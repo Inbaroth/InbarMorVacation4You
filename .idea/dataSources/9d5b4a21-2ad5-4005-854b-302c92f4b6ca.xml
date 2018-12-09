@@ -187,7 +187,7 @@
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="46" parent="9" name="e-mail">
+    <column id="46" parent="9" name="email">
       <Position>7</Position>
       <DataType>text|0s</DataType>
     </column>

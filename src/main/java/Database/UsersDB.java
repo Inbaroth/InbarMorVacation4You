@@ -47,7 +47,7 @@ public class UsersDB extends genericDB{
      */
     public void insertIntoTable(String tableName, String data){
         String [] values = data.split(",");
-        String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address,e_mail,profilePicture) VAlUES (?,?,?,?,?,?)";
+        String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address,email,profilePicture) VAlUES (?,?,?,?,?,?)";
 
         String url = "jdbc:sqlite:" + databaseName + ".db";
 
