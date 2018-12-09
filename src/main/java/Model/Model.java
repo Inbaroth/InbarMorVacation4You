@@ -1,12 +1,15 @@
 package Model;
 
-import Database.DBConnect;
+import Database.AvailableVacationsDB;
+import Database.UsersDB;
 import javafx.scene.control.Alert;
 import java.util.Observable;
 
 public class Model extends Observable {
 
-    private DBConnect usersDatabase;
+    private UsersDB usersDB;
+    private AvailableVacationsDB availableVacationsDB;
+
 
     //public enum errorType {PASSWORD_USERS_NOT_MATCH, PASSWORDS_NOT_MATCH, USER_NOT_EXIST}
 
@@ -16,9 +19,13 @@ public class Model extends Observable {
      * and create a new table by the name "Users"
      */
     public Model() {
-        this.usersDatabase = new DBConnect("Vacation4U");
-        usersDatabase.connect();
-        usersDatabase.createTable("Users");
+        this.usersDB = new UsersDB("Vacation4U");
+        usersDB.connect("Users");
+        //usersDB.createTable("Users");
+
+        this.availableVacationsDB = new AvailableVacationsDB("AvailableVacations");
+       // availableVacationsDB.connect();
+
     }
 
     /**
@@ -31,7 +38,7 @@ public class Model extends Observable {
      * @param address
      * @return true if insert succeeded, otherwise return false
      */
-    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
+    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address ) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
 
         // Checking if the user name already exist in the data base
@@ -46,7 +53,7 @@ public class Model extends Observable {
             return 2;
         }
         else{
-            usersDatabase.insertIntoTable("Users", data);
+            usersDB.insertIntoTable("Users", data);
             // 3 symbol notification type: user connected successfully
             return 3;
         }
@@ -61,8 +68,8 @@ public class Model extends Observable {
      * @return
      */
     public String read(String userName, Boolean isInsert) {
-        if (usersDatabase.read("Users", userName) != null){
-            return usersDatabase.read("Users", userName);
+        if (usersDB.read("Users", userName) != null){
+            return usersDB.read("Users", userName);
         }
         else if (!isInsert){
             alert("שם משתמש לא קיים במערכת", Alert.AlertType.ERROR);
@@ -88,7 +95,7 @@ public class Model extends Observable {
             alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
         }
         else{
-            usersDatabase.updateDatabase("Users", data,oldUserName);
+            usersDB.updateDatabase("Users", data,oldUserName);
             alert("פרטי החשבון עודכנו בהצלחה", Alert.AlertType.INFORMATION);
         }
 
@@ -99,7 +106,7 @@ public class Model extends Observable {
      * @param userName
      */
     public void delete(String userName) {
-        usersDatabase.deleteFromTable("Users", userName);
+        usersDB.deleteFromTable("Users","user_name" ,userName);
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
 
@@ -107,7 +114,7 @@ public class Model extends Observable {
         String details = read(userName,false);
         boolean isLegal = true;
         if (details != null){
-            String UserDetails = usersDatabase.read("Users", userName);
+            String UserDetails = usersDB.read("Users", userName);
             String [] detailsArr = UserDetails.split(",");
             if (!password.equals(detailsArr[1])) {
                 //alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);

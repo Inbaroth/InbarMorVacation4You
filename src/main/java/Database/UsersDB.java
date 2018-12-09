@@ -2,59 +2,43 @@ package Database;
 
 import java.sql.*;
 
-public class DBConnect {
+public class UsersDB extends genericDB{
 
     private String databaseName;
 
     /**
-     * Constructor for the class DBConnect
+     * Constructor for the class UsersDB
      * @param databaseName
      */
-    public DBConnect(String databaseName) {
-        this.databaseName = databaseName;
+    public UsersDB(String databaseName) {
+        super(databaseName);
     }
 
-    /**
-     * This method create if doesn't exist a new database by the name which equal to the databaseName field.
-     */
-    public void connect() {
-        Connection connection = null;
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName + ".db");
-            connection.close();
-
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
-    }
 
     /**
      * This method create a new table in the data base by the name tableName
      * @param tableName
      */
-    public void createTable(String tableName){
-        String createStatement = "CREATE TABLE IF NOT EXISTS Users (\n"
-                + "	user_name text PRIMARY KEY,\n"
-                + "	password text NOT NULL,\n"
-                + " first_name text NOT NULL,\n"
-                + " last_name text NOT NULL,\n"
-                + "	birthday text,\n"
-                + "address text NOT NULL\n"
-                + ");";
-
-        String url = "jdbc:sqlite:" + databaseName + ".db";
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(createStatement);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
+//    public void createTable(String tableName){
+//        String createStatement = "CREATE TABLE IF NOT EXISTS Users (\n"
+//                + "	user_name text PRIMARY KEY,\n"
+//                + "	password text NOT NULL,\n"
+//                + " first_name text NOT NULL,\n"
+//                + " last_name text NOT NULL,\n"
+//                + "	birthday text,\n"
+//                + "address text NOT NULL\n"
+//                + ");";
+//
+//        String url = "jdbc:sqlite:" + databaseName + ".db";
+//        try (Connection conn = DriverManager.getConnection(url);
+//             Statement stmt = conn.createStatement()) {
+//            // create a new table
+//            stmt.execute(createStatement);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//    }
 
     /**
      * This method insert a new row to Users table with the given data
@@ -63,7 +47,7 @@ public class DBConnect {
      */
     public void insertIntoTable(String tableName, String data){
         String [] values = data.split(",");
-        String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address) VAlUES (?,?,?,?,?,?)";
+        String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address,e-mail,profilePicture) VAlUES (?,?,?,?,?,?)";
 
         String url = "jdbc:sqlite:" + databaseName + ".db";
 
