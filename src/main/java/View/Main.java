@@ -1,7 +1,6 @@
 package View;
 
 import Controller.Controller;
-import Database.DBConnect;
 import Model.Model;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
