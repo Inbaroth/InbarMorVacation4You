@@ -14,10 +14,10 @@
     <table id="6" parent="2" name="AvailableVacations"/>
     <table id="7" parent="2" name="PurchaeseUsers"/>
     <table id="8" parent="2" name="PurchasedVacations"/>
-    <table id="9" parent="2" name="sqlite_master">
+    <table id="9" parent="2" name="Users"/>
+    <table id="10" parent="2" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="10" parent="2" name="table_name"/>
     <column id="11" parent="6" name="Origin">
       <Position>1</Position>
       <DataType>text|0s</DataType>
@@ -163,73 +163,73 @@
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <column id="40" parent="9" name="type">
+    <column id="40" parent="9" name="user_name">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="41" parent="9" name="name">
+    <column id="41" parent="9" name="password">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="42" parent="9" name="tbl_name">
+    <column id="42" parent="9" name="first_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="43" parent="9" name="rootpage">
-      <Position>4</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <column id="44" parent="9" name="sql">
-      <Position>5</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="45" parent="10" name="user_name">
-      <Position>1</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="46" parent="10" name="password">
-      <Position>2</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="47" parent="10" name="first_name">
-      <Position>3</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="48" parent="10" name="last_name">
+    <column id="43" parent="9" name="last_name">
       <Position>4</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="49" parent="10" name="birthday">
+    <column id="44" parent="9" name="birthday">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="50" parent="10" name="address">
+    <column id="45" parent="9" name="address">
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="51" parent="10" name="e-mail">
+    <column id="46" parent="9" name="e-mail">
       <Position>7</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="52" parent="10" name="profilePicture">
+    <column id="47" parent="9" name="profilePicture">
       <Position>8</Position>
       <DataType>load|0s</DataType>
     </column>
-    <index id="53" parent="10" name="sqlite_autoindex_table_name_1">
+    <index id="48" parent="9" name="sqlite_autoindex_Users_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_name</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <index id="54" parent="10" name="table_name_user_name_uindex">
+    <index id="49" parent="9" name="table_name_user_name_uindex">
       <ColNames>user_name</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="55" parent="10">
+    <key id="50" parent="9">
       <ColNames>user_name</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>sqlite_autoindex_table_name_1</UnderlyingIndexName>
+      <UnderlyingIndexName>sqlite_autoindex_Users_1</UnderlyingIndexName>
     </key>
+    <column id="51" parent="10" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="52" parent="10" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="53" parent="10" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="54" parent="10" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="55" parent="10" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
   </database-model>
 </dataSource>
