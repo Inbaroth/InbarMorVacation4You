@@ -66,7 +66,7 @@ public class HomePage implements Observer {
     }
 
     //create a new stage
-    protected void newStage(String fxmlName,String title, View windowName, int width, int height){
+    protected void newStage(String fxmlName,String title, HomePage windowName, int width, int height){
         /*FXMLLoader fxmlLoader = new
                 FXMLLoader(getClass().getResource(fxmlName));*/
         FXMLLoader fxmlLoader = new FXMLLoader();

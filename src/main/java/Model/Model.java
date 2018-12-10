@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.regex.Pattern;
 
 public class Model extends Observable {
 
@@ -34,8 +35,8 @@ public class Model extends Observable {
      */
     public Model() {
         this.usersDB = new UsersDB("Vacation4U");
-        //usersDB.connect("Vacation4U");
-        //usersDB.createTable("Users");
+        usersDB.connect("Vacation4U");
+        usersDB.createTable();
 
         this.availableVacationsDB = new AvailableVacationsDB("Vacation4U");
         availableVacationsDB.connect("Vacation4U");
@@ -68,7 +69,7 @@ public class Model extends Observable {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
 
         // Checking if the user name already exist in the data base
-        if (read(userName, true) != null){
+        if (readUsers(userName, true) != null){
             return "שם המשתמש שהזנת כבר קיים";
         }
 
@@ -150,14 +151,14 @@ public class Model extends Observable {
      * @param address
      */
 
-    public void update(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
+    public void updateUser(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
         // Checking that both password text fields are equal
         if(!password.equals(confirmPassword)){
             alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
         }
         else{
-            usersDatabase.updateDatabase("Users", data,oldUserName);
+            usersDB.updateDatabase("Users", data,oldUserName);
             alert("פרטי החשבון עודכנו בהצלחה", Alert.AlertType.INFORMATION);
         }
 
@@ -167,32 +168,43 @@ public class Model extends Observable {
      * This method delete a row from the database where user name is equal to @param userName
      * @param userName
      */
-    public void delete(String userName) {
-        usersDatabase.deleteFromTable("Users", userName);
+    public void deleteUser(String userName) {
+        usersDB.deleteFromTable("Users", userName);
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
 
-    public void signIn(String userName, String password) {
-        String details = read(userName,false);
+    public String signIn(String userName, String password) {
+        String details = readUsers(userName,false);
         boolean isLegal = true;
         if (details != null){
-            String UserDetails = usersDatabase.read("Users", userName);
+            String UserDetails = usersDB.read("Users", userName);
             String [] detailsArr = UserDetails.split(",");
             if (!password.equals(detailsArr[1])) {
-                //alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
-                isLegal = false;
-                setChanged();
-                notifyObservers(isLegal);
-                //return isLegal;
+                return "הסיסמאות אינן תואמות";
             }
             else{
-                setChanged();
-                notifyObservers(isLegal);
-                //return isLegal;
+               return userName;
 
             }
         }
-        //return false;
+        return userName;
+    }
+
+    public void insertPendingVacation(int vacationId,String seller, String buyer ){
+        try{
+            pendingVacationsDB.insertVacation(vacationId, seller,  buyer);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
+        try{
+            confirmedSaleVacationsDB.insertVacation(vacationId, seller,  buyer, origin,destination, price, dateOfDeparture,  dateOfArrival);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+        }
     }
 
     private void alert(String messageText, Alert.AlertType alertType){
