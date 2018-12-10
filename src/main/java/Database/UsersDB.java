@@ -42,10 +42,9 @@ public class UsersDB extends genericDB{
 
     /**
      * This method insert a new row to Users table with the given data
-     * @param tableName
      * @param data data of the new row which need to be added
      */
-    public void insertIntoTable(String tableName, String data){
+    public void insertIntoTable(String data){
         String [] values = data.split(",");
         String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address,e_mail,profilePicture) VAlUES (?,?,?,?,?,?)";
 
@@ -54,12 +53,16 @@ public class UsersDB extends genericDB{
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
             // set the corresponding parameters
-            pstmt.setString(1,values[0]);
-            pstmt.setString(2,values[1]);
-            pstmt.setString(3,values[2]);
-            pstmt.setString(4,values[3]);
-            pstmt.setString(5,values[4]);
-            pstmt.setString(6,values[5]);
+            pstmt.setString(1,values[0]); // user name
+            pstmt.setString(2,values[1]); // password
+            pstmt.setString(3,values[2]); // first name
+            pstmt.setString(4,values[3]); // last name
+            pstmt.setString(5,values[4]); // birthday
+            pstmt.setString(6,values[5]); // address
+            pstmt.setString(7,values[6]); // email
+            pstmt.setString(8,values[7]); // credit card number
+            pstmt.setString(9,values[8]); // expiration time
+            pstmt.setString(10,values[9]); // CSC
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -92,7 +95,11 @@ public class UsersDB extends genericDB{
                         rs.getString("first_name") + "," +
                         rs.getString("last_name") + "," +
                         rs.getString("birthday") + "," +
-                        rs.getString("address");
+                        rs.getString("address") + "," +
+                        rs.getString("e_mail") + "," +
+                        rs.getString("credit_card_number") + "," +
+                        rs.getString("expiration_time") + "," +
+                        rs.getString("CSV");
                 return res;
             }
         } catch (SQLException e) {
@@ -108,13 +115,15 @@ public class UsersDB extends genericDB{
      * @param data - all the parameters needed to be updated
      */
     public void updateDatabase(String tableName, String data, String userName) {
+        // add fields!!!!
         String[] values = data.split(",");
         String updatetatement = "UPDATE Users SET user_name = ?,"
                 + "password = ? ,"
                 + "first_name = ? ,"
                 + "last_name = ? ,"
                 + "birthday = ? ,"
-                + "address = ?"
+                + "address = ? ,"
+                + "e_mail = ?"
                 + "WHERE user_name = ?";
 
         String url = "jdbc:sqlite:" + databaseName + ".db";
@@ -123,13 +132,13 @@ public class UsersDB extends genericDB{
              PreparedStatement pstmt = conn.prepareStatement(updatetatement)) {
 
             // set the corresponding param
-            pstmt.setString(1, values[0]);
-            pstmt.setString(2, values[1]);
-            pstmt.setString(3, values[2]);
-            pstmt.setString(4, values[3]);
-            pstmt.setString(5, values[4]);
-            pstmt.setString(6, values[5]);
-            pstmt.setString(7, userName);
+            pstmt.setString(1, values[0]); // user name
+            pstmt.setString(2, values[1]); // first name
+            pstmt.setString(3, values[2]); // last name
+            pstmt.setString(4, values[3]); // birthday
+            pstmt.setString(5, values[4]); // address
+            pstmt.setString(6, values[5]); // email
+            pstmt.setString(7, userName); // user name - primary key
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

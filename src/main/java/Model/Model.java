@@ -4,6 +4,7 @@ import Database.AvailableVacationsDB;
 import Database.UsersDB;
 import javafx.scene.control.Alert;
 import java.util.Observable;
+import java.util.regex.Pattern;
 
 public class Model extends Observable {
 
@@ -38,8 +39,8 @@ public class Model extends Observable {
      * @param address
      * @return true if insert succeeded, otherwise return false
      */
-    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address ) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
+    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
+        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSC;
 
         // Checking if the user name already exist in the data base
         if (read(userName, true) != null){
@@ -52,13 +53,33 @@ public class Model extends Observable {
             // 2 symbol notification type: passwords doesn't match
             return 2;
         }
-        else{
-            usersDB.insertIntoTable("Users", data);
-            // 3 symbol notification type: user connected successfully
+
+        else if(!isValidEmail(email))
+            // 3 symbol notification type: email is not in the right format
             return 3;
+        else{
+            usersDB.insertIntoTable(data);
+            // 4 symbol notification type: user connected successfully
+            return 4;
         }
 
+    }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 
     /**

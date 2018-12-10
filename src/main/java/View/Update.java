@@ -14,15 +14,21 @@ public class Update extends View implements Observer {
     private String userDetails;
     private String [] userDetailsSplited;
 
-    public javafx.scene.control.TextField userName;
-    public javafx.scene.control.TextField firstName;
-    public javafx.scene.control.TextField lastName;
-    public javafx.scene.control.TextField password;
-    public javafx.scene.control.TextField passwordReplay;
-    public javafx.scene.control.TextField address;
-    public javafx.scene.control.ComboBox day;
-    public javafx.scene.control.ComboBox month;
-    public javafx.scene.control.ComboBox year;
+    public javafx.scene.control.TextField txtfld_userName;
+    public javafx.scene.control.PasswordField txtfld_password;
+    public javafx.scene.control.PasswordField txtfld_confirmPassword;
+    public javafx.scene.control.TextField txtfld_firstName;
+    public javafx.scene.control.TextField txtfld_lastName;
+    public javafx.scene.control.TextField txtfld_Address;
+    public javafx.scene.control.TextField txtfld_email;
+    public javafx.scene.control.TextField txtfld_creditCardNumber;
+    public javafx.scene.control.TextField txtfld_CSC;
+    public javafx.scene.image.ImageView pictureView;
+    public javafx.scene.control.ComboBox combo_box_day;
+    public javafx.scene.control.ComboBox combo_box_month;
+    public javafx.scene.control.ComboBox combo_box_year;
+    public javafx.scene.control.ComboBox combo_box_yearForCredit;
+    public javafx.scene.control.ComboBox combo_box_monthForCredit;
 
     /**
      *
@@ -52,36 +58,53 @@ public class Update extends View implements Observer {
      */
     private void splitToFields(){
         userDetailsSplited = userDetails.split(",");
-        userName.setText(userDetailsSplited[0]);
-        firstName.setText(userDetailsSplited[2]);
-        lastName.setText(userDetailsSplited[3]);
-        password.setText(userDetailsSplited[1]);
-        passwordReplay.setText(userDetailsSplited[1]);
-        address.setText(userDetailsSplited[5]);
+        txtfld_userName.setText(userDetailsSplited[0]);
+        txtfld_firstName.setText(userDetailsSplited[2]);
+        txtfld_lastName.setText(userDetailsSplited[3]);
+        txtfld_password.setText(userDetailsSplited[1]);
+        txtfld_confirmPassword.setText(userDetailsSplited[1]);
+        txtfld_Address.setText(userDetailsSplited[5]);
         String [] date = userDetailsSplited[4].split("/");
-        day.setValue(date[0]);
-        month.setValue(date[1]);
-        year.setValue(date[2]);
+        combo_box_day.setValue(date[0]);
+        combo_box_month.setValue(date[1]);
+        combo_box_year.setValue(date[2]);
     }
 
+    /**
+     *
+     */
     public void confirm (){
-        String newUserName = userName.getText();
-        String newPassword = password.getText();
-        String newPasswordReplay = passwordReplay.getText();
-        String newFirstName = firstName.getText();
-        String newLastName = lastName.getText();
+        String newUserName = txtfld_userName.getText();
+        String newPassword = txtfld_password.getText();
+        String newPasswordReplay = txtfld_confirmPassword.getText();
+        String newFirstName = txtfld_firstName.getText();
+        String newLastName = txtfld_lastName.getText();
         String newBirthday = getBirthday();
-        String newAddress = address.getText();
+        String newAddress = txtfld_Address.getText();
         String data = userDetailsSplited[0] + "," + newPassword + "," + newPasswordReplay + "," + newFirstName + "," + newLastName + "," + newBirthday + "," + newAddress;
         controller.updateDB(userDetailsSplited[0],newUserName,newPassword ,newPasswordReplay,newFirstName , newLastName , newBirthday,newAddress);
         stage.close();
     }
 
+    /**
+     *
+     * @return
+     */
     private String getBirthday(){
-        String newDay = (String) day.getValue();
-        String newMonth = (String) month.getValue();
-        String newYear = (String) year.getValue();
+        String newDay = (String) combo_box_day.getValue();
+        String newMonth = (String) combo_box_month.getValue();
+        String newYear = (String) combo_box_year.getValue();
         return newDay  + "/" + newMonth + "/" + newYear;
+    }
+
+    /**
+     * get the user expiration credit card time
+     * @return the value of the combo_box_monthForCredit, combo_box_yearForCredit in the format: MM/YYYY
+     */
+    private String getExpirationTime(){
+        String month = (String) combo_box_monthForCredit.getValue();
+        String year = (String) combo_box_yearForCredit.getValue();
+        return month + "/" + year;
     }
 
     @Override
