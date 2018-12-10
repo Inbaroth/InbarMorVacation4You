@@ -3,9 +3,21 @@ package View;
 import Controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -49,24 +61,17 @@ public class Insert extends HomePage implements Observer {
         String creditCardNumber = txtfld_creditCardNumber.getText();
         String CSC = txtfld_CSC.getText();
 
-
         if (!validation()){
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
         }
         else{
-            int ans = controller.insert(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
-            if (ans == 1)
-                alert("שם המשתמש שהזנת כבר קיים", Alert.AlertType.ERROR);
-            if (ans == 2)
-                alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
-            if (ans == 3)
-                alert("האימייל לא בפורמט הנכון", Alert.AlertType.ERROR);
-            if (ans == 4){
+            String ans = controller.insert(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
+            if (!ans.equals("התחברת בהצלחה"))
+                alert(ans, Alert.AlertType.ERROR);
+            else
                 alert("התחברת בהצלחה", Alert.AlertType.INFORMATION);
-                stage.close();
+            stage.close();
             }
-
-        }
 
     }
 
@@ -92,6 +97,8 @@ public class Insert extends HomePage implements Observer {
         if (txtfld_creditCardNumber.getText() == null || txtfld_creditCardNumber.getText().trim().isEmpty())
             return false;
         if (txtfld_CSC.getText() == null || txtfld_CSC.getText().trim().isEmpty())
+            return false;
+        if (pictureView == null)
             return false;
         return true;
     }
@@ -139,5 +146,17 @@ public class Insert extends HomePage implements Observer {
     }
 
     public void loadPicture(ActionEvent actionEvent) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            File selectedFile = fileChooser.showOpenDialog(new Stage());
+            if (selectedFile != null) {
+                javafx.scene.image.Image image = new Image(selectedFile.toURI().toString());
+                pictureView.setImage(image);
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+        }
     }
 }

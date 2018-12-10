@@ -39,36 +39,43 @@ public class Model extends Observable {
      * @param address
      * @return true if insert succeeded, otherwise return false
      */
-    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSC;
+    public String insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSV) {
+        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
 
         // Checking if the user name already exist in the data base
         if (read(userName, true) != null){
-            // 1 symbol notification type: username already exist in the database
-            return 1;
+            return "שם המשתמש שהזנת כבר קיים";
         }
 
         // Checking that both password text fields are equal
         else if (!password.equals(confirmPassword)){
-            // 2 symbol notification type: passwords doesn't match
-            return 2;
+            return "הסיסמאות אינן תואמות";
         }
-
         else if(!isValidEmail(email))
-            // 3 symbol notification type: email is not in the right format
-            return 3;
+            return "האימייל לא בפורמט הנכון";
+        else if(!isValidCreditCardNumber(creditCardNumber))
+            return "מספר כרטיס אשראי לא תקין, אנא הזן מספר בן 16 ספרות";
+        else if(!isValidCSVNumber(CSV))
+            return "מספר CSV לא תקין, אנא הזן מספר בן 3 ספרות";
         else{
             usersDB.insertIntoTable(data);
-            // 4 symbol notification type: user connected successfully
-            return 4;
+            return "התחברת בהצלחה";
         }
+    }
 
+    /**
+     *
+     * @param CSV
+     * @return true is CSV a valid CSV number. In a length of 3 and contain only digits
+     */
+    private boolean isValidCSVNumber(String CSV) {
+        return CSV.length() == 3 && StringUtils.isNumeric(CSV);
     }
 
     /**
      *
      * @param email
-     * @return
+     * @return true if @param email is in the right format
      */
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
@@ -80,6 +87,15 @@ public class Model extends Observable {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
+    }
+
+    /**
+     *
+     * @param creditCardNumber
+     * @return true is creditCardNumber a valid CSV number. In a length of 16 and contain only digits
+     */
+    private boolean isValidCreditCardNumber(String creditCardNumber){
+        return creditCardNumber.length() == 16 && StringUtils.isNumeric(creditCardNumber);
     }
 
     /**

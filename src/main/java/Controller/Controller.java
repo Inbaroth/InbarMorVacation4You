@@ -28,7 +28,7 @@ public class Controller extends Observable implements Observer {
      * @param address
      * This method insert a new row to the data base with the given parameters
      */
-    public int insert (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
+    public String insert (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
         return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address,email, creditCardNumber,expirationTime,CSC);
     }
 

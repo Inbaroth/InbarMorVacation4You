@@ -1,3 +1,4 @@
+/*
 package View;
 
 import Controller.Controller;
@@ -125,9 +126,11 @@ public class View  implements Observer {
         });
     }
 
-    /**
+    */
+/**
      * @param actionEvent
-     */
+     *//*
+
     public void exit(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("יציאה");
@@ -152,9 +155,11 @@ public class View  implements Observer {
     }
 
     //create a new stage
-    private void newStage(String fxmlName,String title, View windowName, int width, int height){
-        /*FXMLLoader fxmlLoader = new
-                FXMLLoader(getClass().getResource(fxmlName));*/
+    protected void newStage(String fxmlName,String title, View windowName, int width, int height){
+        */
+/*FXMLLoader fxmlLoader = new
+                FXMLLoader(getClass().getResource(fxmlName));*//*
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = null;
         try {
@@ -183,3 +188,4 @@ public class View  implements Observer {
         }
     }
 }
+*/

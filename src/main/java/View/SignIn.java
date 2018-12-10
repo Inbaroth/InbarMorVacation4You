@@ -37,7 +37,6 @@ public class SignIn extends HomePage implements Observer{
 
     }
 
-
     public void logIn(){
 
         String userName = username.getText();

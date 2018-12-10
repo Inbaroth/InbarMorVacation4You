@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Model model;
-    private View view;
+    private HomePage view;
 
 
     @Override
@@ -25,8 +25,8 @@ public class Main extends Application {
         //FXMLLoader fxmlLoader = FXMLLoader.load(getClass().getClassLoader().getResource("view.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader();
         //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view.fxml"));
-        //Parent root = (Parent) fxmlLoader.load();
-        Parent root = fxmlLoader.load(getClass().getResource("/view.fxml").openStream());
+        Parent root = fxmlLoader.load(getClass().getResource("/HomePage.fxml").openStream());
+//        Parent root = (Parent) fxmlLoader.load(getClass().getResource("HomePage.fxml").openStream());
         primaryStage.setTitle("Welcome to Vacation4U");
         Scene scene = new Scene(root, 595, 415);
         primaryStage.setScene(scene);
