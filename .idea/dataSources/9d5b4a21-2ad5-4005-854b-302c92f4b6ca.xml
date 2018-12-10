@@ -121,137 +121,157 @@
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="33" parent="7" name="sqlite_autoindex_ConfirmedSaleVacations_1">
+    <column id="33" parent="7" name="Origin">
+      <Position>4</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="34" parent="7" name="Destination">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="35" parent="7" name="Price">
+      <Position>6</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="36" parent="7" name="DateOfDeparture">
+      <Position>7</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="37" parent="7" name="DateOfArrival">
+      <Position>8</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <index id="38" parent="7" name="sqlite_autoindex_ConfirmedSaleVacations_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>vacationId
 sellerUserName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="34" parent="7" name="ConfirmedSaleVacations_pk">
+    <key id="39" parent="7" name="ConfirmedSaleVacations_pk">
       <ColNames>vacationId
 sellerUserName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_ConfirmedSaleVacations_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="35" parent="7" name="ConfirmedSaleVacations_AvailableVacationas_VacationId_fk">
+    <foreign-key id="40" parent="7" name="ConfirmedSaleVacations_AvailableVacationas_VacationId_fk">
       <ColNames>vacationId</ColNames>
       <RefTableName>AvailableVacationas</RefTableName>
       <RefColNames>VacationId</RefColNames>
     </foreign-key>
-    <foreign-key id="36" parent="7" name="ConfirmedSaleVacations_seller_fk">
+    <foreign-key id="41" parent="7" name="ConfirmedSaleVacations_seller_fk">
       <ColNames>sellerUserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <foreign-key id="37" parent="7" name="ConfirmedSaleVacations_buyer_fk">
+    <foreign-key id="42" parent="7" name="ConfirmedSaleVacations_buyer_fk">
       <ColNames>buyerUserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <column id="38" parent="8" name="vacationId">
+    <column id="43" parent="8" name="vacationId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="39" parent="8" name="sellerUserNeme">
+    <column id="44" parent="8" name="sellerUserName">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="40" parent="8" name="buyerUserName">
+    <column id="45" parent="8" name="buyerUserName">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="41" parent="8" name="sqlite_autoindex_PendingVacations_1">
+    <index id="46" parent="8" name="sqlite_autoindex_PendingVacations_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>vacationId
-sellerUserNeme</ColNames>
+sellerUserName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="42" parent="8" name="PendingVacations_pk">
+    <key id="47" parent="8" name="PendingVacations_pk">
       <ColNames>vacationId
-sellerUserNeme</ColNames>
+sellerUserName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_PendingVacations_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="43" parent="8" name="PendingVacations_vacation_fk">
+    <foreign-key id="48" parent="8" name="PendingVacations__fk">
       <ColNames>vacationId</ColNames>
       <RefTableName>AvailableVacationas</RefTableName>
       <RefColNames>VacationId</RefColNames>
     </foreign-key>
-    <foreign-key id="44" parent="8" name="PendingVacations_seller_fk">
-      <ColNames>sellerUserNeme</ColNames>
+    <foreign-key id="49" parent="8" name="PendingVacations_seller_fk">
+      <ColNames>sellerUserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <foreign-key id="45" parent="8" name="PendingVacations_buyer_fk">
+    <foreign-key id="50" parent="8" name="PendingVacations_buyer_fk">
       <ColNames>buyerUserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <column id="46" parent="9" name="UserName">
+    <column id="51" parent="9" name="UserName">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="47" parent="9" name="numberOfVacationPurchased">
+    <column id="52" parent="9" name="numberOfVacationPurchased">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="48" parent="9" name="sqlite_autoindex_PurchaeseUsers_1">
+    <index id="53" parent="9" name="sqlite_autoindex_PurchaeseUsers_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>UserName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="49" parent="9">
+    <key id="54" parent="9">
       <ColNames>UserName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_PurchaeseUsers_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="50" parent="9" name="PurchaeseUsers_Users_user_name_fk">
+    <foreign-key id="55" parent="9" name="PurchaeseUsers_Users_user_name_fk">
       <ColNames>UserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <column id="51" parent="10" name="VacationId">
+    <column id="56" parent="10" name="VacationId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="52" parent="10" name="DateOfPurchase">
+    <column id="57" parent="10" name="DateOfPurchase">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="53" parent="10" name="TimeOfPurchase">
+    <column id="58" parent="10" name="TimeOfPurchase">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="54" parent="10" name="UserName">
+    <column id="59" parent="10" name="UserName">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="10" name="CreditCardNumber">
+    <column id="60" parent="10" name="CreditCardNumber">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="56" parent="10" name="ExpirationDate">
+    <column id="61" parent="10" name="ExpirationDate">
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="57" parent="10" name="CSV">
+    <column id="62" parent="10" name="CSV">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="58" parent="10" name="sqlite_autoindex_PurchasedVacations_1">
+    <index id="63" parent="10" name="sqlite_autoindex_PurchasedVacations_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>UserName
 DateOfPurchase
@@ -259,100 +279,100 @@ TimeOfPurchase</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="59" parent="10" name="PurchasedVacations_pk">
+    <key id="64" parent="10" name="PurchasedVacations_pk">
       <ColNames>UserName
 DateOfPurchase
 TimeOfPurchase</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_PurchasedVacations_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="60" parent="10" name="PurchasedVacations_AvailableVacationas_VacationId_fk">
+    <foreign-key id="65" parent="10" name="PurchasedVacations_AvailableVacationas_VacationId_fk">
       <ColNames>VacationId</ColNames>
       <RefTableName>AvailableVacationas</RefTableName>
       <RefColNames>VacationId</RefColNames>
     </foreign-key>
-    <foreign-key id="61" parent="10" name="PurchasedVacations_Users_user_name_fk">
+    <foreign-key id="66" parent="10" name="PurchasedVacations_Users_user_name_fk">
       <ColNames>UserName</ColNames>
       <RefTableName>Users</RefTableName>
       <RefColNames>user_name</RefColNames>
     </foreign-key>
-    <column id="62" parent="11" name="user_name">
+    <column id="67" parent="11" name="user_name">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="63" parent="11" name="password">
+    <column id="68" parent="11" name="password">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="64" parent="11" name="first_name">
+    <column id="69" parent="11" name="first_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="65" parent="11" name="last_name">
+    <column id="70" parent="11" name="last_name">
       <Position>4</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="66" parent="11" name="birthday">
+    <column id="71" parent="11" name="birthday">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="67" parent="11" name="address">
+    <column id="72" parent="11" name="address">
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="68" parent="11" name="email">
+    <column id="73" parent="11" name="email">
       <Position>7</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="69" parent="11" name="profilePicture">
+    <column id="74" parent="11" name="profilePicture">
       <Position>8</Position>
       <DataType>load|0s</DataType>
     </column>
-    <column id="70" parent="11" name="credit_card_number">
+    <column id="75" parent="11" name="credit_card_number">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="71" parent="11" name="expiration_time">
+    <column id="76" parent="11" name="expiration_time">
       <Position>10</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="72" parent="11" name="CSV">
+    <column id="77" parent="11" name="CSV">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="73" parent="11" name="sqlite_autoindex_Users_1">
+    <index id="78" parent="11" name="sqlite_autoindex_Users_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_name</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <index id="74" parent="11" name="table_name_user_name_uindex">
+    <index id="79" parent="11" name="table_name_user_name_uindex">
       <ColNames>user_name</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="75" parent="11">
+    <key id="80" parent="11">
       <ColNames>user_name</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_Users_1</UnderlyingIndexName>
     </key>
-    <column id="76" parent="12" name="type">
+    <column id="81" parent="12" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="77" parent="12" name="name">
+    <column id="82" parent="12" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="78" parent="12" name="tbl_name">
+    <column id="83" parent="12" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="79" parent="12" name="rootpage">
+    <column id="84" parent="12" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="80" parent="12" name="sql">
+    <column id="85" parent="12" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>

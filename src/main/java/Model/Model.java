@@ -1,8 +1,6 @@
 package Model;
 
-import Database.AvailableVacationsDB;
-import Database.PurchasedVacationsDB;
-import Database.UsersDB;
+import Database.*;
 import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
@@ -12,10 +10,12 @@ import java.util.Observable;
 public class Model extends Observable {
 
     private UsersDB usersDB;
-    private AvailableVacationsDB availableVacationsDB;
-    private PurchasedVacationsDB purchcasedVacationDB;
     public static int vacationID=0;
     private Vacation vacation;
+    private AvailableVacationsDB availableVacationsDB;
+    private PurchasedVacationsDB purchasedVacationDB;
+    private PendingVacationsDB pendingVacationsDB;
+    private ConfirmedSaleVacationsDB confirmedSaleVacationsDB;
 
 
     //public enum errorType {PASSWORD_USERS_NOT_MATCH, PASSWORDS_NOT_MATCH, USER_NOT_EXIST}
@@ -27,14 +27,24 @@ public class Model extends Observable {
      */
     public Model() {
         this.usersDB = new UsersDB("Vacation4U");
-        usersDB.connect("Vacation4U");
+        //usersDB.connect("Vacation4U");
         //usersDB.createTable("Users");
 
-        this.availableVacationsDB = new AvailableVacationsDB("AvailableVacations");
+        this.availableVacationsDB = new AvailableVacationsDB("Vacation4U");
         availableVacationsDB.connect("Vacation4U");
+        availableVacationsDB.createNewTable();
 
-        this.purchcasedVacationDB = new PurchasedVacationsDB("vacation4U");
-        purchcasedVacationDB.connect("Vacation4U");
+        this.purchasedVacationDB = new PurchasedVacationsDB("vacation4U");
+        purchasedVacationDB.connect("Vacation4U");
+        purchasedVacationDB.createNewTable();
+
+        this.pendingVacationsDB = new PendingVacationsDB("Vacation4U");
+        pendingVacationsDB.connect("Vacation4U");
+        pendingVacationsDB.createNewTable();
+
+        this.confirmedSaleVacationsDB = new ConfirmedSaleVacationsDB("Vacation4U");
+        confirmedSaleVacationsDB.connect("Vacation4U");
+        confirmedSaleVacationsDB.createNewTable();
     }
 
     /**
@@ -150,7 +160,7 @@ public class Model extends Observable {
     }
 
 
-    private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+    public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
         vacationID++;
         Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
@@ -162,6 +172,25 @@ public class Model extends Observable {
             //check in GUI that all values aren't null ,don't handle this here
         }
     }
+
+    public void insertPendingVacation(int vacationId,String seller, String buyer ){
+        try{
+            pendingVacationsDB.insertVacation(vacationId, seller,  buyer);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
+        try{
+            confirmedSaleVacationsDB.insertVacation(vacationId, seller,  buyer, origin,destination, price, dateOfDeparture,  dateOfArrival);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+        }
+    }
+
+
 
     /**
      * returns list of all match vacation from DB based on given data (as the parameters in signature)
@@ -201,7 +230,7 @@ public class Model extends Observable {
 
     public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
         try{
-            purchcasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
+            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
