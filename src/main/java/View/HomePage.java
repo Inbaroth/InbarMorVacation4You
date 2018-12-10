@@ -44,11 +44,11 @@ public class HomePage implements Observer {
         setImage();
     }
     public void create(ActionEvent actionEvent) {
-        newStage("insert.fxml", "", insertWindow, 600, 466);
+        newStage("insert.fxml", "", insertWindow, 721, 619,controller);
     }
 
     public void signIn(ActionEvent actionEvent){
-        newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 );
+        newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 , controller);
     }
 
     public void setImage() {
@@ -65,20 +65,24 @@ public class HomePage implements Observer {
 
     }
 
-    //create a new stage
-    protected void newStage(String fxmlName,String title, HomePage windowName, int width, int height){
-        /*FXMLLoader fxmlLoader = new
-                FXMLLoader(getClass().getResource(fxmlName));*/
+    /**
+     * creates a new window, based on given details and shows it
+     * @param fxmlName - name of the stage fxml file
+     * @param title - title of the window
+     * @param windowName - name of the java class represents the stage
+     * @param width of window
+     * @param height of window
+     * @param controller - controller of the program, link between the view and model
+     */
+    protected void newStage(String fxmlName,String title, HomePage windowName, int width, int height, Controller controller){
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = null;
         try {
             root = fxmlLoader.load(getClass().getResource("/" + fxmlName).openStream());
-            //root = (Parent) fxmlLoader.load(getClass().getResource(fxmlName).openStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage = new Stage();
-        //set what you want on your scene
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
         Scene scene = new Scene(root, width, height);
