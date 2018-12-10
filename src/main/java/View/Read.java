@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Observer;
 
-public class Read extends View implements Observer {
+public class Read extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;

@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Update extends View implements Observer {
+public class Update extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;

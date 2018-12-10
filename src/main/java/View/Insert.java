@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Insert extends View implements Observer {
+public class Insert extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;

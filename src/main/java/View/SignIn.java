@@ -18,7 +18,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 
-public class SignIn extends View implements Observer{
+public class SignIn extends HomePage implements Observer{
 
     private Controller controller;
     private Stage stage;
