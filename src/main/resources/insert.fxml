@@ -209,23 +209,21 @@
             <ComboBox fx:id="combo_box_yearForCredit" layoutX="589.0" layoutY="471.0" prefHeight="25.0" prefWidth="69.0" promptText="2000" value="2000">
                <items>
                   <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="1" />
-                      <String fx:value="2" />
-                      <String fx:value="3" />
-                      <String fx:value="4" />
-                      <String fx:value="5" />
-                      <String fx:value="6" />
-                      <String fx:value="7" />
-                      <String fx:value="8" />
-                      <String fx:value="9" />
-                      <String fx:value="10" />
-                      <String fx:value="11" />
-                      <String fx:value="12" />
+                      <String fx:value="2028" />
+                      <String fx:value="2027" />
+                      <String fx:value="2026" />
+                      <String fx:value="2025" />
+                      <String fx:value="2024" />
+                      <String fx:value="2023" />
+                      <String fx:value="2022" />
+                      <String fx:value="2021" />
+                      <String fx:value="2020" />
+                      <String fx:value="2019" />
                   </FXCollections>
                </items>
             </ComboBox>
             <Label layoutX="671.0" layoutY="501.0" prefHeight="35.0" prefWidth="32.0" text=":CSV" />
-            <TextField fx:id="txtfld_CSC" layoutX="599.0" layoutY="506.0" prefHeight="25.0" prefWidth="64.0" />
+            <TextField fx:id="txtfld_CSV" layoutX="599.0" layoutY="506.0" prefHeight="25.0" prefWidth="64.0" />
             </children>
         </AnchorPane>
     </children>

@@ -44,26 +44,22 @@ public class SignIn extends HomePage implements Observer{
 
         //if one or more is empty
         if(userName == null || Password == null || username.getText().trim().isEmpty() || password.getText().trim().isEmpty()){
-            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("שגיאה");
-            alert.setContentText("שדה אחד או יותר ריקים");
-            alert.showAndWait();
-            alert.close();*/
-            alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
+            alert("שדה אחד או יותר ריקים", Alert.AlertType.ERROR);
         }
         else{
-            // read the user name from the data base
-            // if doesn't exist showing alert message
-            userDetails = controller.read(userName,false);
+            String ans = controller.signIn(userName, Password);
+            if (!ans.equals(userName))
+                alert(ans,Alert.AlertType.ERROR);
+            else {
 
-            //if the password is not correct shows alert massage
-            if (userDetails != null) {
-                controller.signIn(userName, Password);
+
+
+
+
                 stage.close();
             }
-
-
         }
+
 
     }
 

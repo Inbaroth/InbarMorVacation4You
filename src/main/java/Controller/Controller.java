@@ -84,9 +84,9 @@ public class Controller extends Observable implements Observer {
 
     }
 
-    public void signIn(String userName, String password){
+    public String signIn(String userName, String password){
         currentUserName = userName;
-        model.signIn(userName,password);
+        return model.signIn(userName,password);
     }
 
     public String getUserName() {

@@ -4,8 +4,6 @@ import java.sql.*;
 
 public class UsersDB extends genericDB{
 
-    private String databaseName;
-
     /**
      * Constructor for the class UsersDB
      * @param databaseName
@@ -17,28 +15,32 @@ public class UsersDB extends genericDB{
 
     /**
      * This method create a new table in the data base by the name tableName
-     * @param tableName
      */
-//    public void createTable(String tableName){
-//        String createStatement = "CREATE TABLE IF NOT EXISTS Users (\n"
-//                + "	user_name text PRIMARY KEY,\n"
-//                + "	password text NOT NULL,\n"
-//                + " first_name text NOT NULL,\n"
-//                + " last_name text NOT NULL,\n"
-//                + "	birthday text,\n"
-//                + "address text NOT NULL\n"
-//                + ");";
-//
-//        String url = "jdbc:sqlite:" + databaseName + ".db";
-//        try (Connection conn = DriverManager.getConnection(url);
-//             Statement stmt = conn.createStatement()) {
-//            // create a new table
-//            stmt.execute(createStatement);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//    }
+    public void createTable(){
+        String createStatement = "CREATE TABLE IF NOT EXISTS Users (\n"
+                + "	user_name text PRIMARY KEY,\n"
+                + "	password text NOT NULL,\n"
+                + " first_name text NOT NULL,\n"
+                + " last_name text NOT NULL,\n"
+                + "	birthday text,\n"
+                + "	address text,\n"
+                + "	email text,\n"
+                + "	profilePicture text,\n"
+                + "	credit_card_number text,\n"
+                + "	expiration_time text,\n"
+                + " CSV text NOT NULL\n"
+                + ");";
+
+        String url = "jdbc:sqlite:" + DBName + ".db";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(createStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 
     /**
      * This method insert a new row to Users table with the given data
@@ -46,9 +48,9 @@ public class UsersDB extends genericDB{
      */
     public void insertIntoTable(String data){
         String [] values = data.split(",");
-        String insertStatement = "INSERT INTO Users (user_name,password,first_name,last_name,birthday,address,e_mail,profilePicture) VAlUES (?,?,?,?,?,?)";
+        String insertStatement = "INSERT INTO Users (user_name, password, first_name, last_name, birthday, address, email, profilePicture, credit_card_number, expiration_time, CSV) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-        String url = "jdbc:sqlite:" + databaseName + ".db";
+        String url = "jdbc:sqlite:" + DBName + ".db";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
@@ -60,13 +62,14 @@ public class UsersDB extends genericDB{
             pstmt.setString(5,values[4]); // birthday
             pstmt.setString(6,values[5]); // address
             pstmt.setString(7,values[6]); // email
-            pstmt.setString(8,values[7]); // credit card number
-            pstmt.setString(9,values[8]); // expiration time
-            pstmt.setString(10,values[9]); // CSC
+            pstmt.setString(8,"picture"); // picture
+            pstmt.setString(9,values[7]); // credit card number
+            pstmt.setString(10,values[8]); // expiration time
+            pstmt.setString(11,values[9]); // CSC
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            //System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -80,7 +83,7 @@ public class UsersDB extends genericDB{
 
         String selectQuery = "SELECT * FROM users WHERE user_name = ?";
 
-        String url = "jdbc:sqlite:" + databaseName + ".db";
+        String url = "jdbc:sqlite:" + DBName + ".db";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
@@ -96,7 +99,8 @@ public class UsersDB extends genericDB{
                         rs.getString("last_name") + "," +
                         rs.getString("birthday") + "," +
                         rs.getString("address") + "," +
-                        rs.getString("e_mail") + "," +
+                        rs.getString("email") + "," +
+                        rs.getString("profilePicture") + "," +
                         rs.getString("credit_card_number") + "," +
                         rs.getString("expiration_time") + "," +
                         rs.getString("CSV");
@@ -126,7 +130,7 @@ public class UsersDB extends genericDB{
                 + "e_mail = ?"
                 + "WHERE user_name = ?";
 
-        String url = "jdbc:sqlite:" + databaseName + ".db";
+        String url = "jdbc:sqlite:" + DBName + ".db";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(updatetatement)) {
@@ -153,7 +157,7 @@ public class UsersDB extends genericDB{
     public void deleteFromTable (String tableName, String userName){
         String deleteStatement = "DELETE FROM Users WHERE user_name = ?";
 
-        String url = "jdbc:sqlite:" + databaseName + ".db";
+        String url = "jdbc:sqlite:" + DBName + ".db";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {

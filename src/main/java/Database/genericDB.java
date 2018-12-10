@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class genericDB {
 
-    private String DBName;
+    protected String DBName;
 
     public genericDB(String DBName) {
         this.DBName = DBName;

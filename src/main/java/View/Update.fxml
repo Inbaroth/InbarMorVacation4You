@@ -223,7 +223,7 @@
                </items>
             </ComboBox>
             <Label layoutX="671.0" layoutY="501.0" prefHeight="35.0" prefWidth="32.0" text=":CSC" />
-            <TextField fx:id="txtfld_CSC" layoutX="599.0" layoutY="506.0" prefHeight="25.0" prefWidth="64.0" />
+            <TextField fx:id="txtfld_CSV" layoutX="599.0" layoutY="506.0" prefHeight="25.0" prefWidth="64.0" />
          </children>
       </AnchorPane>
    </children>

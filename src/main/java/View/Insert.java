@@ -3,21 +3,11 @@ package View;
 import Controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -35,7 +25,7 @@ public class Insert extends HomePage implements Observer {
     public javafx.scene.control.TextField txtfld_Address;
     public javafx.scene.control.TextField txtfld_email;
     public javafx.scene.control.TextField txtfld_creditCardNumber;
-    public javafx.scene.control.TextField txtfld_CSC;
+    public javafx.scene.control.TextField txtfld_CSV;
     public javafx.scene.image.ImageView pictureView;
     public javafx.scene.control.ComboBox combo_box_day;
     public javafx.scene.control.ComboBox combo_box_month;
@@ -59,7 +49,7 @@ public class Insert extends HomePage implements Observer {
         String lastName = txtfld_lastName.getText();
         String address = txtfld_Address.getText();
         String creditCardNumber = txtfld_creditCardNumber.getText();
-        String CSC = txtfld_CSC.getText();
+        String CSC = txtfld_CSV.getText();
 
         if (!validation()){
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
@@ -68,10 +58,11 @@ public class Insert extends HomePage implements Observer {
             String ans = controller.insert(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
             if (!ans.equals("התחברת בהצלחה"))
                 alert(ans, Alert.AlertType.ERROR);
-            else
+            else {
                 alert("התחברת בהצלחה", Alert.AlertType.INFORMATION);
-            stage.close();
+                stage.close();
             }
+        }
 
     }
 
@@ -96,7 +87,7 @@ public class Insert extends HomePage implements Observer {
             return false;
         if (txtfld_creditCardNumber.getText() == null || txtfld_creditCardNumber.getText().trim().isEmpty())
             return false;
-        if (txtfld_CSC.getText() == null || txtfld_CSC.getText().trim().isEmpty())
+        if (txtfld_CSV.getText() == null || txtfld_CSV.getText().trim().isEmpty())
             return false;
         if (pictureView == null)
             return false;
