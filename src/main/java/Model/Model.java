@@ -154,7 +154,7 @@ public class Model extends Observable {
         vacationID++;
         Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
-            availableVacationsDB.insertVacation("AvailableVacations", vacation, vacationID);
+            availableVacationsDB.insertVacation( vacation, vacationID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -182,7 +182,7 @@ public class Model extends Observable {
     public ArrayList<Vacation> getVactions(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller,int OriginalPrice){
        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
         Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
-        matchesVacations = availableVacationsDB.readVacation("AvailableVacations", vacation);
+        matchesVacations = availableVacationsDB.readVacation( vacation);
         return matchesVacations;
     }
 
@@ -190,7 +190,7 @@ public class Model extends Observable {
     public ArrayList<Vacation> getMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
         ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
         Vacation vacation = new Vacation(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        matchesVacations = availableVacationsDB.readMatchVacations("AvailableVacations", vacation);
+        matchesVacations = availableVacationsDB.readMatchVacations( vacation);
         return matchesVacations;
     }
 
@@ -201,7 +201,7 @@ public class Model extends Observable {
 
     public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
         try{
-            purchcasedVacationDB.insertVacation( tableName,  vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
+            purchcasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
