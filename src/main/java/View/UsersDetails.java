@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
 
-public class UsersDetails extends View implements Observer {
+public class UsersDetails extends HomePage implements Observer {
 
 
     private Controller controller;
@@ -21,6 +21,7 @@ public class UsersDetails extends View implements Observer {
     public javafx.scene.control.Label month;
     public javafx.scene.control.Label year;
     public javafx.scene.control.Label address;
+    public javafx.scene.control.Label email;
 
 
 
@@ -34,8 +35,8 @@ public class UsersDetails extends View implements Observer {
     public void update(Observable o, Object arg) {
     }
 
-    public void setUserDetails(String userdetails) {
-        userDetails = userdetails;
+    public void setUserDetails(String userDetails) {
+        this.userDetails = userDetails;
         splitToFields();
     }
 
@@ -49,7 +50,13 @@ public class UsersDetails extends View implements Observer {
         month.setText(date[1]);
         year.setText(date[2]);
         address.setText(userDetailsSplited[5]);
+        email.setText(userDetailsSplited[6]);
 
+
+    }
+
+
+    public void loadPicture(){
 
     }
 

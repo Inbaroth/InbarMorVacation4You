@@ -1,3 +1,4 @@
+/*
 package View;
 
 import Controller.Controller;
@@ -77,9 +78,6 @@ public class View  implements Observer {
 
     }
 
-
-
-
     public void create(ActionEvent actionEvent) {
         newStage("insert.fxml", "", insertWindow, 600, 466);
     }
@@ -128,9 +126,11 @@ public class View  implements Observer {
         });
     }
 
-    /**
+    */
+/**
      * @param actionEvent
-     */
+     *//*
+
     public void exit(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("יציאה");
@@ -156,8 +156,10 @@ public class View  implements Observer {
 
     //create a new stage
     protected void newStage(String fxmlName,String title, View windowName, int width, int height){
-        /*FXMLLoader fxmlLoader = new
-                FXMLLoader(getClass().getResource(fxmlName));*/
+        */
+/*FXMLLoader fxmlLoader = new
+                FXMLLoader(getClass().getResource(fxmlName));*//*
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = null;
         try {
@@ -180,9 +182,10 @@ public class View  implements Observer {
         controller.addObserver(windowName);
 
         if (windowName instanceof Update){
-            String userDetails = controller.readUsers(controller.getUserName(),false);
+            String userDetails = controller.read(controller.getUserName(),false);
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }
     }
 }
+*/

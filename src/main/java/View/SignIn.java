@@ -1,12 +1,24 @@
 package View;
 
 import Controller.Controller;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
+import java.io.IOException;
+import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
-public class SignIn extends View implements Observer{
+public class SignIn extends HomePage implements Observer{
 
     private Controller controller;
     private Stage stage;
@@ -25,7 +37,6 @@ public class SignIn extends View implements Observer{
 
     }
 
-
     public void logIn(){
 
         String userName = username.getText();
@@ -33,26 +44,22 @@ public class SignIn extends View implements Observer{
 
         //if one or more is empty
         if(userName == null || Password == null || username.getText().trim().isEmpty() || password.getText().trim().isEmpty()){
-            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("שגיאה");
-            alert.setContentText("שדה אחד או יותר ריקים");
-            alert.showAndWait();
-            alert.close();*/
-            alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
+            alert("שדה אחד או יותר ריקים", Alert.AlertType.ERROR);
         }
         else{
-            // readUsers the user name from the data base
-            // if doesn't exist showing alert message
-            userDetails = controller.readUsers(userName,false);
+            String ans = controller.signIn(userName, Password);
+            if (!ans.equals(userName))
+                alert(ans,Alert.AlertType.ERROR);
+            else {
 
-            //if the password is not correct shows alert massage
-            if (userDetails != null) {
-                controller.signIn(userName, Password);
+
+
+
+
                 stage.close();
             }
-
-
         }
+
 
     }
 

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Observer;
 import java.util.Optional;
 
-public class InsertUserName extends View implements Observer {
+public class InsertUserName extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;

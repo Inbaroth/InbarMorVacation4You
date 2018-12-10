@@ -1,7 +1,14 @@
 package Model;
 
 import Database.*;
+import Database.AvailableVacationsDB;
+//import Database.PurchcasedVacationDB;
+import Database.UsersDB;
 import javafx.scene.control.Alert;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,37 +55,73 @@ public class Model extends Observable {
     }
 
     /**
-     * This method insertUser to the database a new row with the given parameters
+     * This method insert to the database a new row with the given parameters
      * @param userName
      * @param password
      * @param firstName
      * @param lastName
      * @param birthday
      * @param address
-     * @return true if insertUser succeeded, otherwise return false
+     * @return true if insert succeeded, otherwise return false
      */
-    public int insertUsers(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address ) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
+    public String insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSV) {
+        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
 
         // Checking if the user name already exist in the data base
-        if (readUsers(userName, true) != null){
-            // 1 symbol notification type: username already exist in the database
-            return 1;
+        if (read(userName, true) != null){
+            return "שם המשתמש שהזנת כבר קיים";
         }
+
         // Checking that both password text fields are equal
         else if (!password.equals(confirmPassword)){
-            // 2 symbol notification type: passwords doesn't match
-            return 2;
+            return "הסיסמאות אינן תואמות";
         }
+        else if(!isValidEmail(email))
+            return "האימייל לא בפורמט הנכון";
+        else if(!isValidCreditCardNumber(creditCardNumber))
+            return "מספר כרטיס אשראי לא תקין, אנא הזן מספר בן 16 ספרות";
+        else if(!isValidCSVNumber(CSV))
+            return "מספר CSV לא תקין, אנא הזן מספר בן 3 ספרות";
         else{
-            usersDB.insertIntoTable("Users", data);
-            // 3 symbol notification type: user connected successfully
-            return 3;
+            usersDB.insertIntoTable(data);
+            return "התחברת בהצלחה";
         }
-
-
     }
 
+    /**
+     *
+     * @param CSV
+     * @return true is CSV a valid CSV number. In a length of 3 and contain only digits
+     */
+    private boolean isValidCSVNumber(String CSV) {
+        return CSV.length() == 3 && StringUtils.isNumeric(CSV);
+    }
+
+    /**
+     *
+     * @param email
+     * @return true if @param email is in the right format
+     */
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+    /**
+     *
+     * @param creditCardNumber
+     * @return true is creditCardNumber a valid CSV number. In a length of 16 and contain only digits
+     */
+    private boolean isValidCreditCardNumber(String creditCardNumber){
+        return creditCardNumber.length() == 16 && StringUtils.isNumeric(creditCardNumber);
+    }
 
     /**
      * This method search and return the row in the database with the same user name as @param userName if exist
@@ -107,33 +150,33 @@ public class Model extends Observable {
      * @param address
      */
 
-    public void updateUser(String oldUserName, String userName, String password, String confirmPassword, String firstName, String lastName, String birthday, String address) {
+    public void update(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
         // Checking that both password text fields are equal
         if(!password.equals(confirmPassword)){
             alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
         }
         else{
-            usersDB.updateDatabase("Users", data,oldUserName);
+            usersDatabase.updateDatabase("Users", data,oldUserName);
             alert("פרטי החשבון עודכנו בהצלחה", Alert.AlertType.INFORMATION);
         }
 
     }
 
     /**
-     * This method deleteUser a row from the database where user name is equal to @param userName
+     * This method delete a row from the database where user name is equal to @param userName
      * @param userName
      */
-    public void deleteUser(String userName) {
-        usersDB.deleteFromTable("Users","user_name" ,userName);
+    public void delete(String userName) {
+        usersDatabase.deleteFromTable("Users", userName);
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
 
     public void signIn(String userName, String password) {
-        String details = readUsers(userName,false);
+        String details = read(userName,false);
         boolean isLegal = true;
         if (details != null){
-            String UserDetails = usersDB.read("Users", userName);
+            String UserDetails = usersDatabase.read("Users", userName);
             String [] detailsArr = UserDetails.split(",");
             if (!password.equals(detailsArr[1])) {
                 //alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
@@ -158,88 +201,5 @@ public class Model extends Observable {
         alert.showAndWait();
         alert.close();
     }
-
-
-    public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
-        vacationID++;
-        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
-        try {
-            availableVacationsDB.insertVacation( vacation, vacationID);
-        }catch (SQLException e){
-            System.out.println(e.getErrorCode());
-            //inform controller something is wrong
-
-            //check in GUI that all values aren't null ,don't handle this here
-        }
-    }
-
-    public void insertPendingVacation(int vacationId,String seller, String buyer ){
-        try{
-            pendingVacationsDB.insertVacation(vacationId, seller,  buyer);
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
-        try{
-            confirmedSaleVacationsDB.insertVacation(vacationId, seller,  buyer, origin,destination, price, dateOfDeparture,  dateOfArrival);
-        }catch (SQLException e){
-            System.out.println(e.getErrorCode());
-        }
-    }
-
-
-
-    /**
-     * returns list of all match vacation from DB based on given data (as the parameters in signature)
-     * @param origin
-     * @param destination
-     * @param price
-     * @param destinationAirport
-     * @param dateOfDeparture
-     * @param dateOfArrival
-     * @param airlineCompany
-     * @param numOfTickets
-     * @param baggage
-     * @param ticketsType
-     * @param vacationStyle
-     * @param seller
-     * @return
-     */
-    public ArrayList<Vacation> getVactions(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller,int OriginalPrice){
-       ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
-        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
-        matchesVacations = availableVacationsDB.readVacation( vacation);
-        return matchesVacations;
-    }
-
-
-    public ArrayList<Vacation> getMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
-        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
-        Vacation vacation = new Vacation(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        matchesVacations = availableVacationsDB.readMatchVacations( vacation);
-        return matchesVacations;
-    }
-
-
-    public int getVacationID() {
-        return vacationID;
-    }
-
-    public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
-        try{
-            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
-        }catch (SQLException e){
-            System.out.println(e.getErrorCode());
-            //inform controller something is wrong
-
-            //check in GUI that all values aren't null ,don't handle this here
-        }
-    }
-
-
-
 
 }

@@ -26,10 +26,10 @@ public class Controller extends Observable implements Observer {
      * @param firstName
      * @param lastName
      * @param address
-     * This method insertUser a new row to the data base with the given parameters
+     * This method insert a new row to the data base with the given parameters
      */
-    public int insertUser(String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address) {
-        return model.insertUsers(userName,password,confirmPassword,birthday,firstName,lastName,address);
+    public String insert (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
+        return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address,email, creditCardNumber,expirationTime,CSC);
     }
 
     /**
@@ -84,9 +84,9 @@ public class Controller extends Observable implements Observer {
 
     }
 
-    public void signIn(String userName, String password){
+    public String signIn(String userName, String password){
         currentUserName = userName;
-        model.signIn(userName,password);
+        return model.signIn(userName,password);
     }
 
     public String getUserName() {
