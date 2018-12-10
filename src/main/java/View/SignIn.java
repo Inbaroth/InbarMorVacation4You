@@ -23,7 +23,7 @@ public class SignIn extends HomePage implements Observer{
     private Controller controller;
     private Stage stage;
     private String userDetails;
-
+    private UserHomePage userHomePage;
     public javafx.scene.control.TextField username;
     public javafx.scene.control.PasswordField password;
 
@@ -51,12 +51,10 @@ public class SignIn extends HomePage implements Observer{
             if (!ans.equals(userName))
                 alert(ans,Alert.AlertType.ERROR);
             else {
-
-
-
-
-
                 stage.close();
+                newStage("UserHomePage.fxml", "כניסת משתמש רשום", userHomePage, 940, 581,controller);
+
+                //
             }
         }
 
