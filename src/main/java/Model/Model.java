@@ -1,14 +1,20 @@
 package Model;
 
 import Database.AvailableVacationsDB;
+import Database.PurchcasedVacationDB;
 import Database.UsersDB;
 import javafx.scene.control.Alert;
+
+import java.sql.SQLException;
 import java.util.Observable;
 
 public class Model extends Observable {
 
     private UsersDB usersDB;
     private AvailableVacationsDB availableVacationsDB;
+    private PurchcasedVacationDB purchcasedVacationDB;
+    public static int vacationID=0;
+    private Vacation vacation;
 
 
     //public enum errorType {PASSWORD_USERS_NOT_MATCH, PASSWORDS_NOT_MATCH, USER_NOT_EXIST}
@@ -138,6 +144,20 @@ public class Model extends Observable {
         alert.setContentText(messageText);
         alert.showAndWait();
         alert.close();
+    }
+
+
+    private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller){
+        vacationID++;
+                                           //                                                  missing in db table need to be fixed
+        Vacation vacation = new Vacation( origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle, vacationID, seller);
+        try {
+            availableVacationsDB.insertVacation("AvailableVacations", vacation, vacationID);
+        }catch (SQLException e){
+            //inform controller something is wrong
+
+            //check in GUI that all values aren't null ,don't handle this here
+        }
     }
 
 }
