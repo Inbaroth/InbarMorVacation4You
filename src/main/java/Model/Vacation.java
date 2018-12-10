@@ -21,8 +21,9 @@ public class Vacation {
     //Urban/ Exotic/ Natures/ Multi
     private String vacationStyle;
     private String seller;
+    private int originalPrice;
 
-    public Vacation(int vacationId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller) {
+    public Vacation(int vacationId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
         this.vacationId=vacationId;
         this.origin = origin;
         this.destination = destination;
@@ -36,11 +37,12 @@ public class Vacation {
         this.ticketsType = ticketsType;
         this.vacationStyle = vacationStyle;
         this.seller=seller;
+        this.originalPrice =originalPrice;
 
     }
 
 
-    public Vacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller) {
+    public Vacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
         this.vacationId=0;
         this.origin = origin;
         this.destination = destination;
@@ -54,6 +56,8 @@ public class Vacation {
         this.ticketsType = ticketsType;
         this.vacationStyle = vacationStyle;
         this.seller=seller;
+        this.originalPrice =originalPrice;
+
 
     }
 
@@ -116,4 +120,6 @@ public class Vacation {
     public String getSeller() {
         return seller;
     }
+
+    public int getOriginalPrice() { return originalPrice; }
 }
