@@ -26,10 +26,10 @@ public class Controller extends Observable implements Observer {
      * @param firstName
      * @param lastName
      * @param address
-     * This method insert a new row to the data base with the given parameters
+     * This method insertUser a new row to the data base with the given parameters
      */
-    public int insert (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address) {
-        return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address);
+    public int insertUser(String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address) {
+        return model.insertUsers(userName,password,confirmPassword,birthday,firstName,lastName,address);
     }
 
     /**
@@ -37,8 +37,8 @@ public class Controller extends Observable implements Observer {
      * @param userName
      * @return the row
      */
-    public String read(String userName, Boolean isInsert){
-        return model.read(userName,isInsert);
+    public String readUsers(String userName, Boolean isInsert){
+        return model.readUsers(userName,isInsert);
     }
 
     /**
@@ -52,20 +52,20 @@ public class Controller extends Observable implements Observer {
      * @param address
      */
     public void updateDB(String oldUserName, String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address){
-        model.update(oldUserName,userName,password,confirmPassword,birthday,firstName,lastName,address);
+        model.updateUser(oldUserName,userName,password,confirmPassword,birthday,firstName,lastName,address);
     }
 
     /**
-     * This method delete a row from the data base where the primary key is equal to @param userName
+     * This method deleteUser a row from the data base where the primary key is equal to @param userName
      * @param userName
      */
     public void delete (String userName){
-        model.delete(userName);
+        model.deleteUser(userName);
     }
 
     /**
      * This method create an Alert object.
-     * This method invoked when the user didn't insert an input
+     * This method invoked when the user didn't insertUser an input
      */
     public void alert(String messageText){
         Alert alert = new Alert(Alert.AlertType.ERROR);

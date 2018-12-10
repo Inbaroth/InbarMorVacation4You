@@ -40,7 +40,7 @@ public class genericDB {
              PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {
             // set the corresponding param
             pstmt.setString(1, userName);
-            // execute the delete statement
+            // execute the deleteUser statement
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

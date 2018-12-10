@@ -180,7 +180,7 @@ public class View  implements Observer {
         controller.addObserver(windowName);
 
         if (windowName instanceof Update){
-            String userDetails = controller.read(controller.getUserName(),false);
+            String userDetails = controller.readUsers(controller.getUserName(),false);
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }

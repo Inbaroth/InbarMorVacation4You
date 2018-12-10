@@ -1,22 +1,10 @@
 package View;
 
 import Controller.Controller;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
-import java.io.IOException;
-import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
 
 public class SignIn extends View implements Observer{
 
@@ -53,9 +41,9 @@ public class SignIn extends View implements Observer{
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
         }
         else{
-            // read the user name from the data base
+            // readUsers the user name from the data base
             // if doesn't exist showing alert message
-            userDetails = controller.read(userName,false);
+            userDetails = controller.readUsers(userName,false);
 
             //if the password is not correct shows alert massage
             if (userDetails != null) {

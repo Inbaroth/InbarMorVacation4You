@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,7 +16,6 @@ import javafx.stage.WindowEvent;
 
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
@@ -92,7 +90,7 @@ public class HomePage implements Observer {
         controller.addObserver(windowName);
 
         if (windowName instanceof Update){
-            String userDetails = controller.read(controller.getUserName(),false);
+            String userDetails = controller.readUsers(controller.getUserName(),false);
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }
@@ -127,7 +125,7 @@ public class HomePage implements Observer {
     public void update(Observable o, Object arg) {
 
     }
-    
+
     protected void alert(String messageText, Alert.AlertType alertType){
         Alert alert = new Alert(alertType);
         alert.setContentText(messageText);

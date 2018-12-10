@@ -43,9 +43,9 @@ public class InsertUserName extends View implements Observer {
             controller.alert("שדה אחד או יותר ריקים");
         }
 
-        // read the user name from the data base
+        // readUsers the user name from the data base
         // if doesn't exist showing alert message
-        userDetails = controller.read(username,false);
+        userDetails = controller.readUsers(username,false);
         if (userDetails != null){
             //btn_create.setDisable(true);
             /*FXMLLoader fxmlLoader = new

@@ -41,7 +41,7 @@ public class UsersDB extends genericDB{
 //    }
 
     /**
-     * This method insert a new row to Users table with the given data
+     * This method insertUser a new row to Users table with the given data
      * @param tableName
      * @param data data of the new row which need to be added
      */
@@ -102,7 +102,7 @@ public class UsersDB extends genericDB{
     }
 
     /**
-     * This method update the row in the data base where the user name is equal to the given user name in the
+     * This method updateUser the row in the data base where the user name is equal to the given user name in the
      * data string
      * @param tableName
      * @param data - all the parameters needed to be updated
@@ -137,7 +137,7 @@ public class UsersDB extends genericDB{
     }
 
     /**
-     * This method delete a row from the data base where the user name is equal to given userName param
+     * This method deleteUser a row from the data base where the user name is equal to given userName param
      * @param tableName
      * @param userName
      */
@@ -150,7 +150,7 @@ public class UsersDB extends genericDB{
              PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {
             // set the corresponding param
             pstmt.setString(1, userName);
-            // execute the delete statement
+            // execute the deleteUser statement
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

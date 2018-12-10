@@ -48,7 +48,7 @@ public class Update extends View implements Observer {
 
     /**
      * This method split the data from the database into fields and initials the Text Fields in the
-     * update window
+     * updateUser window
      */
     private void splitToFields(){
         userDetailsSplited = userDetails.split(",");

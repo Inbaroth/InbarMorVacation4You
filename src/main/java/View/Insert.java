@@ -43,7 +43,7 @@ public class Insert extends View implements Observer {
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
         }
         else{
-            int ans = controller.insert(userName,password,confirmPassword,firstName,lastName,getBirthday(),address);
+            int ans = controller.insertUser(userName,password,confirmPassword,firstName,lastName,getBirthday(),address);
             if (ans == 1)
                 alert("שם המשתמש שהזנת כבר קיים", Alert.AlertType.ERROR);
             if (ans == 2)

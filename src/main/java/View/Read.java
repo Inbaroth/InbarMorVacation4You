@@ -40,10 +40,10 @@ public class Read extends View implements Observer {
             controller.alert("אנא בחר שם משתמש לחיפוש");
         }
 
-        stringUserDetails = controller.read(userName,false);
+        stringUserDetails = controller.readUsers(userName,false);
 
         if (stringUserDetails != null) {
-            stringUserDetails = controller.read(userName,false);
+            stringUserDetails = controller.readUsers(userName,false);
 
             stage.close();
 

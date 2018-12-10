@@ -1,7 +1,7 @@
 package Model;
 
 import Database.AvailableVacationsDB;
-import Database.PurchcasedVacationDB;
+import Database.PurchasedVacationsDB;
 import Database.UsersDB;
 import javafx.scene.control.Alert;
 
@@ -13,7 +13,7 @@ public class Model extends Observable {
 
     private UsersDB usersDB;
     private AvailableVacationsDB availableVacationsDB;
-    private PurchcasedVacationDB purchcasedVacationDB;
+    private PurchasedVacationsDB purchcasedVacationDB;
     public static int vacationID=0;
     private Vacation vacation;
 
@@ -27,33 +27,34 @@ public class Model extends Observable {
      */
     public Model() {
         this.usersDB = new UsersDB("Vacation4U");
-        usersDB.connect("Users");
+        usersDB.connect("Vacation4U");
         //usersDB.createTable("Users");
 
         this.availableVacationsDB = new AvailableVacationsDB("AvailableVacations");
-       // availableVacationsDB.connect();
+        availableVacationsDB.connect("Vacation4U");
 
+        this.purchcasedVacationDB = new PurchasedVacationsDB("vacation4U");
+        purchcasedVacationDB.connect("Vacation4U");
     }
 
     /**
-     * This method insert to the database a new row with the given parameters
+     * This method insertUser to the database a new row with the given parameters
      * @param userName
      * @param password
      * @param firstName
      * @param lastName
      * @param birthday
      * @param address
-     * @return true if insert succeeded, otherwise return false
+     * @return true if insertUser succeeded, otherwise return false
      */
-    public int insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address ) {
+    public int insertUsers(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address ) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
 
         // Checking if the user name already exist in the data base
-        if (read(userName, true) != null){
+        if (readUsers(userName, true) != null){
             // 1 symbol notification type: username already exist in the database
             return 1;
         }
-
         // Checking that both password text fields are equal
         else if (!password.equals(confirmPassword)){
             // 2 symbol notification type: passwords doesn't match
@@ -68,13 +69,14 @@ public class Model extends Observable {
 
     }
 
+
     /**
      * This method search and return the row in the database with the same user name as @param userName if exist
      * if doesn't exist - alert message shows up
      * @param userName
      * @return
      */
-    public String read(String userName, Boolean isInsert) {
+    public String readUsers(String userName, Boolean isInsert) {
         if (usersDB.read("Users", userName) != null){
             return usersDB.read("Users", userName);
         }
@@ -85,7 +87,7 @@ public class Model extends Observable {
     }
 
     /**
-     * This method update the database with the given @param data
+     * This method updateUser the database with the given @param data
      * @param userName
      * @param password
      * @param confirmPassword
@@ -95,7 +97,7 @@ public class Model extends Observable {
      * @param address
      */
 
-    public void update(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
+    public void updateUser(String oldUserName, String userName, String password, String confirmPassword, String firstName, String lastName, String birthday, String address) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
         // Checking that both password text fields are equal
         if(!password.equals(confirmPassword)){
@@ -109,16 +111,16 @@ public class Model extends Observable {
     }
 
     /**
-     * This method delete a row from the database where user name is equal to @param userName
+     * This method deleteUser a row from the database where user name is equal to @param userName
      * @param userName
      */
-    public void delete(String userName) {
+    public void deleteUser(String userName) {
         usersDB.deleteFromTable("Users","user_name" ,userName);
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
 
     public void signIn(String userName, String password) {
-        String details = read(userName,false);
+        String details = readUsers(userName,false);
         boolean isLegal = true;
         if (details != null){
             String UserDetails = usersDB.read("Users", userName);
@@ -148,12 +150,13 @@ public class Model extends Observable {
     }
 
 
-    private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller){
+    private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
         vacationID++;
-        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller);
+        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
             availableVacationsDB.insertVacation("AvailableVacations", vacation, vacationID);
         }catch (SQLException e){
+            System.out.println(e.getErrorCode());
             //inform controller something is wrong
 
             //check in GUI that all values aren't null ,don't handle this here
@@ -176,9 +179,9 @@ public class Model extends Observable {
      * @param seller
      * @return
      */
-    public ArrayList<Vacation> getVactions(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller){
+    public ArrayList<Vacation> getVactions(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller,int OriginalPrice){
        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
-        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller);
+        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
         matchesVacations = availableVacationsDB.readVacation("AvailableVacations", vacation);
         return matchesVacations;
     }
@@ -195,4 +198,19 @@ public class Model extends Observable {
     public int getVacationID() {
         return vacationID;
     }
+
+    public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+        try{
+            purchcasedVacationDB.insertVacation( tableName,  vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+            //inform controller something is wrong
+
+            //check in GUI that all values aren't null ,don't handle this here
+        }
+    }
+
+
+
+
 }

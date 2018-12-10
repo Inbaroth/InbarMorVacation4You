@@ -13,7 +13,7 @@ public class AvailableVacationsDB extends genericDB {
         super(databaseName);
     }
 
-    public void insertVacation(String tableName, Vacation Data, int vacationId) throws SQLException {
+    public void insertVacation(Vacation Data, int vacationId) throws SQLException {
         String insertStatement = "INSERT INTO AvailableVacations (VacationId,Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfarrival,AirlineCompny,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + databaseName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
@@ -44,8 +44,8 @@ public class AvailableVacationsDB extends genericDB {
     //this method search by ALL columns data except for VacationId,
     //maybe there will be another usage for this
     //maybe return by using it all vacations by removing the "WHERE" parts
-//    //implement read method which will display eace available vacation
-    public ArrayList<Vacation> readVacation(String tableName, Vacation Data) {
+//    //implement readUsers method which will display eace available vacation
+    public ArrayList<Vacation> readVacation(Vacation Data) {
         ArrayList<Vacation> vacations = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
@@ -72,8 +72,8 @@ public class AvailableVacationsDB extends genericDB {
 
 
 
-    //implement read method which will display each available vacation which match given data
-    public ArrayList<Vacation> readMatchVacations(String tableName, Vacation Data) {
+    //implement readUsers method which will display each available vacation which match given data
+    public ArrayList<Vacation> readMatchVacations( Vacation Data) {
         ArrayList<Vacation> vacations = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
@@ -81,7 +81,7 @@ public class AvailableVacationsDB extends genericDB {
         String dateOfArrival = Data.getDateOfArrival();
         int numOfTickets = Data.getNumOfTickets();
         String sql = "SELECT Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfarrival,AirlineCompny,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice FROM AvailableVacationas WHERE " +
-                "Origin='" + origin + "' AND Destionation= '" + destination  + "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival  + "'AND NumberOfTickets='" + numOfTickets + "'";
+                "Origin='" + origin + "' AND Destionation= '" + destination  + "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival  + "'AND NumberOfTickets>='" + numOfTickets + "' AND WHERE NOT EXIST (SELECT VacationId FROM PurchasedVacations  WHERE VacationId=AvailableVacationas.VacationId )";
         String url = "jdbc:sqlite:" + databaseName + ".db";
         vacations = getVacationsBasedOnQuery(url, sql);
         return vacations;
@@ -106,9 +106,7 @@ public class AvailableVacationsDB extends genericDB {
         return vacations;
     }
 
-
-
-    //implement update method (by user)
+    //implement updateUser method (by user)
 
     //
 
