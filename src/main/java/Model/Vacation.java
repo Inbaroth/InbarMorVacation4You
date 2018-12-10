@@ -10,9 +10,7 @@ public class Vacation {
     private String destination;
     private int price;
     private String destinationAirport;
-
-    //missing in the table need to be fixed
-    //private String dateOfDeparture;
+    private String dateOfDeparture;
     private String dateOfArrival;
     private String airlineCompany;
     private int numOfTickets;
@@ -24,12 +22,13 @@ public class Vacation {
     private String vacationStyle;
     private String seller;
 
-    public Vacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, int vacationId, String seller) {
+    public Vacation(int vacationId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller) {
+        this.vacationId=vacationId;
         this.origin = origin;
         this.destination = destination;
         this.price = price;
         this.destinationAirport = destinationAirport;
-        //this.dateOfDeparture = dateOfDeparture;
+        this.dateOfDeparture = dateOfDeparture;
         this.dateOfArrival = dateOfArrival;
         this.airlineCompany = airlineCompany;
         this.numOfTickets = numOfTickets;
@@ -37,6 +36,33 @@ public class Vacation {
         this.ticketsType = ticketsType;
         this.vacationStyle = vacationStyle;
         this.seller=seller;
+
+    }
+
+
+    public Vacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller) {
+        this.vacationId=0;
+        this.origin = origin;
+        this.destination = destination;
+        this.price = price;
+        this.destinationAirport = destinationAirport;
+        this.dateOfDeparture = dateOfDeparture;
+        this.dateOfArrival = dateOfArrival;
+        this.airlineCompany = airlineCompany;
+        this.numOfTickets = numOfTickets;
+        this.baggage = baggage;
+        this.ticketsType = ticketsType;
+        this.vacationStyle = vacationStyle;
+        this.seller=seller;
+
+    }
+
+    public Vacation(String origin, String destination,  String dateOfDeparture, String dateOfArrival, int numOfTickets) {
+        this.origin = origin;
+        this.destination = destination;
+        this.dateOfDeparture = dateOfDeparture;
+        this.dateOfArrival = dateOfArrival;
+        this.numOfTickets = numOfTickets;
     }
 
     public int getVacationId() {
@@ -59,9 +85,9 @@ public class Vacation {
         return destinationAirport;
     }
 
-//    public String getDateOfDeparture() {
-//        return dateOfDeparture;
-//    }
+    public String getDateOfDeparture() {
+        return dateOfDeparture;
+    }
 
     public String getDateOfArrival() {
         return dateOfArrival;

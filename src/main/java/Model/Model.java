@@ -6,6 +6,7 @@ import Database.UsersDB;
 import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Model extends Observable {
@@ -149,8 +150,7 @@ public class Model extends Observable {
 
     private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller){
         vacationID++;
-                                           //                                                  missing in db table need to be fixed
-        Vacation vacation = new Vacation( origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle, vacationID, seller);
+        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller);
         try {
             availableVacationsDB.insertVacation("AvailableVacations", vacation, vacationID);
         }catch (SQLException e){
@@ -160,4 +160,39 @@ public class Model extends Observable {
         }
     }
 
+    /**
+     * returns list of all match vacation from DB based on given data (as the parameters in signature)
+     * @param origin
+     * @param destination
+     * @param price
+     * @param destinationAirport
+     * @param dateOfDeparture
+     * @param dateOfArrival
+     * @param airlineCompany
+     * @param numOfTickets
+     * @param baggage
+     * @param ticketsType
+     * @param vacationStyle
+     * @param seller
+     * @return
+     */
+    public ArrayList<Vacation> getVactions(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller){
+       ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
+        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller);
+        matchesVacations = availableVacationsDB.readVacation("AvailableVacations", vacation);
+        return matchesVacations;
+    }
+
+
+    public ArrayList<Vacation> getMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
+        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
+        Vacation vacation = new Vacation(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        matchesVacations = availableVacationsDB.readMatchVacations("AvailableVacations", vacation);
+        return matchesVacations;
+    }
+
+
+    public int getVacationID() {
+        return vacationID;
+    }
 }
