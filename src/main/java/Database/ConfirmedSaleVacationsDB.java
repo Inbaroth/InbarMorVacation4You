@@ -80,7 +80,7 @@ public class ConfirmedSaleVacationsDB extends genericDB {
      * @param buyerUserName
      * @return
      */
-    public ArrayList<String> readConfirmedVacation(String buyerUserName){
+    public ArrayList<String> readConfirmedVacations(String buyerUserName){
         ArrayList<String> vacationsToPay = new ArrayList<String>();
         String sql = "SELECT vacationId,Origin,Destination,Price,DateOfDeparture,DateOfArrival FROM ConfirmedSaleVacations WHERE buyerUserName='" +buyerUserName+ "'";
         String url = "jdbc:sqlite:" + DBName + ".db";

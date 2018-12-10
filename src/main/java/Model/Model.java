@@ -150,7 +150,6 @@ public class Model extends Observable {
      * @param birthday
      * @param address
      */
-
     public void updateUser(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
         String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
         // Checking that both password text fields are equal
@@ -165,7 +164,7 @@ public class Model extends Observable {
     }
 
     /**
-     * This method delete a row from the database where user name is equal to @param userName
+     * This method deleteUser a row from the database where user name is equal to @param userName
      * @param userName
      */
     public void deleteUser(String userName) {
@@ -198,6 +197,15 @@ public class Model extends Observable {
         }
     }
 
+    public ArrayList<String> readPendingVacations(String sellerUserName){
+        ArrayList<String> pendingVacations = new ArrayList<>();
+        pendingVacations = pendingVacationsDB.readPendingVacation(sellerUserName);
+        return pendingVacations;
+    }
+
+    public void deletePendingVacation(int vacationID){
+        pendingVacationsDB.deleteVacation(vacationID);
+    }
 
     public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
         try{
@@ -205,6 +213,74 @@ public class Model extends Observable {
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
         }
+    }
+
+    public ArrayList<String> readConfirmedVacations(String buyerUserName){
+        ArrayList<String> confirmedVacations = new ArrayList<>();
+        confirmedVacations = confirmedSaleVacationsDB.readConfirmedVacations(buyerUserName);
+        return confirmedVacations;
+    }
+
+    public void deleteConfirmedVacation(int vacationID){
+        confirmedSaleVacationsDB.deleteVacation(vacationID);
+    }
+
+    private void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+        vacationID++;
+        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+        try {
+            availableVacationsDB.insertVacation( vacation, vacationID);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+            //inform controller something is wrong
+
+            //check in GUI that all values aren't null ,don't handle this here
+        }
+    }
+
+    /**
+     * returns list of all match vacation from DB based on given data (as the parameters in signature)
+     * @param origin
+     * @param destination
+     * @param price
+     * @param destinationAirport
+     * @param dateOfDeparture
+     * @param dateOfArrival
+     * @param airlineCompany
+     * @param numOfTickets
+     * @param baggage
+     * @param ticketsType
+     * @param vacationStyle
+     * @param seller
+     * @return
+     */
+    public ArrayList<Vacation> getVacations(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller,int OriginalPrice){
+        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
+        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
+        matchesVacations = availableVacationsDB.readVacation( vacation);
+        return matchesVacations;
+    }
+
+    public ArrayList<Vacation> getMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
+        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
+        Vacation vacation = new Vacation(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        matchesVacations = availableVacationsDB.readMatchVacations( vacation);
+        return matchesVacations;
+    }
+
+    public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+        try{
+            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+            //inform controller something is wrong
+
+            //check in GUI that all values aren't null ,don't handle this here
+        }
+    }
+
+    public int getVacationID() {
+        return vacationID;
     }
 
     private void alert(String messageText, Alert.AlertType alertType){
