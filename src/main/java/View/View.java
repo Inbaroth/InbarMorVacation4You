@@ -55,7 +55,7 @@ public class View  implements Observer {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     // ... user chose OK
-                    controller.delete(controller.getUserName());
+                    controller.deleteUser(controller.getUserName());
                     // Close program
                 }
                 btn_delete.setDisable(false);
@@ -94,7 +94,7 @@ public class View  implements Observer {
 
     }
 
-    public void delete(ActionEvent actionEvent){
+    public void deleteUser(ActionEvent actionEvent){
         btn_delete.setDisable(true);
         signIn(actionEvent);
     }

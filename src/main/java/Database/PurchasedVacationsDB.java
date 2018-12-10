@@ -35,7 +35,6 @@ public class PurchasedVacationsDB extends genericDB{
         }
     }
 
-
     public void insertVacation( int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv) throws SQLException {
         String insertStatement = "INSERT INTO PurchcasedVacations (VacationId,DateOfPurchase,TimeOfPurchase,UserName,CreditCardNumber,ExpirationDate,CSV) VAlUES (?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
@@ -55,4 +54,5 @@ public class PurchasedVacationsDB extends genericDB{
             throw (new SQLException(e));
         }
     }
+
 }

@@ -19,7 +19,7 @@ public class AvailableVacationsDB extends genericDB {
         // SQLite connection string
         String url ="jdbc:sqlite:" + DBName + ".db";
         // SQL statement for creating a new table
-        String createStatement = "CREATE TABLE IF NOT EXISTS ConfirmedSaleVacations (\n"
+        String createStatement = "CREATE TABLE IF NOT EXISTS AvailableVacations (\n"
                 + "	VacationId integer PRIMARY KEY,\n"
                 + "	Origin text NOT NULL,\n"
                 + "	Destionation text NOT NULL,\n"
