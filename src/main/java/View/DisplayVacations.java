@@ -29,7 +29,7 @@ public class DisplayVacations extends HomePage implements Observer {
         this.stage = stage;
         matchVacations = new ArrayList<>();
         matchVacations = controller.getMatchesVacations();
-        if(matchVacations == null)
+        if(matchVacations.size() == 0)
             alert("מתנצלים אך אין חופשה שתואמת את החיפוש שלך", Alert.AlertType.INFORMATION);
         else
             offerVacations();

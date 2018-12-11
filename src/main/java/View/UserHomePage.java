@@ -58,9 +58,15 @@ public class UserHomePage extends HomePage {
     }
 
     public void search(ActionEvent actionEvent) {
+        super.search();
     }
 
     public void sellTickets(ActionEvent actionEvent) {
+    }
+
+    public void logOut(ActionEvent actionEvent){
+        stage.close();
+        newStage("HomePage.fxml", "כניסת משתמש רשום", homePage, 940, 581,controller);
     }
 
 

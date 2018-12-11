@@ -60,7 +60,7 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
         controller.insertConfirmedVacation(Integer.valueOf(button.getId()),controller.getUserName(),
                 buyer,data[1],data[2],Integer.valueOf(data[3]),data[4],data[5]);
         button.setDisable(true);
-        alert("הודעת אישור תעבור לקונה", Alert.AlertType.CONFIRMATION);
+        alert("הודעת אישור תועבר לקונה", Alert.AlertType.CONFIRMATION);
 
     }
 

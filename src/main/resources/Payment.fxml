@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.Payment"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="311.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Payment">
+   <children>
+       <Label layoutX="478.0" layoutY="14.0" prefHeight="47.0" prefWidth="228.0" text="פרטי חשבון בנק:">
+           <font>
+               <Font size="32.0" />
+           </font>
+       </Label>
+       <Label layoutX="589.0" layoutY="73.0" prefHeight="35.0" prefWidth="110.0" text="מספר כרטיס אשראי:" />
+       <TextField fx:id="txtfld_creditCardNumber" layoutX="402.0" layoutY="78.0" prefHeight="25.0" prefWidth="174.0" />
+       <Label layoutX="667.0" layoutY="123.0" prefHeight="35.0" prefWidth="32.0" text="תוקף:" />
+       <ComboBox fx:id="combo_box_monthForCredit" layoutX="499.0" layoutY="128.0" prefHeight="25.0" prefWidth="69.0" promptText="1" value="1">
+           <items>
+               <FXCollections fx:factory="observableArrayList">
+                   <String fx:value="1" />
+                   <String fx:value="2" />
+                   <String fx:value="3" />
+                   <String fx:value="4" />
+                   <String fx:value="5" />
+                   <String fx:value="6" />
+                   <String fx:value="7" />
+                   <String fx:value="8" />
+                   <String fx:value="9" />
+                   <String fx:value="10" />
+                   <String fx:value="11" />
+                   <String fx:value="12" />
+               </FXCollections>
+           </items>
+       </ComboBox>
+       <ComboBox fx:id="combo_box_yearForCredit" layoutX="586.0" layoutY="128.0" prefHeight="25.0" prefWidth="69.0" promptText="2000" value="2000">
+           <items>
+               <FXCollections fx:factory="observableArrayList">
+                   <String fx:value="2028" />
+                   <String fx:value="2027" />
+                   <String fx:value="2026" />
+                   <String fx:value="2025" />
+                   <String fx:value="2024" />
+                   <String fx:value="2023" />
+                   <String fx:value="2022" />
+                   <String fx:value="2021" />
+                   <String fx:value="2020" />
+                   <String fx:value="2019" />
+               </FXCollections>
+           </items>
+       </ComboBox>
+       <Label layoutX="667.0" layoutY="161.0" prefHeight="35.0" prefWidth="32.0" text=":CSC" />
+       <TextField fx:id="txtfld_CSV" layoutX="592.0" layoutY="166.0" prefHeight="25.0" prefWidth="64.0" />
+      <Button layoutX="360.0" layoutY="245.0" mnemonicParsing="false" text="אישור" onAction="#confirm"/>
+   </children>
 </AnchorPane>

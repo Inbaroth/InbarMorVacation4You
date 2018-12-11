@@ -40,7 +40,7 @@
             </font>
         </Label>
         <DatePicker fx:id="dp_departure" layoutX="343.0" layoutY="215.0" prefHeight="25.0" prefWidth="123.0" />
-        <TextField fx:id="tf_numOfTickets" layoutX="236.0" layoutY="215.0" prefHeight="25.0" prefWidth="92.0" promptText="num of tickets" text="מספר כרטיסים" />
+        <TextField fx:id="tf_numOfTickets" layoutX="236.0" layoutY="215.0" prefHeight="25.0" prefWidth="92.0" promptText="מספר כרטיסים" />
         <Button layoutX="89.0" layoutY="240.0" mnemonicParsing="false" onAction="#search" text="חפש חופשה">
             <font>
                 <Font name="Calibri Light" size="15.0" />
@@ -78,5 +78,6 @@
                 <Font name="Calibri Light" size="18.0" />
             </font>
         </Label>
+      <Button layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="התנתק" />
     </children>
 </AnchorPane>

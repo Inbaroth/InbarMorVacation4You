@@ -60,7 +60,7 @@ public class HomePage implements Observer {
     public void setController(Controller controller, Stage primaryStage) {
         this.controller = controller;
         this.primaryStage = primaryStage;
-        setImage();
+        //setImage();
         tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
         tf_origin.setTooltip(tooltip);
         tf_destination.setTooltip(tooltip);
@@ -73,7 +73,7 @@ public class HomePage implements Observer {
         newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 , controller);
     }
 
-    public void setImage()  {
+/*    public void setImage()  {
     try {
         Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
         iv_firstHotVacation.setImage(img1);
@@ -82,7 +82,7 @@ public class HomePage implements Observer {
     }catch (URISyntaxException e){
         System.out.println(e.getReason() + "," + e.getMessage());
      }
-    }
+    }*/
 
     /**
      * creates a new window, based on given details and shows it
@@ -173,9 +173,9 @@ public class HomePage implements Observer {
             //empty, make default 1
             else if(tf_numOfTickets.getText() == null)
                 numberOfTickets = 1;
-                String dateDepart = controller.changeToRightDateFormat(dp_departure.getValue().toString());
-                String dateArriv = controller.changeToRightDateFormat(dp_arrival.getValue().toString());
-                controller.setMatchesVacations(tf_origin.getText(), tf_destination.getText(), dateDepart, dateArriv,numberOfTickets);
+                String dateDepart = this.controller.changeToRightDateFormat(dp_departure.getValue().toString());
+                String dateArriv = this.controller.changeToRightDateFormat(dp_arrival.getValue().toString());
+                this.controller.setMatchesVacations(tf_origin.getText(), tf_destination.getText(), dateDepart, dateArriv,numberOfTickets);
                 newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
        }
 

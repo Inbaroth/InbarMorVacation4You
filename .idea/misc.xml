@@ -7,6 +7,22 @@
       </list>
     </option>
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/target/ConfirmMessages.fxml" />
+    <file url="file://$PROJECT_DIR$/target/DisplayVacations.fxml" />
+    <file url="file://$PROJECT_DIR$/target/HomePage.fxml" />
+    <file url="file://$PROJECT_DIR$/target/insert.fxml" />
+    <file url="file://$PROJECT_DIR$/target/InsertUserName.fxml" />
+    <file url="file://$PROJECT_DIR$/target/Payment.fxml" />
+    <file url="file://$PROJECT_DIR$/target/PendingMessages.fxml" />
+    <file url="file://$PROJECT_DIR$/target/PublishVacation.fxml" />
+    <file url="file://$PROJECT_DIR$/target/read.fxml" />
+    <file url="file://$PROJECT_DIR$/target/SignIn.fxml" />
+    <file url="file://$PROJECT_DIR$/target/Update.fxml" />
+    <file url="file://$PROJECT_DIR$/target/UserHomePage.fxml" />
+    <file url="file://$PROJECT_DIR$/target/usersDetails.fxml" />
+    <file url="file://$PROJECT_DIR$/target/view.fxml" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
