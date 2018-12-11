@@ -122,4 +122,12 @@ public class Vacation {
     }
 
     public int getOriginalPrice() { return originalPrice; }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public void setVacationId(int vacationId) {
+        this.vacationId = vacationId;
+    }
 }

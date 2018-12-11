@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Vacation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,17 +30,18 @@ public class ConfirmMessages extends HomePage implements EventHandler<ActionEven
     }
 
     public void setMessages() {
-        ArrayList<String> pendingVacations = controller.readPendingVacations(controller.getUserName());
+        ArrayList<Vacation> pendingVacations = controller.readConfirmedVacations(controller.getUserName());
         this.buttonsList = new ArrayList<>();
         this.labelList = new ArrayList<>();
-        for (String message : pendingVacations) {
-            String[] messageDetails = message.split(",");
+        for (Vacation vacation : pendingVacations) {
+            String vacationID = String.valueOf(vacation.getVacationId());
+            String details = "שדה תעופה ביעד:"+vacation.getDestination() + "\n" + " מחיר: "+ vacation.getNumOfTickets();
             Button button = new Button("קנה עכשיו");
-            button.setId(messageDetails[0]);
+            button.setId(vacationID);
             button.setOnAction(this);
             button.setFont(new Font("Calibri Light",15));
-            buttonsList.add(new Button(messageDetails[0]));
-            Label label = new Label(message.substring(messageDetails.length));
+            buttonsList.add(button);
+            Label label = new Label(details);
             label.setFont(new Font("Calibri Light",15));
             labelList.add(label);
         }
@@ -55,7 +57,7 @@ public class ConfirmMessages extends HomePage implements EventHandler<ActionEven
         Button button = (Button) event.getSource();
         int index = buttonsList.indexOf(button);
         this.vacationID = Integer.valueOf(button.getId());
-        newStage("Payment.fxml", "כניסת משתמש רשום", payment, 200, 200,controller);
+        newStage("Payment.fxml", "כניסת משתמש רשום", payment, 600, 400,controller);
     }
     public void cancel(ActionEvent actionEvent) {
         stage.close();

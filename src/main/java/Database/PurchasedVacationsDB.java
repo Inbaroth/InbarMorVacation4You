@@ -22,7 +22,7 @@ public class PurchasedVacationsDB extends genericDB{
                 + "	DateOfPurchase text NOT NULL,\n"
                 + " TimeOfPurchase text NOT NULL,\n"
                 + " UserName text NOT NULL,\n"
-                + "	CreditCardNumber integer,\n"
+                + "	CreditCardNumber text,\n"
                 + "	ExpirationDate text,\n"
                 + "CSV integer NOT NULL\n"
                 + ");";
@@ -35,8 +35,8 @@ public class PurchasedVacationsDB extends genericDB{
         }
     }
 
-    public void insertVacation( int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv) throws SQLException {
-        String insertStatement = "INSERT INTO PurchcasedVacations (VacationId,DateOfPurchase,TimeOfPurchase,UserName,CreditCardNumber,ExpirationDate,CSV) VAlUES (?,?,?,?,?,?,?)";
+    public void insertVacation( int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv) throws SQLException {
+        String insertStatement = "INSERT INTO PurchasedVacations (VacationId,DateOfPurchase,TimeOfPurchase,UserName,CreditCardNumber,ExpirationDate,CSV) VAlUES (?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
@@ -45,7 +45,7 @@ public class PurchasedVacationsDB extends genericDB{
             pstmt.setString(2, date);
             pstmt.setString(3, time);
             pstmt.setString(4, userName);
-            pstmt.setInt(5, creditCard);
+            pstmt.setString(5, creditCard);
             pstmt.setString(6, expirationDate);
             pstmt.setInt(7, csv);
             pstmt.executeUpdate();

@@ -1,22 +1,13 @@
 package View;
 
 import Controller.Controller;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import Model.Vacation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.stage.Modality;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Optional;
+import java.util.*;
 
 public class SignIn extends HomePage implements Observer{
 
@@ -24,6 +15,7 @@ public class SignIn extends HomePage implements Observer{
     private Stage stage;
     private String userDetails;
     private UserHomePage userHomePage;
+    private PendingMessages pendingMessage;
     public javafx.scene.control.TextField username;
     public javafx.scene.control.PasswordField password;
 
@@ -45,13 +37,22 @@ public class SignIn extends HomePage implements Observer{
         }
         else{
             String ans = controller.signIn(userName, Password);
-            if (!ans.equals(userName))
+            if (ans != null && !ans.equals(userName))
                 alert(ans,Alert.AlertType.ERROR);
-            else {
+            else if (ans != null && ans.equals(userName)){
                 stage.close();
                 newStage("UserHomePage.fxml", "כניסת משתמש רשום", userHomePage, 940, 581,controller);
+                HomePage.stage.close();
+                ArrayList<Vacation> pendingVacations = controller.readPendingVacations(controller.getUserName());
+                //VacationId,Origin,Destionation,Price,DateOfDeparture,Date
+                if (pendingVacations.size() > 0)
+                    newStage("PendingMessages.fxml", "אשר רכישת חופשות", pendingMessage, 604, 312,controller);
+                ArrayList<Vacation> confirmVacations = controller.readConfirmedVacations(controller.getUserName());
+                if (confirmVacations.size() > 0){
+                    newStage("ConfirmMessages.fxml", "אשר תשלום עבור חופשות", pendingMessage, 400, 600,controller);
 
-                //
+                }
+
             }
         }
 

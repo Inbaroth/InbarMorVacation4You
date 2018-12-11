@@ -19,7 +19,7 @@ public class AllVacationsDB  extends genericDB{
         String createStatement = "CREATE TABLE IF NOT EXISTS AllVacations (\n"
                 + "	VacationId integer PRIMARY KEY,\n"
                 + "	Origin text NOT NULL,\n"
-                + "	Destionation text NOT NULL,\n"
+                + "	Destination text NOT NULL,\n"
                 + "	Price integer NOT NULL,\n"
                 + "	DestinationAirport text NOT NULL,\n"
                 + "	DateOfDeparture text NOT NULL,\n"
@@ -42,7 +42,7 @@ public class AllVacationsDB  extends genericDB{
     }
 
     public void insertVacation(Vacation Data, int vacationId) throws SQLException {
-        String insertStatement = "INSERT INTO AvailableVacations (VacationId,Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertStatement = "INSERT INTO AllVacations (VacationId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
@@ -60,7 +60,7 @@ public class AllVacationsDB  extends genericDB{
             pstmt.setString(11, Data.getTicketsType());
             pstmt.setString(12, Data.getVacationStyle());
             pstmt.setString(13, Data.getSeller());
-            pstmt.setInt(13, Data.getOriginalPrice());
+            pstmt.setInt(14, Data.getOriginalPrice());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -101,9 +101,12 @@ public class AllVacationsDB  extends genericDB{
 
 
     public ArrayList<Vacation> getVacationsBasedOnQuery(String url, String query){
+
+        query = "SELECT Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,sellerUserName,OriginalPrice FROM AvailableVacations where Origin=? and Destination=? and DateOfArrival=? and DateOfDeparture=? and NumberOfTickets>=?";
         ArrayList<Vacation> vacations = new ArrayList<Vacation>();
         try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             //stmt.setString(1,);
              ResultSet rs = stmt.executeQuery(query)) {
 
             // loop through the result set
@@ -119,7 +122,23 @@ public class AllVacationsDB  extends genericDB{
         return vacations;
     }
 
+    public int getMaxNumber(){
+        String url = "jdbc:sqlite:" + DBName + ".db";
+        String query = "SELECT MAX(VacationId) FROM AllVacations";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement pstmt = conn.createStatement()) {
+            pstmt.execute(query);
+            ResultSet rs = pstmt.getResultSet();
+            while (rs.next()) {
+                int w = rs.getInt(1);
+                return w;
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 
 

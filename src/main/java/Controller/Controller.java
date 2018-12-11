@@ -12,7 +12,7 @@ import java.util.Observer;
 public class Controller extends Observable implements Observer {
 
     private Model model;
-    private String currentUserName;
+    public static String currentUserName;
 
     private ArrayList<Vacation> vacationMatchSearch;
 
@@ -41,6 +41,7 @@ public class Controller extends Observable implements Observer {
      */
     public String insertUser (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
         return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address,email, creditCardNumber,expirationTime,CSC);
+
     }
 
     /**
@@ -78,7 +79,7 @@ public class Controller extends Observable implements Observer {
         return model.readPendingVacations(sellerUserName);
     }
 
-    public ArrayList<String> readConfirmedVacations(String buyerUserName){
+    public ArrayList<Vacation> readConfirmedVacations(String buyerUserName){
         return model.readConfirmedVacations(buyerUserName);
     }
 
@@ -89,7 +90,7 @@ public class Controller extends Observable implements Observer {
         model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
     }
 
-    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv){
         model.insertPurchasedVacation(vacationId,date,time,userName,creditCard,expirationDate,csv);
     }
 
@@ -114,6 +115,15 @@ public class Controller extends Observable implements Observer {
 
     }
 
+    public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+        model.insertVacation(origin, destination, price, destinationAirport, dateOfDeparture, dateOfArrival, airlineCompany, numOfTickets, baggage, ticketsType, vacationStyle, seller, originalPrice);
+    }
+
+    public int getVacationID(){
+        return model.getVacationID();
+    }
+
+
     public String signIn(String userName, String password){
         currentUserName = userName;
         return model.signIn(userName,password);
@@ -137,9 +147,9 @@ public class Controller extends Observable implements Observer {
     }
 
     public ArrayList<Vacation> getMatchesVacations(){
-       if(vacationMatchSearch!=null)
-           return vacationMatchSearch;
-       return null;
+        if(vacationMatchSearch!=null)
+            return vacationMatchSearch;
+        return null;
     }
 
 
@@ -149,7 +159,7 @@ public class Controller extends Observable implements Observer {
     }
 
     public String readPendingVacationBuyer(int VacationId){
-      return model.readPendingVacationBuyer(VacationId);
+        return model.readPendingVacationBuyer(VacationId);
     }
 
     public String getUserName() {
@@ -160,11 +170,16 @@ public class Controller extends Observable implements Observer {
         model.insertPendingVacation(vacationId, seller, buyer);
     }
 
-    /**
-     * FROM:YYYY-MM-DD  TO:DD/MM/YY
-     * @param dataPickerValue YYYY-MM-DD
-     * @return DD/MM/YY
-     */
+
+    public void deleteConfirmedVacation(int vacationID) {
+        model.deleteConfirmedVacation(vacationID);
+    }
+
+        /**
+         * FROM:YYYY-MM-DD  TO:DD/MM/YY
+         * @param dataPickerValue YYYY-MM-DD
+         * @return DD/MM/YY
+         */
     public String changeToRightDateFormat(String dataPickerValue){
         String[] arr = new String[3];
         String str = dataPickerValue.substring(0,4);
@@ -175,5 +190,9 @@ public class Controller extends Observable implements Observer {
         arr[0] = str;
         String RightDateFormat = arr[0] + "/" + arr[1] + "/" + arr[2] ;
         return RightDateFormat;
+    }
+
+    public void setUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 }
