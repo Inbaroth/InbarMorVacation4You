@@ -72,24 +72,12 @@ public class PendingVacationsDB extends genericDB {
      * @param sellerUserName
      * @return
      */
-    public ArrayList<String> readPendingVacation(String sellerUserName){
-        ArrayList<String> vacationsToConfirm = new ArrayList<String>();
-        String sql = "SELECT VacationId,Origin,Destionation,Price,DateOfDeparture,DateOfArrival FROM AvailableVacationas WHERE SellerUserName IN (SELECT SellerUserName FROM PendingVacations  WHERE SellerUserName=AvailableVacationas.SellerUserName AND PendingVacations.vacationId =AvailableVacationas.VacationId )";
+    public ArrayList<Vacation> readPendingVacation(String sellerUserName){
+        ArrayList<Vacation> vacations = new ArrayList<Vacation>();
+        String sql = "SELECT VacationId,Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompny, NumberOfTickets,Baggage, TicketsType,VacationStyle,SellerUserName,OriginalPrice, FROM AvailableVacationas WHERE SellerUserName IN (SELECT SellerUserName FROM PendingVacations  WHERE SellerUserName='" +sellerUserName+"'AND PendingVacations.vacationId =AvailableVacationas.VacationId )";
         String url = "jdbc:sqlite:" + DBName + ".db";
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            // loop through the result set
-            while (rs.next()) {
-                String str=rs.getInt("VacationId")+","+ rs.getString("Origin") +"," + rs.getString("Destination") + ","+rs.getInt("Price") +","+ rs.getString("DateOfDeparture") +","+ rs.getString("DateOfArrival");
-                vacationsToConfirm.add(str);
-                str = "";
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return vacationsToConfirm;
+        vacations = getVacationsBasedOnQuery(url, sql);
+        return vacations;
     }
 
 

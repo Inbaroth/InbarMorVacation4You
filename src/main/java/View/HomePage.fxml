@@ -55,24 +55,9 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Label layoutX="806.0" layoutY="322.0" text="חופשות חמות">
-         <font>
-            <Font name="Calibri Light" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="718.0" layoutY="498.0" prefHeight="64.0" prefWidth="199.0" text="פרטים על החופשה הלוהטת">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="464.0" layoutY="498.0" prefHeight="64.0" prefWidth="199.0" text="פרטים על החופשה הרותחת">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
       <Button fx:id="btn_signIn" layoutX="21.0" layoutY="24.0" mnemonicParsing="false" onAction="#signIn" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="כניסה לחשבון קיים" />
       <Button fx:id="bth_createUser" layoutX="144.0" layoutY="24.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="יצירת חשבון" />
-      <ImageView fx:id="iv_firstHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="717.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="iv_firstHotVacation" fitHeight="184.0" fitWidth="483.0" layoutX="254.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iv_secondHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="449.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

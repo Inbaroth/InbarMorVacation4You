@@ -74,9 +74,7 @@ public class HomePage implements Observer {
 
     public void setImage()  {
     try {
-        Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
-        iv_firstHotVacation.setImage(img1);
-        Image img2 = new Image(getClass().getResource("/maldives.jpg").toURI().toString());
+        Image img2 = new Image(getClass().getResource("/mainImage.jpg").toURI().toString());
         iv_secondHotVacation.setImage(img2);
     }catch (URISyntaxException e){
         System.out.println(e.getReason() + "," + e.getMessage());
