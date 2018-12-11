@@ -203,6 +203,10 @@ public class Model extends Observable {
         return pendingVacations;
     }
 
+    public String readPendingVacationBuyer(int vacationId){
+        return pendingVacationsDB.readPendingVacationBuyer(vacationId);
+    }
+
     public void deletePendingVacation(int vacationID){
         pendingVacationsDB.deleteVacation(vacationID);
     }

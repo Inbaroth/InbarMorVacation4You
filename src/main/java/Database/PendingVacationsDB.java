@@ -93,5 +93,21 @@ public class PendingVacationsDB extends genericDB {
     }
 
 
+    public String readPendingVacationBuyer(int vacationId){
+        String buyer="";
+        String sql = "SELECT buyerUserName FROM PendingVacations  WHERE PendingVacations.vacationId = ' " +vacationId+"'";
+        String url = "jdbc:sqlite:" + DBName + ".db";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+               buyer=rs.getString(3);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return buyer;
+    }
+
+
 
 }

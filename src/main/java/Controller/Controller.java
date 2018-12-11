@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Model;
+import Model.Vacation;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -12,12 +13,28 @@ public class Controller extends Observable implements Observer {
     private Model model;
     private String currentUserName;
 
+    private ArrayList<Vacation> vacationMatchSearch;
+
+
+
     /**
      * Constructor for the class Controller
      * @param model
      */
     public Controller(Model model) {
+
         this.model = model;
+    }
+
+
+    //delete after test
+    public void setVac(){
+        //delete after test
+        vacationMatchSearch = new ArrayList<Vacation>();
+        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
+        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
+        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
+        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
     }
 
     /**
@@ -104,6 +121,21 @@ public class Controller extends Observable implements Observer {
     public String signIn(String userName, String password){
         currentUserName = userName;
         return model.signIn(userName,password);
+    }
+
+    public void setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
+        vacationMatchSearch = new ArrayList<Vacation>();
+        vacationMatchSearch = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+    }
+
+    public ArrayList<Vacation> getMatchesVacations(){
+       if(vacationMatchSearch!=null)
+           return vacationMatchSearch;
+       return null;
+    }
+
+    public String readPendingVacationBuyer(int VacationId){
+      return model.readPendingVacationBuyer(VacationId);
     }
 
     public String getUserName() {
