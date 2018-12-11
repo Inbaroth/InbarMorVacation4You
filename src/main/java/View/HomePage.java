@@ -155,7 +155,7 @@ public class HomePage implements Observer {
     }
 
 
-    public void search(){
+    public void search(ActionEvent actionEvent){
         if(tf_origin.getText()==null || tf_destination.getText()==null  || dp_departure.getValue()==null || dp_arrival.getValue() == null ) {
             alert("אופס! אחד או יותר משדות החיפוש ריקים", Alert.AlertType.ERROR);
             return;
@@ -184,7 +184,9 @@ public class HomePage implements Observer {
 
     }
 
-
+    public void sellTickets(ActionEvent actionEvent){
+        newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 , controller);
+    }
 
 
     @Override

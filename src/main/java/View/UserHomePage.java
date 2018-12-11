@@ -15,6 +15,7 @@ public class UserHomePage extends HomePage {
     private HomePage homePage;
     private Controller controller;
     private Stage stage;
+    private InsertVacation insertVacation;
 
     public void setController(Controller controller, Stage stage) {
         this.controller = controller;
@@ -50,5 +51,8 @@ public class UserHomePage extends HomePage {
     }
 
     public void sellTickets(ActionEvent actionEvent) {
+        newStage("InsertVacation.fxml", "", insertVacation, 760,430,controller);
     }
+
+
 }
