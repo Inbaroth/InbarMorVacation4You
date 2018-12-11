@@ -100,7 +100,7 @@ public class AllVacationsDB  extends genericDB{
 
 
 
-    private ArrayList<Vacation> getVacationsBasedOnQuery(String url, String query){
+    public ArrayList<Vacation> getVacationsBasedOnQuery(String url, String query){
         ArrayList<Vacation> vacations = new ArrayList<Vacation>();
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();

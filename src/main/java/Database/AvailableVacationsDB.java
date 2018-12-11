@@ -114,13 +114,8 @@ public class AvailableVacationsDB extends genericDB {
         String sql = "SELECT Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival," +
                 "AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice" +
                 " FROM AvailableVacations WHERE Origin='" + origin + "' AND Destination= '" + destination  +
-                "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival  +
-                "'AND NumberOfTickets>='" + numOfTickets + "' AND" +
-                " WHERE NOT EXIST " +
-                "(SELECT VacationId FROM PurchasedVacations " +
-                " WHERE VacationId=AvailableVacations.VacationId ) " +
-                "OR WHERE NOT EXIST (SELECT VacationId FROM PendingVacations " +
-                "WHERE VacationId=AvailableVacations.VacationId ) ";
+                "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfArrival='" + dateOfArrival  +
+                "'AND NumberOfTickets>='" + numOfTickets + "' AND";
         String url = "jdbc:sqlite:" + DBName + ".db";
         vacations = getVacationsBasedOnQuery(url, sql);
         return vacations;
