@@ -13,6 +13,20 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.jpg</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
     <modelVersion>4.0.0</modelVersion>
     <groupId>groupId</groupId>
@@ -31,5 +45,6 @@
             <version>3.0</version>
         </dependency>
     </dependencies>
+
 
 </project>
