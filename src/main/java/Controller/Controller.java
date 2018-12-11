@@ -115,6 +115,15 @@ public class Controller extends Observable implements Observer {
 
     }
 
+    public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+        model.insertVacation(origin, destination, price, destinationAirport, dateOfDeparture, dateOfArrival, airlineCompany, numOfTickets, baggage, ticketsType, vacationStyle, seller, originalPrice);
+    }
+
+    public int getVacationID(){
+        return model.getVacationID();
+    }
+
+
     public String signIn(String userName, String password){
         currentUserName = userName;
         return model.signIn(userName,password);
@@ -138,13 +147,13 @@ public class Controller extends Observable implements Observer {
     }
 
     public ArrayList<Vacation> getMatchesVacations(){
-       if(vacationMatchSearch!=null)
-           return vacationMatchSearch;
-       return null;
+        if(vacationMatchSearch!=null)
+            return vacationMatchSearch;
+        return null;
     }
 
     public String readPendingVacationBuyer(int VacationId){
-      return model.readPendingVacationBuyer(VacationId);
+        return model.readPendingVacationBuyer(VacationId);
     }
 
     public String getUserName() {

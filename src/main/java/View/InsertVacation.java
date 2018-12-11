@@ -43,10 +43,27 @@ public class InsertVacation extends HomePage {
         }
         else{
             //invalid number (not empty)
-             if((tf_numOfTickets.getText()==null && !StringUtils.isNumeric(tf_numOfTickets.getText()))||(tf_originalPrice.getText()==null && !StringUtils.isNumeric(tf_originalPrice.getText()))||(tf_requestedPrice.getText()==null && !StringUtils.isNumeric(tf_requestedPrice.getText()))) {
+            if((tf_numOfTickets.getText()==null && !StringUtils.isNumeric(tf_numOfTickets.getText()))||(tf_originalPrice.getText()==null && !StringUtils.isNumeric(tf_originalPrice.getText()))||(tf_requestedPrice.getText()==null && !StringUtils.isNumeric(tf_requestedPrice.getText()))) {
                 alert("אופס! הערך שהוזן בשדה מספרי איננו תקין.", Alert.AlertType.ERROR);
                 return;
-             }
+            }
+            String origin = tf_origin.getText();
+            String destination = tf_destination.getText();
+            int price = Integer.valueOf(tf_requestedPrice.getText());
+            String destinationAirport = tf_destinationAirport.getText();
+            String dateDepart = controller.changeToRightDateFormat(dp_departure.getValue().toString());
+            String dateArriv = controller.changeToRightDateFormat(dp_arrival.getValue().toString());
+            String airlineCompany = tf_AirlineCompany.getText();
+            int numberOfTicktes = Integer.valueOf(tf_numOfTickets.getText());
+            //String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice
+            String baggage = cb_baggage.getValue();
+            String ticketsType = cb_ticketsType.getValue();
+            String vacationStyle = cb_vacationStyle.getValue();
+            String seller = controller.getUserName();
+            int originalPrice = Integer.valueOf(tf_originalPrice.getText());
+            controller.insertVacation(origin,destination,price,destinationAirport,dateDepart,dateArriv,airlineCompany,numberOfTicktes,baggage,ticketsType,vacationStyle,seller,originalPrice);
+            int vacationID = controller.getVacationID();
+
         }
 
 
