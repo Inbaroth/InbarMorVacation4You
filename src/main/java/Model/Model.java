@@ -191,8 +191,9 @@ public class Model extends Observable {
                return userName;
 
             }
+            //return null;
         }
-        return userName;
+        return null;
     }
 
     public void insertPendingVacation(int vacationId,String seller, String buyer ){

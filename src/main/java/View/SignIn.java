@@ -36,12 +36,12 @@ public class SignIn extends HomePage implements Observer{
         }
         else{
             String ans = controller.signIn(userName, Password);
-            if (!ans.equals(userName))
+            if (ans != null && !ans.equals(userName))
                 alert(ans,Alert.AlertType.ERROR);
-            else {
+            else if (ans != null && ans.equals(userName)){
                 stage.close();
                 newStage("UserHomePage.fxml", "כניסת משתמש רשום", userHomePage, 940, 581,controller);
-                HomePage.primaryStage.close();
+                HomePage.stage.close();
                 ArrayList<String> pendingVacations = controller.readPendingVacations(controller.getUserName());
                 //VacationId,Origin,Destionation,Price,DateOfDeparture,Date
                 if (pendingVacations.size() > 0)

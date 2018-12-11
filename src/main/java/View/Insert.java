@@ -15,6 +15,7 @@ public class Insert extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;
+    private UserHomePage userHomePage;
 
     //<editor-fold desc="Text Fields">
     public javafx.scene.control.TextField txtfld_userName;
@@ -61,6 +62,10 @@ public class Insert extends HomePage implements Observer {
             else {
                 alert("התחברת בהצלחה", Alert.AlertType.INFORMATION);
                 stage.close();
+                controller.setUserName(userName);
+                newStage("UserHomePage.fxml", "כניסת משתמש רשום", userHomePage, 940, 581,controller);
+                HomePage.stage.close();
+
             }
         }
 

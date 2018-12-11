@@ -29,6 +29,10 @@ public class UserHomePage extends HomePage {
         this.controller = controller;
         this.stage = stage;
         lbl_user.setText("שלום " + controller.getUserName());
+        super.setImage();
+        tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
+        tf_origin.setTooltip(tooltip);
+        tf_destination.setTooltip(tooltip);
 
 
     }
@@ -66,6 +70,7 @@ public class UserHomePage extends HomePage {
 
     public void logOut(ActionEvent actionEvent){
         stage.close();
+        controller.setUserName(null);
         newStage("HomePage.fxml", "כניסת משתמש רשום", homePage, 940, 581,controller);
     }
 

@@ -41,6 +41,7 @@ public class Controller extends Observable implements Observer {
      */
     public String insertUser (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
         return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address,email, creditCardNumber,expirationTime,CSC);
+
     }
 
     /**
@@ -169,5 +170,9 @@ public class Controller extends Observable implements Observer {
         arr[0] = str;
         String RightDateFormat = arr[0] + "/" + arr[1] + "/" + arr[2] ;
         return RightDateFormat;
+    }
+
+    public void setUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 }
