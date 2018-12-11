@@ -18,9 +18,6 @@ public class SignIn extends HomePage implements Observer{
     public javafx.scene.control.TextField username;
     public javafx.scene.control.PasswordField password;
 
-    public SignIn() {
-
-    }
 
     public void setController(Controller controller, Stage stage) {
         this.controller = controller;

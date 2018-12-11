@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Insert">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Update">
    <children>
       <AnchorPane layoutX="6.0" prefHeight="619.0" prefWidth="721.0">
          <children>
@@ -222,7 +222,7 @@
                   </FXCollections>
                </items>
             </ComboBox>
-            <Label layoutX="671.0" layoutY="501.0" prefHeight="35.0" prefWidth="32.0" text=":CSC" />
+            <Label layoutX="671.0" layoutY="501.0" prefHeight="35.0" prefWidth="32.0" text=":CSV" />
             <TextField fx:id="txtfld_CSV" layoutX="599.0" layoutY="506.0" prefHeight="25.0" prefWidth="64.0" />
          </children>
       </AnchorPane>

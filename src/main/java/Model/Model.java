@@ -150,15 +150,21 @@ public class Model extends Observable {
      * @param birthday
      * @param address
      */
-    public void updateUser(String oldUserName,String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address;
+    public String updateUser(String oldUserName, String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSV) {
+        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
         // Checking that both password text fields are equal
         if(!password.equals(confirmPassword)){
-            alert("הסיסמאות אינן תואמות", Alert.AlertType.ERROR);
+            return "הסיסמאות אינן תואמות";
         }
+        else if(!isValidEmail(email))
+            return "האימייל לא בפורמט הנכון";
+        else if(!isValidCreditCardNumber(creditCardNumber))
+            return "מספר כרטיס אשראי לא תקין, אנא הזן מספר בן 16 ספרות";
+        else if(!isValidCSVNumber(CSV))
+            return "מספר CSV לא תקין, אנא הזן מספר בן 3 ספרות";
         else{
-            usersDB.updateDatabase("Users", data,oldUserName);
-            alert("פרטי החשבון עודכנו בהצלחה", Alert.AlertType.INFORMATION);
+            usersDB.updateDatabase(data,oldUserName);
+            return "פרטי החשבון עודכנו בהצלחה";
         }
 
     }
@@ -272,7 +278,7 @@ public class Model extends Observable {
         return matchesVacations;
     }
 
-    public void insertPurchasedVacation(String tableName, int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
         try{
             purchasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
         }catch (SQLException e){

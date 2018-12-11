@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -52,10 +53,14 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
         Button button = (Button) event.getSource();
         int index = buttonsList.indexOf(button);
         controller.deletePendingVacation(button.getId());
-        //VacationId,Origin,Destionation,Price,DateOfDeparture,Date
-        //String buyer = controller.readPendingVacations(Integer.valueOf(button.getId()));
-        //controller.insertConfirmedVacation();
-
+        Label label = labelList.get(index);
+        String labelText = label.getText();
+        String [] data = labelText.split(",");
+        String buyer = controller.readPendingVacationBuyer(Integer.valueOf(button.getId()));
+        controller.insertConfirmedVacation(Integer.valueOf(button.getId()),controller.getUserName(),
+                buyer,data[1],data[2],Integer.valueOf(data[3]),data[4],data[5]);
+        button.setDisable(true);
+        alert("הודעת אישור תעבור לקונה", Alert.AlertType.CONFIRMATION);
 
     }
 

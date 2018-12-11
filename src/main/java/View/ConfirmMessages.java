@@ -20,6 +20,7 @@ public class ConfirmMessages extends HomePage implements EventHandler<ActionEven
     private Payment payment;
     private ArrayList<Button> buttonsList;
     private ArrayList<Label> labelList;
+    public static int vacationID;
 
     public void setController(Controller controller, Stage stage){
         this.controller = controller;
@@ -53,12 +54,9 @@ public class ConfirmMessages extends HomePage implements EventHandler<ActionEven
     public void handle(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = buttonsList.indexOf(button);
+        this.vacationID = Integer.valueOf(button.getId());
         newStage("Payment.fxml", "כניסת משתמש רשום", payment, 200, 200,controller);
-        /// finish
-
-
     }
-
     public void cancel(ActionEvent actionEvent) {
         stage.close();
     }

@@ -46,6 +46,7 @@ public class HomePage implements Observer {
     private Insert insertWindow;
     private SignIn signInWindow;
     private UserHomePage userHomeWindow;
+    private Payment payment;
 
     public static Stage primaryStage;
     private Update updateWindow;
@@ -66,14 +67,14 @@ public class HomePage implements Observer {
     }
 
     public void setImage()  {
-    try {
+ /*   try {
         Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
         iv_firstHotVacation.setImage(img1);
         Image img2 = new Image(getClass().getResource("/maldives.jpg").toURI().toString());
         iv_secondHotVacation.setImage(img2);
     }catch (URISyntaxException e){
         System.out.println(e.getReason() + "," + e.getMessage());
-    }
+    }*/
 
     }
 
@@ -112,6 +113,13 @@ public class HomePage implements Observer {
             updateWindow.setUserDetails(userDetails);
         }
 
+        if (windowName instanceof Payment){
+            String userDetails = controller.readUsers(controller.getUserName(),false);
+            payment = (Payment) windowName;
+            payment.setDetails(userDetails);
+
+        }
+
 
 
     }
@@ -147,7 +155,7 @@ public class HomePage implements Observer {
         controller.setVac();
         newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
         System.out.println(dp_arrival.getValue().atStartOfDay());
-        System.out.println(dp_arrival.getValue().);
+        System.out.println(dp_arrival.getValue());
     }
 
 

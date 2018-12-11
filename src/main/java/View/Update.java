@@ -1,9 +1,14 @@
 package View;
 
 import Controller.Controller;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -65,10 +70,11 @@ public class Update extends HomePage implements Observer {
         txtfld_confirmPassword.setText(userDetailsSplited[1]);
         txtfld_Address.setText(userDetailsSplited[5]);
         txtfld_email.setText(userDetailsSplited[6]);
-        txtfld_creditCardNumber.setText(userDetailsSplited[7]);
-        txtfld_CSV.setText(userDetailsSplited[9]);
+        // userDetailsSplited[7] = picture
+        txtfld_creditCardNumber.setText(userDetailsSplited[8]);
+        txtfld_CSV.setText(userDetailsSplited[10]);
         String [] date = userDetailsSplited[4].split("/");
-        String [] exp = userDetailsSplited[8].split("/");
+        String [] exp = userDetailsSplited[9].split("/");
         combo_box_day.setValue(date[0]);
         combo_box_month.setValue(date[1]);
         combo_box_year.setValue(date[2]);
@@ -79,28 +85,33 @@ public class Update extends HomePage implements Observer {
     /**
      *
      */
-    public void confirm (){
-        String newUserName = txtfld_userName.getText();
-        String newPassword = txtfld_password.getText();
-        String newPasswordReplay = txtfld_confirmPassword.getText();
-        String newFirstName = txtfld_firstName.getText();
-        String newLastName = txtfld_lastName.getText();
-        String newBirthday = getBirthday();
-        String newAddress = txtfld_Address.getText();
-        String newEmail = txtfld_email.getText();
-        String newCreditCardNumber = txtfld_creditCardNumber.getText();
-        String newExp = getExp();
-        String newCSV = txtfld_CSV.getText();
-        String data = userDetailsSplited[0] + "," + newPassword + "," + newPasswordReplay + "," + newFirstName + "," + newLastName + "," + newBirthday + "," + newAddress;
-        controller.updateDB(userDetailsSplited[0],newUserName,newPassword ,newPasswordReplay,newFirstName , newLastName , newBirthday,newAddress);
-        stage.close();
+    public void submit (){
+        if (!validation()){
+            alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
+        }
+        else {
+            String newUserName = txtfld_userName.getText();
+            String newPassword = txtfld_password.getText();
+            String newPasswordReplay = txtfld_confirmPassword.getText();
+            String newFirstName = txtfld_firstName.getText();
+            String newLastName = txtfld_lastName.getText();
+            String newBirthday = getBirthday();
+            String newAddress = txtfld_Address.getText();
+            String newEmail = txtfld_email.getText();
+            String newCreditCardNumber = txtfld_creditCardNumber.getText();
+            String newExp = getExpirationTime();
+            String newCSV = txtfld_CSV.getText();
+            String ans = controller.updateDB(userDetailsSplited[0], newUserName, newPassword, newPasswordReplay, newFirstName, newLastName, newBirthday, newAddress, newEmail, newCreditCardNumber, newExp, newCSV);
+            if (!ans.equals("פרטי החשבון עודכנו בהצלחה"))
+                alert(ans, Alert.AlertType.ERROR);
+            else{
+                alert(ans, Alert.AlertType.INFORMATION);
+                stage.close();
+            }
+
+        }
     }
 
-    private String getExp() {
-        String newMonth = (String) combo_box_monthForCredit.getValue();
-        String newYear = (String) combo_box_yearForCredit.getValue();
-        return newMonth + "/" + newYear;
-    }
 
     /**
      *
@@ -123,9 +134,60 @@ public class Update extends HomePage implements Observer {
         return month + "/" + year;
     }
 
+    /**
+     * if the user clicked on cancel, close the program
+     * @param actionEvent
+     */
+    public void cancel(ActionEvent actionEvent) {
+        stage.close();
+    }
+
+    /**
+     * This method checks if the user filled all the Text Fields
+     * @return true if the user filled all the Text Fields, otherwise return false
+     */
+    private boolean validation() {
+        if (txtfld_userName.getText() == null || txtfld_userName.getText().trim().isEmpty())
+            return false;
+        if (txtfld_password.getText() == null || txtfld_password.getText().trim().isEmpty())
+            return false;
+        if (txtfld_confirmPassword.getText() == null || txtfld_confirmPassword.getText().trim().isEmpty())
+            return false;
+        if (txtfld_firstName.getText() == null || txtfld_firstName.getText().trim().isEmpty())
+            return false;
+        if (txtfld_lastName.getText() == null || txtfld_lastName.getText().trim().isEmpty())
+            return false;
+        if (txtfld_Address.getText() == null || txtfld_Address.getText().trim().isEmpty())
+            return false;
+        if (txtfld_email.getText() == null || txtfld_email.getText().trim().isEmpty())
+            return false;
+        if (txtfld_creditCardNumber.getText() == null || txtfld_creditCardNumber.getText().trim().isEmpty())
+            return false;
+        if (txtfld_CSV.getText() == null || txtfld_CSV.getText().trim().isEmpty())
+            return false;
+        if (pictureView == null)
+            return false;
+        return true;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 
+    }
+
+    public void loadPicture(ActionEvent actionEvent) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            File selectedFile = fileChooser.showOpenDialog(new Stage());
+            if (selectedFile != null) {
+                javafx.scene.image.Image image = new Image(selectedFile.toURI().toString());
+                pictureView.setImage(image);
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+        }
     }
 
 }

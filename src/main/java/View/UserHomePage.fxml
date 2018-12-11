@@ -16,7 +16,7 @@
                 <Font name="Ink Free" size="70.0" />
             </font>
         </Label>
-        <TextField layoutX="766.0" layoutY="215.0" />
+        <TextField fx:id="tf_origin" layoutX="766.0" layoutY="215.0" />
         <Label layoutX="876.0" layoutY="188.0" text="מוצא:">
             <font>
                 <Font name="Calibri Light" size="18.0" />
@@ -27,8 +27,8 @@
                 <Font name="Calibri Light" size="18.0" />
             </font>
         </Label>
-        <TextField layoutX="607.0" layoutY="215.0" />
-        <DatePicker layoutX="477.0" layoutY="215.0" prefHeight="25.0" prefWidth="123.0" />
+        <TextField fx:id="tf_destination" layoutX="607.0" layoutY="215.0" />
+        <DatePicker fx:id="dp_arrival" layoutX="477.0" layoutY="215.0" prefHeight="25.0" prefWidth="123.0" />
         <Label layoutX="553.0" layoutY="188.0" text="הגעה:">
             <font>
                 <Font name="Calibri Light" size="18.0" />
@@ -39,8 +39,8 @@
                 <Font name="Calibri Light" size="18.0" />
             </font>
         </Label>
-        <DatePicker layoutX="343.0" layoutY="215.0" prefHeight="25.0" prefWidth="123.0" />
-        <TextField layoutX="236.0" layoutY="215.0" prefHeight="25.0" prefWidth="92.0" promptText="num of tickets" text="מספר כרטיסים" />
+        <DatePicker fx:id="dp_departure" layoutX="343.0" layoutY="215.0" prefHeight="25.0" prefWidth="123.0" />
+        <TextField fx:id="tf_numOfTickets" layoutX="236.0" layoutY="215.0" prefHeight="25.0" prefWidth="92.0" promptText="num of tickets" text="מספר כרטיסים" />
         <Button layoutX="89.0" layoutY="240.0" mnemonicParsing="false" onAction="#search" text="חפש חופשה">
             <font>
                 <Font name="Calibri Light" size="15.0" />
@@ -73,6 +73,10 @@
         <Button fx:id="bth_deleteUser" layoutX="148.0" layoutY="14.0" mnemonicParsing="false" onAction="#delete" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="מחק את חשבונך" />
         <ImageView fx:id="iv_firstHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="iv_secondHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="267.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lbl_user" layoutX="742.0" layoutY="20.0" prefHeight="39.0" prefWidth="173.0" />
+        <Label fx:id="lbl_user" layoutX="748.0" layoutY="20.0" prefHeight="46.0" prefWidth="167.0">
+            <font>
+                <Font name="Calibri Light" size="18.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>
