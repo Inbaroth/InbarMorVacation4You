@@ -74,7 +74,7 @@ public class Controller extends Observable implements Observer {
         model.deleteUser(userName);
     }
 
-    public ArrayList<String> readPendingVacations(String sellerUserName){
+    public ArrayList<Vacation> readPendingVacations(String sellerUserName){
         return model.readPendingVacations(sellerUserName);
     }
 
