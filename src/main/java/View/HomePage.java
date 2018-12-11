@@ -11,11 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.StringConverter;
+import org.apache.commons.lang3.StringUtils;
 
 
 import java.io.File;
@@ -23,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
@@ -38,8 +42,8 @@ public class HomePage implements Observer {
 
     public javafx.scene.control.TextField tf_origin;
     public javafx.scene.control.TextField tf_destination;
-    public javafx.scene.control.DatePicker dp_arrival;
     public javafx.scene.control.DatePicker dp_departure;
+    public javafx.scene.control.DatePicker dp_arrival;
     public javafx.scene.control.TextField tf_numOfTickets;
 
 
@@ -51,12 +55,15 @@ public class HomePage implements Observer {
     public static Stage primaryStage;
     private Update updateWindow;
     private DisplayVacations displayVacations;
+    public final Tooltip tooltip = new Tooltip();
 
     public void setController(Controller controller, Stage primaryStage) {
         this.controller = controller;
         this.primaryStage = primaryStage;
-        //check at maze how I created an image in it
-            setImage();
+        setImage();
+        tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
+        tf_origin.setTooltip(tooltip);
+        tf_destination.setTooltip(tooltip);
     }
     public void create(ActionEvent actionEvent) {
         newStage("insert.fxml", "", insertWindow, 721, 619,controller);
@@ -67,15 +74,14 @@ public class HomePage implements Observer {
     }
 
     public void setImage()  {
- /*   try {
+    try {
         Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
         iv_firstHotVacation.setImage(img1);
         Image img2 = new Image(getClass().getResource("/maldives.jpg").toURI().toString());
         iv_secondHotVacation.setImage(img2);
     }catch (URISyntaxException e){
         System.out.println(e.getReason() + "," + e.getMessage());
-    }*/
-
+     }
     }
 
     /**
@@ -151,12 +157,30 @@ public class HomePage implements Observer {
 
 
     public void search(){
-        //HERE
-        controller.setVac();
-        newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
-        System.out.println(dp_arrival.getValue().atStartOfDay());
-        System.out.println(dp_arrival.getValue());
+        if(tf_origin.getText()==null || tf_destination.getText()==null  || dp_departure.getValue()==null || dp_arrival.getValue() == null ) {
+            alert("אופס! אחד או יותר משדות החיפוש ריקים", Alert.AlertType.ERROR);
+            return;
+        } else{
+            int numberOfTickets=0;
+            //valid number (not empty)
+            if(tf_numOfTickets.getText()!=null && StringUtils.isNumeric(tf_numOfTickets.getText()))
+                numberOfTickets = Integer.valueOf(tf_numOfTickets.getText());
+                //invalid number (not empty)
+            else if(tf_numOfTickets.getText()!=null && !StringUtils.isNumeric(tf_numOfTickets.getText())) {
+                alert("אופס! הערך שהוזן במספר טיסות איננו תקין.", Alert.AlertType.ERROR);
+                return;
+            }
+            //empty, make default 1
+            else if(tf_numOfTickets.getText() == null)
+                numberOfTickets = 1;
+                String dateDepart = controller.changeToRightDateFormat(dp_departure.getValue().toString());
+                String dateArriv = controller.changeToRightDateFormat(dp_arrival.getValue().toString());
+                controller.setMatchesVacations(tf_origin.getText(), tf_destination.getText(), dateDepart, dateArriv,numberOfTickets);
+                newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
+       }
+
     }
+
 
 
 
