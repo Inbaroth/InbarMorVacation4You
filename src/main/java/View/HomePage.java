@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Controller;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,12 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
@@ -29,19 +36,25 @@ public class HomePage implements Observer {
     public ImageView iv_firstHotVacation;
     public ImageView iv_secondHotVacation;
 
+    public javafx.scene.control.TextField tf_origin;
+    public javafx.scene.control.TextField tf_destination;
+    public javafx.scene.control.DatePicker dp_arrival;
+    public javafx.scene.control.DatePicker dp_departure;
+    public javafx.scene.control.TextField tf_numOfTickets;
+
+
     private Insert insertWindow;
     private SignIn signInWindow;
 
     private Stage primaryStage;
     private Update updateWindow;
+    private DisplayVacations displayVacations;
 
     public void setController(Controller controller, Stage primaryStage) {
         this.controller = controller;
         this.primaryStage = primaryStage;
-
-
         //check at maze how I created an image in it
-        setImage();
+            setImage();
     }
     public void create(ActionEvent actionEvent) {
         newStage("insert.fxml", "", insertWindow, 721, 619,controller);
@@ -51,17 +64,15 @@ public class HomePage implements Observer {
         newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 , controller);
     }
 
-    public void setImage() {
-//        try {
-//            //Image img1 = new Image(getClass().getResource("/resources/maldivies.jpg").toURI().toString());
-//            Image img1 = new Image(getClass().getResource("resources/maldivies.jpg").toURI().toString());
-//            iv_firstHotVacation.setImage(img1);
-//            //iv_firstHotVacation = new ImageView(img1);
-//            //Image  img2 = new Image(getClass().getResource("/resources/newYork.jpg").toURI().toString());
-//           // iv_secondHotVacation = new ImageView(img2);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
+    public void setImage()  {
+    try {
+        Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
+        iv_firstHotVacation.setImage(img1);
+        Image img2 = new Image(getClass().getResource("/maldives.jpg").toURI().toString());
+        iv_secondHotVacation.setImage(img2);
+    }catch (URISyntaxException e){
+        System.out.println(e.getReason() + "," + e.getMessage());
+    }
 
     }
 
@@ -125,6 +136,17 @@ public class HomePage implements Observer {
             }
         });
     }
+
+
+    public void search(){
+        //HERE
+        controller.setVac();
+        newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
+        System.out.println(dp_arrival.getValue().atStartOfDay());
+        System.out.println(dp_arrival.getValue().);
+    }
+
+
 
     @Override
     public void update(Observable o, Object arg) {

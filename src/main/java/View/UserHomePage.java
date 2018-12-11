@@ -36,7 +36,7 @@ public class UserHomePage extends HomePage {
         if (result.get() == ButtonType.OK) {
             // ... user chose OK
             // Close program
-                controller.delete(controller.getUserName());
+                controller.deleteUser(controller.getUserName());
                 stage.close();
                 newStage("HomePage.fxml", "כניסת משתמש רשום", homePage, 940, 581,controller);
         } else {

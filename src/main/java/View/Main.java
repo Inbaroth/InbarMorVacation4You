@@ -28,7 +28,7 @@ public class Main extends Application {
         Parent root = fxmlLoader.load(getClass().getResource("/HomePage.fxml").openStream());
 //        Parent root = (Parent) fxmlLoader.load(getClass().getResource("HomePage.fxml").openStream());
         primaryStage.setTitle("Welcome to Vacation4U");
-        Scene scene = new Scene(root, 595, 415);
+        Scene scene = new Scene(root, 990, 600);
         primaryStage.setScene(scene);
 
         view = fxmlLoader.getController();
