@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Model;
 import javafx.scene.control.Alert;
+
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -61,6 +63,21 @@ public class Controller extends Observable implements Observer {
      */
     public void deleteUser(String userName){
         model.deleteUser(userName);
+    }
+
+    public ArrayList<String> readPendingVacations(String sellerUserName){
+        return model.readPendingVacations(sellerUserName);
+    }
+
+    public ArrayList<String> readConfirmedVacations(String buyerUserName){
+        return model.readConfirmedVacations(buyerUserName);
+    }
+
+    public void deletePendingVacation(String vacationID){
+        model.deletePendingVacation(Integer.valueOf(vacationID));
+    }
+    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
+        model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
     }
 
     /**

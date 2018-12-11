@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -16,15 +17,25 @@ public class UserHomePage extends HomePage {
     private Controller controller;
     private Stage stage;
 
+    public javafx.scene.control.Label lbl_user;
+    public javafx.scene.control.TextField tf_origin;
+    public javafx.scene.control.TextField tf_destination;
+    public javafx.scene.control.DatePicker dp_arrival;
+    public javafx.scene.control.DatePicker dp_departure;
+    public javafx.scene.control.TextField tf_numOfTickets;
+
+
     public void setController(Controller controller, Stage stage) {
         this.controller = controller;
         this.stage = stage;
+        lbl_user.setText("שלום " + controller.getUserName());
+
 
     }
 
 
     public void update(ActionEvent actionEvent) {
-        newStage("Update.fxml", "עדכון פרטים אישיים", updateWindow, 600, 400,controller);
+        newStage("Update.fxml", "עדכון פרטים אישיים", updateWindow, 721, 619,controller);
     }
 
     public void delete(ActionEvent actionEvent) {
@@ -36,7 +47,7 @@ public class UserHomePage extends HomePage {
         if (result.get() == ButtonType.OK) {
             // ... user chose OK
             // Close program
-                controller.delete(controller.getUserName());
+                controller.deleteUser(controller.getUserName());
                 stage.close();
                 newStage("HomePage.fxml", "כניסת משתמש רשום", homePage, 940, 581,controller);
         } else {
@@ -51,4 +62,7 @@ public class UserHomePage extends HomePage {
 
     public void sellTickets(ActionEvent actionEvent) {
     }
+
+
+
 }

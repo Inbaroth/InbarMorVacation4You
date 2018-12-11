@@ -55,7 +55,7 @@ public class Insert extends HomePage implements Observer {
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
         }
         else{
-            String ans = controller.insert(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
+            String ans = controller.insertUser(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
             if (!ans.equals("התחברת בהצלחה"))
                 alert(ans, Alert.AlertType.ERROR);
             else {

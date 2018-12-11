@@ -31,8 +31,9 @@ public class HomePage implements Observer {
 
     private Insert insertWindow;
     private SignIn signInWindow;
+    private UserHomePage userHomeWindow;
 
-    private Stage primaryStage;
+    public static Stage primaryStage;
     private Update updateWindow;
 
     public void setController(Controller controller, Stage primaryStage) {
@@ -99,6 +100,9 @@ public class HomePage implements Observer {
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }
+
+
+
     }
 
 
