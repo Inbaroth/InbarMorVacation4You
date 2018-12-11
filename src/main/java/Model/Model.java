@@ -211,8 +211,8 @@ public class Model extends Observable {
         }
     }
 
-    public ArrayList<String> readPendingVacations(String sellerUserName){
-        ArrayList<String> pendingVacations = new ArrayList<>();
+    public ArrayList<Vacation> readPendingVacations(String sellerUserName){
+        ArrayList<Vacation> pendingVacations = new ArrayList<>();
         pendingVacations = pendingVacationsDB.readPendingVacation(sellerUserName);
         return pendingVacations;
     }
@@ -249,6 +249,20 @@ public class Model extends Observable {
         try {
             availableVacationsDB.insertVacation( vacation, vacationID);
             allVacationsDB.insertVacation(vacation, vacationID);
+        }catch (SQLException e){
+            System.out.println(e.getErrorCode());
+            //inform controller something is wrong
+
+            //check in GUI that all values aren't null ,don't handle this here
+        }
+    }
+
+
+    private void insertAvailableVacation(int vactionId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+
+        Vacation vacation = new Vacation(vactionId, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+        try {
+            availableVacationsDB.insertVacation( vacation, vacationID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong

@@ -50,7 +50,6 @@ public class HomePage implements Observer {
     private SignIn signInWindow;
     private UserHomePage userHomeWindow;
     private Payment payment;
-    public static Stage stage;
 
     private Stage primaryStage;
     private Update updateWindow;
@@ -60,7 +59,6 @@ public class HomePage implements Observer {
     public void setController(Controller controller, Stage primaryStage) {
         this.controller = controller;
         this.primaryStage = primaryStage;
-        stage = primaryStage;
         setImage();
         tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
         tf_origin.setTooltip(tooltip);
@@ -75,14 +73,12 @@ public class HomePage implements Observer {
     }
 
     public void setImage()  {
-        try {
-            Image img1 = new Image(getClass().getResource("/newYork.jpg").toURI().toString());
-            iv_firstHotVacation.setImage(img1);
-            Image img2 = new Image(getClass().getResource("/maldives.jpg").toURI().toString());
-            iv_secondHotVacation.setImage(img2);
-        }catch (URISyntaxException e){
-            System.out.println(e.getReason() + "," + e.getMessage());
-        }
+    try {
+        Image img2 = new Image(getClass().getResource("/mainImage.jpg").toURI().toString());
+        iv_secondHotVacation.setImage(img2);
+    }catch (URISyntaxException e){
+        System.out.println(e.getReason() + "," + e.getMessage());
+     }
     }
 
     /**
@@ -124,6 +120,7 @@ public class HomePage implements Observer {
             String userDetails = controller.readUsers(controller.getUserName(),false);
             payment = (Payment) windowName;
             payment.setDetails(userDetails);
+
         }
 
 
@@ -137,7 +134,7 @@ public class HomePage implements Observer {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("כן");
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("חזור");
-                alert.setContentText("האם אתה בטוח שברצונך לעזוב?");
+                alert.setContentText("האם אתה בטוח שברצונך לעצוב?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     // ... user chose OK
@@ -156,7 +153,7 @@ public class HomePage implements Observer {
     }
 
 
-    public void search(){
+    public void search(ActionEvent actionEvent){
         if(tf_origin.getText()==null || tf_destination.getText()==null  || dp_departure.getValue()==null || dp_arrival.getValue() == null ) {
             alert("אופס! אחד או יותר משדות החיפוש ריקים", Alert.AlertType.ERROR);
             return;
@@ -185,6 +182,9 @@ public class HomePage implements Observer {
 
     }
 
+    public void sellTickets(ActionEvent actionEvent){
+        newStage("SignIn.fxml", "כניסת משתמש רשום", signInWindow, 432, 383 , controller);
+    }
 
 
     @Override
@@ -200,6 +200,4 @@ public class HomePage implements Observer {
     }
 
 
-    public void sellTickets(ActionEvent actionEvent) {
-    }
 }
