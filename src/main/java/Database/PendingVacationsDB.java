@@ -82,7 +82,7 @@ public class PendingVacationsDB extends genericDB {
 
             // loop through the result set
             while (rs.next()) {
-                String str=rs.getInt("VacationId")+","+ rs.getString("Origin") +"," + rs.getString("Destination") + ","+rs.getInt("Price") +","+ rs.getString("DateOfDeparture") +","+ rs.getString("DateOfArrival");
+                String str=rs.getInt("VacationId")+","+ rs.getString("Origin") + "," + rs.getString("Destination") + ","+rs.getInt("Price") +","+ rs.getString("DateOfDeparture") +","+ rs.getString("DateOfArrival");
                 vacationsToConfirm.add(str);
                 str = "";
             }

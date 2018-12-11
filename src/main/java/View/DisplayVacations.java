@@ -70,6 +70,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
         String vacationID = split[0];
         String seller = split[1];
         controller.insertPendingvacation(Integer.valueOf(vacationID),seller,controller.getUserName());
+        controller.deleteAvailableVacation(Integer.valueOf(vacationID));
         alert("בקשתך נשלחה למוכר", Alert.AlertType.CONFIRMATION);
         stage.close();
 

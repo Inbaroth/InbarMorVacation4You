@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane accessibleRole="BUTTON" prefHeight="600.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomePage">
+<AnchorPane accessibleRole="BUTTON" prefHeight="600.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomePage">
    <children>
       <Label layoutX="323.0" layoutY="70.0" text="Vacation4U">
          <font>
@@ -74,5 +73,6 @@
       <Button fx:id="bth_createUser" layoutX="144.0" layoutY="24.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="יצירת חשבון" />
       <ImageView fx:id="iv_firstHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="717.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iv_secondHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="449.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="bth_read" layoutX="223.0" layoutY="24.0" mnemonicParsing="false" onAction="#רקשג" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="חפש שם משתמש" />
    </children>
 </AnchorPane>

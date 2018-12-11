@@ -200,4 +200,6 @@ public class HomePage implements Observer {
     }
 
 
+    public void sellTickets(ActionEvent actionEvent) {
+    }
 }

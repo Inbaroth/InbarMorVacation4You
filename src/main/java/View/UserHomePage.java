@@ -66,6 +66,7 @@ public class UserHomePage extends HomePage {
     }
 
     public void sellTickets(ActionEvent actionEvent) {
+
     }
 
     public void logOut(ActionEvent actionEvent){
