@@ -27,15 +27,6 @@ public class Controller extends Observable implements Observer {
     }
 
 
-    //delete after test
-    public void setVac(){
-        //delete after test
-        vacationMatchSearch = new ArrayList<Vacation>();
-        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
-        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
-        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
-        vacationMatchSearch.add(new Vacation("newYork", "newYork","newYork","newYork",5));
-    }
 
     /**
      *
@@ -125,5 +116,24 @@ public class Controller extends Observable implements Observer {
 
     public String getUserName() {
         return currentUserName;
+    }
+
+
+
+    /**
+     * FROM:YYYY-MM-DD  TO:DD/MM/YY
+     * @param dataPickerValue YYYY-MM-DD
+     * @return DD/MM/YY
+     */
+    public String changeToRightDateFormat(String dataPickerValue){
+        String[] arr = new String[3];
+        String str = dataPickerValue.substring(0,4);
+        arr[2] = str;
+        str = dataPickerValue.substring(5,7);
+        arr[1] = str;
+        str = dataPickerValue.substring(8);
+        arr[0] = str;
+        String RightDateFormat = arr[0] + "/" + arr[1] + "/" + arr[2] ;
+        return RightDateFormat;
     }
 }

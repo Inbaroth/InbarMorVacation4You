@@ -29,18 +29,18 @@
          </font>
       </Label>
       <TextField fx:id="tf_destination" layoutX="617.0" layoutY="225.0" />
-      <DatePicker fx:id="dp_arrival" layoutX="487.0" layoutY="225.0" prefHeight="25.0" prefWidth="123.0" />
-      <Label layoutX="563.0" layoutY="198.0" text="הגעה:">
+      <DatePicker fx:id="dp_departure" layoutX="487.0" layoutY="225.0" prefHeight="25.0" prefWidth="123.0" />
+      <Label layoutX="563.0" layoutY="198.0" text="יציאה:">
          <font>
             <Font name="Calibri Light" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="432.0" layoutY="198.0" text="עזיבה:">
+      <Label layoutX="432.0" layoutY="198.0" text="חזרה:">
          <font>
             <Font name="Calibri Light" size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dp_departure" layoutX="353.0" layoutY="225.0" prefHeight="25.0" prefWidth="123.0" />
+      <DatePicker fx:id="dp_arrival" layoutX="353.0" layoutY="225.0" prefHeight="25.0" prefWidth="123.0" />
       <TextField fx:id="tf_numOfTickets" layoutX="253.0" layoutY="225.0" prefHeight="25.0" prefWidth="92.0" promptText="num of tickets" text="מספר כרטיסים" />
       <Button layoutX="99.0" layoutY="250.0" mnemonicParsing="false" onAction="#search" text="חפש חופשה">
          <font>

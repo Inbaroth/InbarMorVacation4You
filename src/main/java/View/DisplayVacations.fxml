@@ -25,6 +25,6 @@
             </font>
         </Label>
         <VBox fx:id="vb_details" layoutX="491.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" />
-      <VBox fx:id="vb_Buttons" layoutX="218.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" />
+      <VBox fx:id="vb_Buttons" layoutX="104.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" />
     </children>
 </AnchorPane>
