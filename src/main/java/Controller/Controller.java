@@ -142,6 +142,12 @@ public class Controller extends Observable implements Observer {
        return null;
     }
 
+
+
+    public void deleteAvailableVacation(int vacationId){
+        model.deleteAvailableVacation(vacationId);
+    }
+
     public String readPendingVacationBuyer(int VacationId){
       return model.readPendingVacationBuyer(VacationId);
     }

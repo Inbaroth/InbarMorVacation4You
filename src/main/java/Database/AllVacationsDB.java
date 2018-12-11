@@ -5,11 +5,8 @@ import Model.Vacation;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AvailableVacationsDB extends genericDB {
-
-    public AvailableVacationsDB(String databaseName) {
-        super(databaseName);
-    }
+public class AllVacationsDB  extends genericDB{
+    public AllVacationsDB(String databaseName) { super(databaseName); }
 
     /**
      * Create a new table in the test database
@@ -19,7 +16,7 @@ public class AvailableVacationsDB extends genericDB {
         // SQLite connection string
         String url ="jdbc:sqlite:" + DBName + ".db";
         // SQL statement for creating a new table
-        String createStatement = "CREATE TABLE IF NOT EXISTS AvailableVacations (\n"
+        String createStatement = "CREATE TABLE IF NOT EXISTS AllVacations (\n"
                 + "	VacationId integer PRIMARY KEY,\n"
                 + "	Origin text NOT NULL,\n"
                 + "	Destionation text NOT NULL,\n"
@@ -103,32 +100,8 @@ public class AvailableVacationsDB extends genericDB {
 
 
 
-    //implement readUsers method which will display each available vacation which match given data
-    public ArrayList<Vacation> readMatchVacations( Vacation Data) {
-        ArrayList<Vacation> vacations = new ArrayList<>();
-        String origin = Data.getOrigin();
-        String destination = Data.getDestination();
-        String dateOfDeparture = Data.getDateOfDeparture();
-        String dateOfArrival = Data.getDateOfArrival();
-        int numOfTickets = Data.getNumOfTickets();
-        String sql = "SELECT Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival," +
-                "AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice" +
-                " FROM AvailableVacations WHERE Origin='" + origin + "' AND Destination= '" + destination  +
-                "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival  +
-                "'AND NumberOfTickets>='" + numOfTickets + "' AND" +
-                " WHERE NOT EXIST " +
-                "(SELECT VacationId FROM PurchasedVacations " +
-                " WHERE VacationId=AvailableVacations.VacationId ) " +
-                "OR WHERE NOT EXIST (SELECT VacationId FROM PendingVacations " +
-                "WHERE VacationId=AvailableVacations.VacationId ) ";
-        String url = "jdbc:sqlite:" + DBName + ".db";
-        vacations = getVacationsBasedOnQuery(url, sql);
-        return vacations;
-    }
-
-
     private ArrayList<Vacation> getVacationsBasedOnQuery(String url, String query){
-       ArrayList<Vacation> vacations = new ArrayList<Vacation>();
+        ArrayList<Vacation> vacations = new ArrayList<Vacation>();
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -147,20 +120,7 @@ public class AvailableVacationsDB extends genericDB {
     }
 
 
-    public void deleteFromTable ( int vacationId){
-        String deleteStatement = "DELETE FROM AvailableVacations WHERE VacationId = ?";
-        String url = "jdbc:sqlite:" + DBName + ".db";
-        try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {
-            // set the corresponding param
-            pstmt.setInt(1, vacationId);
-            // execute the deleteUser statement
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
 
-    }
 
 
 }

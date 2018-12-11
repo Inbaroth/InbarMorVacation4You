@@ -159,10 +159,9 @@ public class UsersDB extends genericDB{
 
     /**
      * This method deleteUser a row from the data base where the user name is equal to given userName param
-     * @param tableName
      * @param userName
      */
-    public void deleteFromTable (String tableName, String userName){
+    public void deleteFromTable ( String userName){
         String deleteStatement = "DELETE FROM Users WHERE user_name = ?";
 
         String url = "jdbc:sqlite:" + DBName + ".db";

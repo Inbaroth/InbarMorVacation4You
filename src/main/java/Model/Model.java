@@ -24,6 +24,7 @@ public class Model extends Observable {
     private PurchasedVacationsDB purchasedVacationDB;
     private PendingVacationsDB pendingVacationsDB;
     private ConfirmedSaleVacationsDB confirmedSaleVacationsDB;
+    private AllVacationsDB allVacationsDB;
 
 
     //public enum errorType {PASSWORD_USERS_NOT_MATCH, PASSWORDS_NOT_MATCH, USER_NOT_EXIST}
@@ -174,9 +175,15 @@ public class Model extends Observable {
      * @param userName
      */
     public void deleteUser(String userName) {
-        usersDB.deleteFromTable("Users", userName);
+        usersDB.deleteFromTable( userName);
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
+
+    public void deleteAvailableVacation(int vacationId){
+        availableVacationsDB.deleteFromTable(vacationId);
+    }
+
+
 
     public String signIn(String userName, String password) {
         String details = readUsers(userName,false);
@@ -240,6 +247,7 @@ public class Model extends Observable {
         Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
             availableVacationsDB.insertVacation( vacation, vacationID);
+            allVacationsDB.insertVacation(vacation, vacationID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -247,6 +255,8 @@ public class Model extends Observable {
             //check in GUI that all values aren't null ,don't handle this here
         }
     }
+
+
 
     /**
      * returns list of all match vacation from DB based on given data (as the parameters in signature)
