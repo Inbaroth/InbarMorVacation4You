@@ -47,7 +47,7 @@
             <Font name="Calibri Bold Italic" size="22.0" />
          </font>
       </Button>
-      <Button layoutX="77.0" layoutY="49.0" mnemonicParsing="false" style="-fx-text-fill: CornflowerBlue;" text="מכר כרטיסים">
+      <Button layoutX="77.0" layoutY="49.0" mnemonicParsing="false" onAction="#sellTickets" style="-fx-text-fill: CornflowerBlue;" text="מכר כרטיסים">
          <font>
             <Font size="15.0" />
          </font>

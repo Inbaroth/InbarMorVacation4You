@@ -1,12 +1,12 @@
 package View;
 
 import Controller.Controller;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.awt.event.ActionEvent;
 
 public class InsertVacation extends HomePage {
 
@@ -33,7 +33,7 @@ public class InsertVacation extends HomePage {
         tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
         tf_origin.setTooltip(tooltip);
         tf_destination.setTooltip(tooltip);
-        
+
     }
 
 
@@ -48,6 +48,8 @@ public class InsertVacation extends HomePage {
                 return;
              }
         }
+
+
 
 
 
