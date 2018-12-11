@@ -119,9 +119,21 @@ public class Controller extends Observable implements Observer {
         return model.signIn(userName,password);
     }
 
-    public void setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
+    /**
+     * return true if size is 0, else return false
+     * @param origin
+     * @param destination
+     * @param dateOfDeparture
+     * @param dateOfArrival
+     * @param numOfTickets
+     * @return
+     */
+    public boolean setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
         vacationMatchSearch = new ArrayList<Vacation>();
         vacationMatchSearch = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        if(vacationMatchSearch.size()==0)
+            return true;
+        return false;
     }
 
     public ArrayList<Vacation> getMatchesVacations(){
@@ -138,7 +150,9 @@ public class Controller extends Observable implements Observer {
         return currentUserName;
     }
 
-
+    public void insertPendingvacation(int vacationId,String seller, String buyer ){
+        model.insertPendingVacation(vacationId, seller, buyer);
+    }
 
     /**
      * FROM:YYYY-MM-DD  TO:DD/MM/YY

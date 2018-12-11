@@ -159,24 +159,28 @@ public class HomePage implements Observer {
         if(tf_origin.getText()==null || tf_destination.getText()==null  || dp_departure.getValue()==null || dp_arrival.getValue() == null ) {
             alert("אופס! אחד או יותר משדות החיפוש ריקים", Alert.AlertType.ERROR);
             return;
-        } else{
-            int numberOfTickets=0;
+        } else {
+            int numberOfTickets = 0;
             //valid number (not empty)
-            if(tf_numOfTickets.getText()!=null && StringUtils.isNumeric(tf_numOfTickets.getText()))
+            if (!tf_numOfTickets.getText().equals("") && StringUtils.isNumeric(tf_numOfTickets.getText()))
                 numberOfTickets = Integer.valueOf(tf_numOfTickets.getText());
                 //invalid number (not empty)
-            else if(tf_numOfTickets.getText()!=null && !StringUtils.isNumeric(tf_numOfTickets.getText())) {
+            else if (!tf_numOfTickets.getText().equals("") && !StringUtils.isNumeric(tf_numOfTickets.getText())) {
                 alert("אופס! הערך שהוזן במספר טיסות איננו תקין.", Alert.AlertType.ERROR);
                 return;
             }
             //empty, make default 1
-            else if(tf_numOfTickets.getText() == null)
+            else if (tf_numOfTickets.getText().equals("")) {
+                tf_numOfTickets.setText("1");
                 numberOfTickets = 1;
                 String dateDepart = controller.changeToRightDateFormat(dp_departure.getValue().toString());
                 String dateArriv = controller.changeToRightDateFormat(dp_arrival.getValue().toString());
-                controller.setMatchesVacations(tf_origin.getText(), tf_destination.getText(), dateDepart, dateArriv,numberOfTickets);
-                newStage("DisplayVacations.fxml", "", displayVacations,635, 525, controller );
-       }
+                if(!controller.setMatchesVacations(tf_origin.getText(), tf_destination.getText(), dateDepart, dateArriv, numberOfTickets))
+                    newStage("DisplayVacations.fxml", "", displayVacations, 635, 525, controller);
+                else
+                    alert("מתנצלים אך אין חופשה שתואמת את החיפוש שלך", Alert.AlertType.INFORMATION);
+            }
+        }
 
     }
 

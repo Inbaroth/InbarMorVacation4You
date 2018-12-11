@@ -10,11 +10,11 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Observer;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 
-public class DisplayVacations extends HomePage implements Observer {
+public class DisplayVacations extends HomePage implements EventHandler<ActionEvent> {
 
     private Controller controller;
     private Stage stage;
@@ -29,10 +29,7 @@ public class DisplayVacations extends HomePage implements Observer {
         this.stage = stage;
         matchVacations = new ArrayList<>();
         matchVacations = controller.getMatchesVacations();
-        if(matchVacations == null)
-            alert("מתנצלים אך אין חופשה שתואמת את החיפוש שלך", Alert.AlertType.INFORMATION);
-        else
-            offerVacations();
+        offerVacations();
     }
              //(ActionEvent event)
     void offerVacations() {
@@ -45,13 +42,15 @@ public class DisplayVacations extends HomePage implements Observer {
         //change this to flight details
         for (Vacation vacation: matchVacations) {
             Button btn = new Button(buttonTitle);
+            btn.setId(String.valueOf(vacation.getVacationId() + "," + vacation.getSeller()));
             btn.setFont(new Font("Calibri Light", 15));
             btn.setPrefHeight(38.0);
+            btn.setOnAction(this);
            // btn.setTextFill();
             buttonlist.add(btn);
-            String deatails = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + "מס' כרטיסים:" + vacation.getNumOfTickets() + "כבודה:"+ vacation.getBaggage() + "סוג כרטיס:" + vacation.getTicketsType() + "מחיר:"+ vacation.getPrice();
+            String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + "מס' כרטיסים:" + vacation.getNumOfTickets() + "כבודה:"+ vacation.getBaggage() + "סוג כרטיס:" + vacation.getTicketsType() + "מחיר:"+ vacation.getPrice();
             Label lbl = new Label();
-            lbl.setText(deatails);
+            lbl.setText(details);
             lbl.setFont(new Font("Calibri Light", 15));
             lbl.setPrefSize(500.0,38.0);
             detailsLabels.add(lbl);
@@ -64,4 +63,15 @@ public class DisplayVacations extends HomePage implements Observer {
     }
 
 
+    @Override
+    public void handle(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        String [] split = button.getId().split(",");
+        String vacationID = split[0];
+        String seller = split[1];
+        controller.insertPendingvacation(Integer.valueOf(vacationID),seller,controller.getUserName());
+        alert("בקשתך נשלחה למוכר", Alert.AlertType.CONFIRMATION);
+        stage.close();
+
+    }
 }
