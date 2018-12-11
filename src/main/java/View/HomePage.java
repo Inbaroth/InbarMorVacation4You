@@ -48,6 +48,8 @@ public class HomePage implements Observer {
 
     private Insert insertWindow;
     private SignIn signInWindow;
+    private UserHomePage userHomeWindow;
+    private Payment payment;
 
     private Stage primaryStage;
     private Update updateWindow;
@@ -115,6 +117,16 @@ public class HomePage implements Observer {
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }
+
+        if (windowName instanceof Payment){
+            String userDetails = controller.readUsers(controller.getUserName(),false);
+            payment = (Payment) windowName;
+            payment.setDetails(userDetails);
+
+        }
+
+
+
     }
 
 

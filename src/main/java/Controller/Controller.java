@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Model;
 import Model.Vacation;
+import javafx.scene.chart.ValueAxis;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class Controller extends Observable implements Observer {
      * @param lastName
      * @param address
      */
-    public void updateDB(String oldUserName, String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address){
-        model.updateUser(oldUserName,userName,password,confirmPassword,birthday,firstName,lastName,address);
+    public String updateDB(String oldUserName, String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSV){
+        return model.updateUser(oldUserName,userName,password,confirmPassword,birthday,firstName,lastName,address,email,creditCardNumber,expirationTime,CSV);
     }
 
     /**
@@ -71,6 +72,25 @@ public class Controller extends Observable implements Observer {
      */
     public void deleteUser(String userName){
         model.deleteUser(userName);
+    }
+
+    public ArrayList<String> readPendingVacations(String sellerUserName){
+        return model.readPendingVacations(sellerUserName);
+    }
+
+    public ArrayList<String> readConfirmedVacations(String buyerUserName){
+        return model.readConfirmedVacations(buyerUserName);
+    }
+
+    public void deletePendingVacation(String vacationID){
+        model.deletePendingVacation(Integer.valueOf(vacationID));
+    }
+    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
+        model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
+    }
+
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+        model.insertPurchasedVacation(vacationId,date,time,userName,creditCard,expirationDate,csv);
     }
 
     /**

@@ -115,10 +115,9 @@ public class UsersDB extends genericDB{
     /**
      * This method update the row in the data base where the user name is equal to the given user name in the
      * data string
-     * @param tableName
      * @param data - all the parameters needed to be updated
      */
-    public void updateDatabase(String tableName, String data, String userName) {
+    public void updateDatabase(String data, String userName) {
         // add fields!!!!
         String[] values = data.split(",");
         String updatetatement = "UPDATE Users SET user_name = ?,"
@@ -127,7 +126,11 @@ public class UsersDB extends genericDB{
                 + "last_name = ? ,"
                 + "birthday = ? ,"
                 + "address = ? ,"
-                + "e_mail = ?"
+                + "email = ? ,"
+                + "profilePicture = ? ,"
+                + "credit_card_number = ? ,"
+                + "expiration_time = ? ,"
+                + "CSV= ?"
                 + "WHERE user_name = ?";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
@@ -137,12 +140,17 @@ public class UsersDB extends genericDB{
 
             // set the corresponding param
             pstmt.setString(1, values[0]); // user name
-            pstmt.setString(2, values[1]); // first name
-            pstmt.setString(3, values[2]); // last name
-            pstmt.setString(4, values[3]); // birthday
-            pstmt.setString(5, values[4]); // address
-            pstmt.setString(6, values[5]); // email
-            pstmt.setString(7, userName); // user name - primary key
+            pstmt.setString(2, values[1]); // password
+            pstmt.setString(3, values[2]); // first name
+            pstmt.setString(4, values[3]); // last name
+            pstmt.setString(5, values[4]); // birthday
+            pstmt.setString(6,values[5]); // address
+            pstmt.setString(7,values[6]); // email
+            pstmt.setString(8,"picture"); // picture
+            pstmt.setString(9,values[7]); // credit card number
+            pstmt.setString(10,values[8]); // exiration time
+            pstmt.setString(11,values[9]); // CSV
+            pstmt.setString(12, userName); // user name - primary key
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
