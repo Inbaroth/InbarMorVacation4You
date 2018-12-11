@@ -31,9 +31,9 @@ public class Payment  extends HomePage implements Observer {
 
     public void setDetails(String details){
         String [] userDetailsSplited = details.split(",");
-        txtfld_creditCardNumber.setText(userDetailsSplited[7]);
-        txtfld_CSV.setText(userDetailsSplited[9]);
-        String [] exp = userDetailsSplited[8].split("/");
+        txtfld_creditCardNumber.setText(userDetailsSplited[8]);
+        txtfld_CSV.setText(userDetailsSplited[10]);
+        String [] exp = userDetailsSplited[9].split("/");
         combo_box_monthForCredit.setValue(exp[0]);
         combo_box_yearForCredit.setValue(exp[1]);
     }
@@ -45,14 +45,15 @@ public class Payment  extends HomePage implements Observer {
         String newCreditCardNumber = txtfld_creditCardNumber.getText();
         String newExp = getExp();
         String newCSV = txtfld_CSV.getText();
-        creditCardNumber = Integer.valueOf(newCreditCardNumber);
-        expirationDate = newExp;
-        CSV = Integer.valueOf(newCSV);
+        //creditCardNumber = Integer.valueOf(newCreditCardNumber);
+        //expirationDate = newExp;
+        //CSV = Integer.valueOf(newCSV);
         LocalDateTime localDateTime = LocalDateTime.now();
         String date = LocalDateTime.now().toString().substring(0,localDateTime.toString().indexOf("T"));
         String time = LocalTime.now().toString();
+        controller.deleteConfirmedVacation(ConfirmMessages.vacationID);
         controller.insertPurchasedVacation(ConfirmMessages.vacationID,date,time,controller.getUserName(),
-                Integer.valueOf(newCreditCardNumber),newExp,Integer.valueOf(newCSV));
+                newCreditCardNumber,newExp,Integer.valueOf(newCSV));
         alert("הרכישה בוצעה בהצלחה", Alert.AlertType.INFORMATION);
         stage.close();
     }

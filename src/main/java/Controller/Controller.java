@@ -12,7 +12,7 @@ import java.util.Observer;
 public class Controller extends Observable implements Observer {
 
     private Model model;
-    private String currentUserName;
+    public static String currentUserName;
 
     private ArrayList<Vacation> vacationMatchSearch;
 
@@ -75,11 +75,11 @@ public class Controller extends Observable implements Observer {
         model.deleteUser(userName);
     }
 
-    public ArrayList<String> readPendingVacations(String sellerUserName){
+    public ArrayList<Vacation> readPendingVacations(String sellerUserName){
         return model.readPendingVacations(sellerUserName);
     }
 
-    public ArrayList<String> readConfirmedVacations(String buyerUserName){
+    public ArrayList<Vacation> readConfirmedVacations(String buyerUserName){
         return model.readConfirmedVacations(buyerUserName);
     }
 
@@ -90,7 +90,7 @@ public class Controller extends Observable implements Observer {
         model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
     }
 
-    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, int creditCard, String expirationDate, int csv){
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv){
         model.insertPurchasedVacation(vacationId,date,time,userName,creditCard,expirationDate,csv);
     }
 
@@ -170,11 +170,16 @@ public class Controller extends Observable implements Observer {
         model.insertPendingVacation(vacationId, seller, buyer);
     }
 
-    /**
-     * FROM:YYYY-MM-DD  TO:DD/MM/YY
-     * @param dataPickerValue YYYY-MM-DD
-     * @return DD/MM/YY
-     */
+
+    public void deleteConfirmedVacation(int vacationID) {
+        model.deleteConfirmedVacation(vacationID);
+    }
+
+        /**
+         * FROM:YYYY-MM-DD  TO:DD/MM/YY
+         * @param dataPickerValue YYYY-MM-DD
+         * @return DD/MM/YY
+         */
     public String changeToRightDateFormat(String dataPickerValue){
         String[] arr = new String[3];
         String str = dataPickerValue.substring(0,4);

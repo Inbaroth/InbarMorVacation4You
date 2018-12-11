@@ -18,6 +18,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
 
     private Controller controller;
     private Stage stage;
+    private SignIn signInWindow;
     ArrayList<Vacation> matchVacations;
     public VBox vb_Buttons;
     public VBox vb_details;
@@ -34,7 +35,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
              //(ActionEvent event)
     void offerVacations() {
         //check this is the right order HERE
-        l_originAndDestination.setText("מ"+matchVacations.get(0).getOrigin() + "אל "+matchVacations.get(0).getDestination() );
+        l_originAndDestination.setText("מ"+matchVacations.get(0).getOrigin() + " אל "+matchVacations.get(0).getDestination() );
         l_dates.setText(matchVacations.get(0).getDateOfDeparture() + "-" +matchVacations.get(0).getDateOfArrival() );
         ArrayList<Button> buttonlist = new ArrayList<Button>(); //our Collection to hold newly created Buttons
         String buttonTitle = "רכוש חופשה"; //extract button text, adapt the String to the columnname that you are interested in
@@ -48,7 +49,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
             btn.setOnAction(this);
            // btn.setTextFill();
             buttonlist.add(btn);
-            String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + "מס' כרטיסים:" + vacation.getNumOfTickets() + "כבודה:"+ vacation.getBaggage() + "סוג כרטיס:" + vacation.getTicketsType() + "מחיר:"+ vacation.getPrice();
+            String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + " מס' כרטיסים: " + vacation.getNumOfTickets() + "\n" +  " כבודה:"+ vacation.getBaggage() + " סוג כרטיס: " + vacation.getTicketsType() + "\n" + " מחיר: "+ vacation.getPrice();
             Label lbl = new Label();
             lbl.setText(details);
             lbl.setFont(new Font("Calibri Light", 15));
@@ -65,14 +66,20 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
 
     @Override
     public void handle(ActionEvent event) {
-        Button button = (Button) event.getSource();
-        String [] split = button.getId().split(",");
-        String vacationID = split[0];
-        String seller = split[1];
-        controller.insertPendingvacation(Integer.valueOf(vacationID),seller,controller.getUserName());
-        controller.deleteAvailableVacation(Integer.valueOf(vacationID));
-        alert("בקשתך נשלחה למוכר", Alert.AlertType.CONFIRMATION);
-        stage.close();
+        if (controller.getUserName() == null){
+            alert("על מנת לרכוש חופשה עליך להתחבר למערכת תחילה", Alert.AlertType.ERROR);
+            stage.close();
+        }
+        else {
+            Button button = (Button) event.getSource();
+            String[] split = button.getId().split(",");
+            String vacationID = split[0];
+            String seller = split[1];
+            controller.insertPendingvacation(Integer.valueOf(vacationID), seller, controller.getUserName());
+            controller.deleteAvailableVacation(Integer.valueOf(vacationID));
+            alert("בקשתך נשלחה למוכר", Alert.AlertType.CONFIRMATION);
+            stage.close();
+        }
 
     }
 }

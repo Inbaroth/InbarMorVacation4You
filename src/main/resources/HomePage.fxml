@@ -58,6 +58,5 @@
       <Button fx:id="bth_createUser" layoutX="144.0" layoutY="24.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="יצירת חשבון" />
       <ImageView fx:id="iv_firstHotVacation" fitHeight="184.0" fitWidth="483.0" layoutX="254.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iv_secondHotVacation" fitHeight="150.0" fitWidth="200.0" layoutX="449.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="bth_read" layoutX="223.0" layoutY="24.0" mnemonicParsing="false" onAction="#רקשג" style="-fx-background-color: none; -fx-text-fill: DeepSkyBlue;" text="חפש שם משתמש" />
    </children>
 </AnchorPane>

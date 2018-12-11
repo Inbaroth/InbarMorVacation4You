@@ -29,7 +29,7 @@ public class InsertVacation extends HomePage {
 
     public void setController(Controller controller, Stage primaryStage) {
         this.controller = controller;
-        this.stage = stage;
+        this.stage = primaryStage;
         tooltip.setText("\nהכנס מיקום בפורמט:\n"+"עיר,מדינה"+"\n");
         tf_origin.setTooltip(tooltip);
         tf_destination.setTooltip(tooltip);
@@ -43,7 +43,7 @@ public class InsertVacation extends HomePage {
         }
         else{
             //invalid number (not empty)
-            if((tf_numOfTickets.getText()==null && !StringUtils.isNumeric(tf_numOfTickets.getText()))||(tf_originalPrice.getText()==null && !StringUtils.isNumeric(tf_originalPrice.getText()))||(tf_requestedPrice.getText()==null && !StringUtils.isNumeric(tf_requestedPrice.getText()))) {
+            if((tf_numOfTickets.getText()!=null && !StringUtils.isNumeric(tf_numOfTickets.getText()))||(tf_originalPrice.getText()!=null && !StringUtils.isNumeric(tf_originalPrice.getText()))||(tf_requestedPrice.getText()!=null && !StringUtils.isNumeric(tf_requestedPrice.getText()))) {
                 alert("אופס! הערך שהוזן בשדה מספרי איננו תקין.", Alert.AlertType.ERROR);
                 return;
             }
@@ -53,6 +53,8 @@ public class InsertVacation extends HomePage {
             String destinationAirport = tf_destinationAirport.getText();
             String dateDepart = controller.changeToRightDateFormat(dp_departure.getValue().toString());
             String dateArriv = controller.changeToRightDateFormat(dp_arrival.getValue().toString());
+//            String dateDepart = dp_departure.getValue().toString();
+//            String dateArriv = dp_arrival.getValue().toString();
             String airlineCompany = tf_AirlineCompany.getText();
             int numberOfTicktes = Integer.valueOf(tf_numOfTickets.getText());
             //String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice
@@ -62,6 +64,8 @@ public class InsertVacation extends HomePage {
             String seller = controller.getUserName();
             int originalPrice = Integer.valueOf(tf_originalPrice.getText());
             controller.insertVacation(origin,destination,price,destinationAirport,dateDepart,dateArriv,airlineCompany,numberOfTicktes,baggage,ticketsType,vacationStyle,seller,originalPrice);
+            alert("חופשה נוספה בהצלחה", Alert.AlertType.INFORMATION);
+            stage.close();
             int vacationID = controller.getVacationID();
 
         }
