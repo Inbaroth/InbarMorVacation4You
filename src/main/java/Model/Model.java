@@ -188,23 +188,19 @@ public class Model extends Observable {
     }
 
     public String signIn(String userName, String password) {
-        String details = readUsers(userName,false);
+        User user = readUsers(userName,false);
         boolean isLegal = true;
-        if (details != null){
-            String UserDetails = usersDB.read(userName);
-            String [] detailsArr = UserDetails.split(",");
-            if (!password.equals(detailsArr[1])) {
+        if (user != null){
+            if (!password.equals(user.getPassword())) {
                 return "הסיסמאות אינן תואמות";
             }
             else{
                 return userName;
-
             }
             //return null;
         }
         return null;
     }
-
     public void insertPendingFlight(int flightId, String seller, String buyer ){
         try{
             pendingFlightsDB.insertVacation(flightId, seller,  buyer);

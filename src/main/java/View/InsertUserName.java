@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class InsertUserName extends HomePage implements Observer {
     private Controller controller;
     private Stage stage;
     private Update updateWindow;
-    private String userDetails;
+    private User user;
 
     public javafx.scene.control.TextField userName;
 
@@ -45,8 +46,8 @@ public class InsertUserName extends HomePage implements Observer {
 
         // readUsers the user name from the data base
         // if doesn't exist showing alert message
-        userDetails = controller.readUsers(username,false);
-        if (userDetails != null){
+        user = controller.readUsers(username,false);
+        if (user != null){
             //btn_create.setDisable(true);
             /*FXMLLoader fxmlLoader = new
                     FXMLLoader(getClass().getResource("Update.fxml"));*/
@@ -73,7 +74,7 @@ public class InsertUserName extends HomePage implements Observer {
             //view.setResizeEvent(scene);
             updateWindow.setController(controller, stage);
             controller.addObserver(updateWindow);
-            updateWindow.setUserDetails(userDetails);
+            updateWindow.setUserDetails(user);
         }
     }
 
@@ -81,8 +82,8 @@ public class InsertUserName extends HomePage implements Observer {
      *
      * @return the userDetails field
      */
-    public String getUserDetails(){
-        return userDetails;
+    public User getUserDetails(){
+        return user;
 
     }
 

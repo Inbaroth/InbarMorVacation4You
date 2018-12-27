@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public class Read extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;
-    private String stringUserDetails;
+    private User user;
     private UsersDetails usersDetails;
 
     public javafx.scene.control.TextField txtfld_userinput;
@@ -40,11 +41,9 @@ public class Read extends HomePage implements Observer {
             controller.alert("אנא בחר שם משתמש לחיפוש");
         }
 
-        stringUserDetails = controller.readUsers(userName,false);
+        user = controller.readUsers(userName,false);
 
-        if (stringUserDetails != null) {
-            stringUserDetails = controller.readUsers(userName,false);
-
+        if (user != null) {
             stage.close();
 
             /*FXMLLoader fxmlLoader = new
@@ -69,7 +68,7 @@ public class Read extends HomePage implements Observer {
             usersDetails = fxmlLoader.getController();
             usersDetails.setController(controller, newStage);
             controller.addObserver(usersDetails);
-            usersDetails.setUserDetails(stringUserDetails);
+            usersDetails.setUserDetails(user);
 
         }
     }

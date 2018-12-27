@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -16,8 +17,7 @@ public class Update extends HomePage implements Observer {
 
     private Controller controller;
     private Stage stage;
-    private String userDetails;
-    private String [] userDetailsSplited;
+    private User user;
 
     public javafx.scene.control.TextField txtfld_userName;
     public javafx.scene.control.PasswordField txtfld_password;
@@ -26,14 +26,11 @@ public class Update extends HomePage implements Observer {
     public javafx.scene.control.TextField txtfld_lastName;
     public javafx.scene.control.TextField txtfld_Address;
     public javafx.scene.control.TextField txtfld_email;
-    public javafx.scene.control.TextField txtfld_creditCardNumber;
-    public javafx.scene.control.TextField txtfld_CSV;
     public javafx.scene.image.ImageView pictureView;
     public javafx.scene.control.ComboBox combo_box_day;
     public javafx.scene.control.ComboBox combo_box_month;
     public javafx.scene.control.ComboBox combo_box_year;
-    public javafx.scene.control.ComboBox combo_box_yearForCredit;
-    public javafx.scene.control.ComboBox combo_box_monthForCredit;
+
 
     /**
      *
@@ -43,16 +40,15 @@ public class Update extends HomePage implements Observer {
     public void setController(Controller controller, Stage stage) {
         this.controller = controller;
         this.stage = stage;
-        this.userDetails = "";
     }
 
 
     /**
      * This method set the userDetails field
-     * @param userdetails
+     * @param user
      */
-    public void setUserDetails(String userdetails) {
-        userDetails = userdetails;
+    public void setUserDetails(User user) {
+        this.user = user;
         splitToFields();
     }
 
@@ -62,24 +58,18 @@ public class Update extends HomePage implements Observer {
      * updateUser window
      */
     private void splitToFields(){
-        userDetailsSplited = userDetails.split(",");
-        txtfld_userName.setText(userDetailsSplited[0]);
-        txtfld_firstName.setText(userDetailsSplited[2]);
-        txtfld_lastName.setText(userDetailsSplited[3]);
-        txtfld_password.setText(userDetailsSplited[1]);
-        txtfld_confirmPassword.setText(userDetailsSplited[1]);
-        txtfld_Address.setText(userDetailsSplited[5]);
-        txtfld_email.setText(userDetailsSplited[6]);
-        // userDetailsSplited[7] = picture
-        txtfld_creditCardNumber.setText(userDetailsSplited[8]);
-        txtfld_CSV.setText(userDetailsSplited[10]);
-        String [] date = userDetailsSplited[4].split("/");
-        String [] exp = userDetailsSplited[9].split("/");
+        txtfld_userName.setText(user.getUserName());
+        txtfld_firstName.setText(user.getFirstName());
+        txtfld_lastName.setText(user.getLastName());
+        txtfld_password.setText(user.getPassword());
+        txtfld_confirmPassword.setText(user.getPassword());
+        txtfld_Address.setText(user.getAddress());
+        txtfld_email.setText(user.getEmail());
+        String [] date = user.getBirthday().split("/");
         combo_box_day.setValue(date[0]);
         combo_box_month.setValue(date[1]);
         combo_box_year.setValue(date[2]);
-        combo_box_monthForCredit.setValue(exp[0]);
-        combo_box_yearForCredit.setValue(exp[1]);
+
     }
 
     /**
@@ -98,10 +88,8 @@ public class Update extends HomePage implements Observer {
             String newBirthday = getBirthday();
             String newAddress = txtfld_Address.getText();
             String newEmail = txtfld_email.getText();
-            String newCreditCardNumber = txtfld_creditCardNumber.getText();
-            String newExp = getExpirationTime();
-            String newCSV = txtfld_CSV.getText();
-            String ans = controller.updateDB(userDetailsSplited[0], newUserName, newPassword, newPasswordReplay, newFirstName, newLastName, newBirthday, newAddress, newEmail, newCreditCardNumber, newExp, newCSV);
+            User updateUser = new User(newUserName,newPassword,newFirstName,newLastName,newBirthday,newAddress,newEmail,null);
+            String ans = controller.updateDB(user.getUserName(), updateUser,newPasswordReplay);
             if (!ans.equals("פרטי החשבון עודכנו בהצלחה"))
                 alert(ans, Alert.AlertType.ERROR);
             else{
@@ -122,16 +110,6 @@ public class Update extends HomePage implements Observer {
         String newMonth = (String) combo_box_month.getValue();
         String newYear = (String) combo_box_year.getValue();
         return newDay  + "/" + newMonth + "/" + newYear;
-    }
-
-    /**
-     * get the user expiration credit card time
-     * @return the value of the combo_box_monthForCredit, combo_box_yearForCredit in the format: MM/YYYY
-     */
-    private String getExpirationTime(){
-        String month = (String) combo_box_monthForCredit.getValue();
-        String year = (String) combo_box_yearForCredit.getValue();
-        return month + "/" + year;
     }
 
     /**
@@ -160,10 +138,6 @@ public class Update extends HomePage implements Observer {
         if (txtfld_Address.getText() == null || txtfld_Address.getText().trim().isEmpty())
             return false;
         if (txtfld_email.getText() == null || txtfld_email.getText().trim().isEmpty())
-            return false;
-        if (txtfld_creditCardNumber.getText() == null || txtfld_creditCardNumber.getText().trim().isEmpty())
-            return false;
-        if (txtfld_CSV.getText() == null || txtfld_CSV.getText().trim().isEmpty())
             return false;
         if (pictureView == null)
             return false;

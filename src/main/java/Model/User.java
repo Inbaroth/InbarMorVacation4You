@@ -13,7 +13,6 @@ public class User {
     String email;
     Image profilePicture;
 
-
     public User(String userName, String password, String firstName, String lastName, String birthday, String address, String email, Image profilePicture) {
         this.userName = userName;
         this.password = password;
