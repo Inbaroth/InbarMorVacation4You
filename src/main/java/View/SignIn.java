@@ -1,7 +1,7 @@
 package View;
 
 import Controller.Controller;
-import Model.Flights;
+import Model.Flight;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -41,11 +41,11 @@ public class SignIn extends HomePage implements Observer{
                 stage.close();
                 newStage("UserHomePage.fxml", "כניסת משתמש רשום", userHomePage, 940, 581,controller);
                 HomePage.stage.close();
-                ArrayList<Flights> pendingFlights = controller.readPendingVacations(controller.getUserName());
+                ArrayList<Flight> pendingFlights = controller.readPendingVacations(controller.getUserName());
                 //VacationId,Origin,Destionation,Price,DateOfDeparture,Date
                 if (pendingFlights.size() > 0)
                     newStage("PendingMessages.fxml", "אשר רכישת חופשות", pendingMessage, 604, 312,controller);
-                ArrayList<Flights> confirmFlights = controller.readConfirmedVacations(controller.getUserName());
+                ArrayList<Flight> confirmFlights = controller.readConfirmedVacations(controller.getUserName());
                 if (confirmFlights.size() > 0){
                     newStage("ConfirmMessages.fxml", "אשר תשלום עבור חופשות", pendingMessage, 400, 600,controller);
 

@@ -79,7 +79,7 @@ public class View  implements Observer {
     }
 
     public void create(ActionEvent actionEvent) {
-        newStage("insert.fxml", "", insertWindow, 600, 466);
+        newStage("insertNewUser.fxml", "", insertWindow, 600, 466);
     }
 
 

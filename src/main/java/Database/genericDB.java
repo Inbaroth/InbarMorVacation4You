@@ -1,6 +1,6 @@
 package Database;
 
-import Model.Flights;
+import Model.Flight;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class genericDB {
 
 
 
-    public ArrayList<Flights> getVacationsBasedOnQuery(String url, String query){
-        ArrayList<Flights> flights = new ArrayList<Flights>();
+    public ArrayList<Flight> getVacationsBasedOnQuery(String url, String query){
+        ArrayList<Flight> flights = new ArrayList<Flight>();
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -59,7 +59,7 @@ public class genericDB {
             // loop through the result set
             while (rs.next()) {
                 //creating flights objects only so we could display them, there are not going to be a real availableVacation obects
-                Flights flight = new Flights(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
+                Flight flight = new Flight(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
                 flights.add(flight);
                 flights = null;
             }

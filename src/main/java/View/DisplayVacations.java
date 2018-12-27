@@ -1,7 +1,7 @@
 package View;
 
 import Controller.Controller;
-import Model.Flights;
+import Model.Flight;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +18,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
     private Controller controller;
     private Stage stage;
     private SignIn signInWindow;
-    ArrayList<Flights> matchFlights;
+    ArrayList<Flight> matchFlights;
     public VBox vb_Buttons;
     public VBox vb_details;
     public Label l_originAndDestination;
@@ -40,15 +40,15 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
         String buttonTitle = "רכוש חופשה"; //extract button text, adapt the String to the columnname that you are interested in
         ArrayList<Label> detailsLabels = new ArrayList<Label>();
         //change this to flight details
-        for (Flights flights : matchFlights) {
+        for (Flight flight : matchFlights) {
             Button btn = new Button(buttonTitle);
-            btn.setId(String.valueOf(flights.getVacationId() + "," + flights.getSeller()));
+            btn.setId(String.valueOf(flight.getVacationId() + "," + flight.getSeller()));
             btn.setFont(new Font("Calibri Light", 15));
             btn.setPrefHeight(38.0);
             btn.setOnAction(this);
            // btn.setTextFill();
             buttonlist.add(btn);
-            String details = "שדה תעופה ביעד:"+ flights.getDestinationAirport() + " מס' כרטיסים: " + flights.getNumOfTickets() + "\n" +  " כבודה:"+ flights.getBaggage() + " סוג כרטיס: " + flights.getTicketsType() + "\n" + " מחיר: "+ flights.getPrice();
+            String details = "שדה תעופה ביעד:"+ flight.getDestinationAirport() + " מס' כרטיסים: " + flight.getNumOfTickets() + "\n" +  " כבודה:"+ flight.getBaggage() + " סוג כרטיס: " + flight.getTicketsType() + "\n" + " מחיר: "+ flight.getPrice();
             Label lbl = new Label();
             lbl.setText(details);
             lbl.setFont(new Font("Calibri Light", 15));

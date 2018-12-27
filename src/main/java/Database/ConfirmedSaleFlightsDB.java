@@ -1,14 +1,14 @@
 package Database;
 
-import Model.Flights;
+import Model.Flight;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ConfirmedSaleVacationsDB extends genericDB {
+public class ConfirmedSaleFlightsDB extends genericDB {
 
 
-    public ConfirmedSaleVacationsDB(String databaseName) { super(databaseName); }
+    public ConfirmedSaleFlightsDB(String databaseName) { super(databaseName); }
 
     /**
      * Create a new table in the test database
@@ -18,15 +18,10 @@ public class ConfirmedSaleVacationsDB extends genericDB {
         // SQLite connection string
         String url ="jdbc:sqlite:" + DBName + ".db";
         // SQL statement for creating a new table
-        String createStatement = "CREATE TABLE IF NOT EXISTS ConfirmedSaleVacations (\n"
-                + "	VacationId integer PRIMARY KEY,\n"
+        String createStatement = "CREATE TABLE IF NOT EXISTS ConfirmedSaleFlights (\n"
+                + "	FlightId integer PRIMARY KEY,\n"
                 + "	sellerUserName text NOT NULL,\n"
-                + "	buyerUserName text NOT NULL,\n"
-                + "	Origin text NOT NULL,\n"
-                + "	Destination text NOT NULL,\n"
-                + "	Price integer NOT NULL,\n"
-                + "	DateOfDeparture text NOT NULL,\n"
-                + " DateOfArrival text NOT NULL\n"
+                + "	buyerUserName text NOT NULL \n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
@@ -38,13 +33,13 @@ public class ConfirmedSaleVacationsDB extends genericDB {
     }
 
 
-    public void insertVacation( int vacationId,String seller, String buyer, String origin, String destination, int price, String dateOfDeparture, String dateOfArrival) throws SQLException {
-        String insertStatement = "INSERT INTO ConfirmedSaleVacations (VacationId,sellerUserName,buyerUserName,Origin,Destination,Price,DateOfDeparture,DateOfArrival) VAlUES (?,?,?,?,?,?,?,?)";
+    public void insertVacation( int FlightId,String seller, String buyer, String origin, String destination, int price, String dateOfDeparture, String dateOfArrival) throws SQLException {
+        String insertStatement = "INSERT INTO ConfirmedSaleFlights (FlightId,sellerUserName,buyerUserName,Origin,Destination,Price,DateOfDeparture,DateOfArrival) VAlUES (?,?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
             // set the corresponding parameters
-            pstmt.setInt(1, vacationId);
+            pstmt.setInt(1, FlightId);
             pstmt.setString(2, seller);
             pstmt.setString(3, buyer);
             pstmt.setString(4, origin);
@@ -61,13 +56,13 @@ public class ConfirmedSaleVacationsDB extends genericDB {
 
 
 
-    public void deleteVacation(int vacationId){
-        String deleteStatement = "DELETE FROM ConfirmedSaleVacations WHERE vacationId = ?";
+    public void deleteVacation(int FlightId){
+        String deleteStatement = "DELETE FROM ConfirmedSaleFlights WHERE FlightId = ?";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {
             // set the corresponding param
-            pstmt.setInt(1, vacationId);
+            pstmt.setInt(1, FlightId);
             // execute the deleteUser statement
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -82,9 +77,10 @@ public class ConfirmedSaleVacationsDB extends genericDB {
      * @param buyerUserName
      * @return
      */
-    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
-        ArrayList<Flights> vacationsToPay = new ArrayList<Flights>();
-        String sql = "SELECT VacationId,Origin,Destination,Price,DateOfDeparture,DateOfArrival FROM ConfirmedSaleVacations WHERE buyerUserName=?";
+    public ArrayList<Flight> readConfirmedVacations(String buyerUserName){
+        ArrayList<Flight> vacationsToPay = new ArrayList<Flight>();
+        //String sql = "SELECT VacationId,Origin,Destination,Price,DateOfDeparture,DateOfArrival FROM ConfirmedSaleVacations WHERE buyerUserName=?";
+        String sql = "SELECT AllFlights.FlightId,AllFlights.Origin,AllFlights.Destination,AllFlights.Price,AllFlights.DateOfDeparture,AllFlights.DateOfArrival FROM AllFlights INNER JOIN ConfirmedSaleFlights ON ConfirmedSaleFlights.FlightId = AllFlights.FlightId  WHERE buyerUserName=? ";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection connect = DriverManager.getConnection(url);
              PreparedStatement stmt = connect.prepareStatement(sql)){
@@ -92,11 +88,11 @@ public class ConfirmedSaleVacationsDB extends genericDB {
              ResultSet rs = stmt.executeQuery();
             // loop through the result set
             while (rs.next()) {
-                //Flights flights = new Flights(rs.getInt("VacationId"), rs.getString("Origin"),)
-                Flights flights = new Flights(rs.getString("Origin"),rs.getString("Destination"),rs.getString("DateOfDeparture"),rs.getString("DateOfArrival"),rs.getInt("Price"));
-                //String details = "שדה תעופה ביעד:"+flights.getDestinationAirport() + " מס' כרטיסים: " + flights.getNumOfTickets() + "\n" +  " כבודה:"+ flights.getBaggage() + " סוג כרטיס: " + flights.getTicketsType() + "\n" + " מחיר: "+ flights.getPrice()
-                flights.setVacationId(rs.getInt("VacationId"));
-                vacationsToPay.add(flights);
+                //Flight flight = new Flight(rs.getInt("VacationId"), rs.getString("Origin"),)
+                Flight flight = new Flight(rs.getString("Origin"),rs.getString("Destination"),rs.getString("DateOfDeparture"),rs.getString("DateOfArrival"),rs.getInt("Price"));
+                //String details = "שדה תעופה ביעד:"+flight.getDestinationAirport() + " מס' כרטיסים: " + flight.getNumOfTickets() + "\n" +  " כבודה:"+ flight.getBaggage() + " סוג כרטיס: " + flight.getTicketsType() + "\n" + " מחיר: "+ flight.getPrice()
+                flight.setVacationId(rs.getInt("FlightId"));
+                vacationsToPay.add(flight);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

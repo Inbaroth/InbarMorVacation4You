@@ -2,7 +2,7 @@ package Model;
 
 import java.sql.Date;
 
-public class Flights {
+public class Flight {
     //here or at model  or both(?)
    // private static int vacationId = 0;
     private int vacationId;
@@ -23,7 +23,7 @@ public class Flights {
     private String seller;
     private int originalPrice;
 
-    public Flights(int vacationId, String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
+    public Flight(int vacationId, String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
         this.vacationId=vacationId;
         this.origin = origin;
         this.destination = destination;
@@ -42,7 +42,7 @@ public class Flights {
     }
 
 
-    public Flights(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
+    public Flight(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice) {
         this.vacationId=0;
         this.origin = origin;
         this.destination = destination;
@@ -61,7 +61,7 @@ public class Flights {
 
     }
 
-    public Flights(String origin, String destination, String dateOfDeparture, String dateOfArrival, int numOfTickets) {
+    public Flight(String origin, String destination, String dateOfDeparture, String dateOfArrival, int numOfTickets) {
         this.origin = origin;
         this.destination = destination;
         this.dateOfDeparture = dateOfDeparture;

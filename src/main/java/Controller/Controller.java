@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Model;
-import Model.Flights;
+import Model.Flight;
 import Model.User;
 import javafx.scene.control.Alert;
 
@@ -14,7 +14,7 @@ public class Controller extends Observable implements Observer {
     private Model model;
     public static String currentUserName;
 
-    private ArrayList<Flights> flightsMatchSearches;
+    private ArrayList<Flight> flightMatchSearches;
 
 
 
@@ -75,23 +75,23 @@ public class Controller extends Observable implements Observer {
         model.deleteUser(userName);
     }
 
-    public ArrayList<Flights> readPendingVacations(String sellerUserName){
-        return model.readPendingVacations(sellerUserName);
+    public ArrayList<Flight> readPendingVacations(String sellerUserName){
+        return model.readPendingFlights(sellerUserName);
     }
 
-    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
-        return model.readConfirmedVacations(buyerUserName);
+    public ArrayList<Flight> readConfirmedVacations(String buyerUserName){
+        return model.readConfirmedFlights(buyerUserName);
     }
 
     public void deletePendingVacation(String vacationID){
-        model.deletePendingVacation(Integer.valueOf(vacationID));
+        model.deleteFlightFlight(Integer.valueOf(vacationID));
     }
     public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
-        model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
+        model.insertConfirmedFlight(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
     }
 
     public void insertPurchasedVacation(int vacationId,String date, String time,String  userName){
-        model.insertPurchasedVacation(vacationId,date,time,userName);
+        model.insertPurchasedFlight(vacationId,date,time,userName);
     }
 
     /**
@@ -116,11 +116,11 @@ public class Controller extends Observable implements Observer {
     }
 
     public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
-        model.insertVacation(origin, destination, price, destinationAirport, dateOfDeparture, dateOfArrival, airlineCompany, numOfTickets, baggage, ticketsType, vacationStyle, seller, originalPrice);
+        model.insertFlight(origin, destination, price, destinationAirport, dateOfDeparture, dateOfArrival, airlineCompany, numOfTickets, baggage, ticketsType, vacationStyle, seller, originalPrice);
     }
 
     public int getVacationID(){
-        return model.getVacationID();
+        return model.getFlightID();
     }
 
 
@@ -139,27 +139,27 @@ public class Controller extends Observable implements Observer {
      * @return
      */
     public boolean setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
-        flightsMatchSearches = new ArrayList<Flights>();
-        flightsMatchSearches = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        if(flightsMatchSearches.size()==0)
+        flightMatchSearches = new ArrayList<Flight>();
+        flightMatchSearches = model.getMatchesFlights(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        if(flightMatchSearches.size()==0)
             return true;
         return false;
     }
 
-    public ArrayList<Flights> getMatchesVacations(){
-        if(flightsMatchSearches !=null)
-            return flightsMatchSearches;
+    public ArrayList<Flight> getMatchesVacations(){
+        if(flightMatchSearches !=null)
+            return flightMatchSearches;
         return null;
     }
 
 
 
     public void deleteAvailableVacation(int vacationId){
-        model.deleteAvailableVacation(vacationId);
+        model.deleteAvailableFlight(vacationId);
     }
 
     public String readPendingVacationBuyer(int VacationId){
-        return model.readPendingVacationBuyer(VacationId);
+        return model.readPendingFlightBuyer(VacationId);
     }
 
     public String getUserName() {
@@ -167,12 +167,12 @@ public class Controller extends Observable implements Observer {
     }
 
     public void insertPendingvacation(int vacationId,String seller, String buyer ){
-        model.insertPendingVacation(vacationId, seller, buyer);
+        model.insertPendingFlight(vacationId, seller, buyer);
     }
 
 
     public void deleteConfirmedVacation(int vacationID) {
-        model.deleteConfirmedVacation(vacationID);
+        model.deleteConfirmedFlight(vacationID);
     }
 
         /**

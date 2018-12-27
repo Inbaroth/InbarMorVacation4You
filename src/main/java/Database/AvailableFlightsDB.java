@@ -1,14 +1,13 @@
 package Database;
 
-import Model.Flights;
-import Model.Flights;
+import Model.Flight;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AvailableVacationsDB extends genericDB {
+public class AvailableFlightsDB extends genericDB {
 
-    public AvailableVacationsDB(String databaseName) {
+    public AvailableFlightsDB(String databaseName) {
         super(databaseName);
     }
 
@@ -20,8 +19,8 @@ public class AvailableVacationsDB extends genericDB {
         // SQLite connection string
         String url ="jdbc:sqlite:" + DBName + ".db";
         // SQL statement for creating a new table
-        String createStatement = "CREATE TABLE IF NOT EXISTS AvailableVacations (\n"
-                + "	VacationId integer PRIMARY KEY,\n"
+        String createStatement = "CREATE TABLE IF NOT EXISTS AvailableFlights (\n"
+                + "	FlightId integer PRIMARY KEY,\n"
                 + "	Origin text NOT NULL,\n"
                 + "	Destination text NOT NULL,\n"
                 + "	Price integer NOT NULL,\n"
@@ -45,8 +44,8 @@ public class AvailableVacationsDB extends genericDB {
         }
     }
 
-    public void insertVacation(Flights Data, int vacationId) throws SQLException {
-        String insertStatement = "INSERT INTO AvailableVacations (VacationId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public void insertVacation(Flight Data, int FlightId) throws SQLException {
+        String insertStatement = "INSERT INTO AvailableFlights (FlightId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
@@ -77,8 +76,8 @@ public class AvailableVacationsDB extends genericDB {
     //maybe there will be another usage for this
     //maybe return by using it all vacations by removing the "WHERE" parts
 //    //implement readUsers method which will display eace available vacation
-    public ArrayList<Flights> readVacation(Flights Data) {
-        ArrayList<Flights> flights = new ArrayList<>();
+    public ArrayList<Flight> readVacation(Flight Data) {
+        ArrayList<Flight> flights = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
         int price = Data.getPrice();
@@ -95,7 +94,7 @@ public class AvailableVacationsDB extends genericDB {
         String vacationStyle = Data.getVacationStyle();
         String seller = Data.getSeller();
         int originalPrice = Data.getOriginalPrice();
-        String sql = "SELECT Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName FROM AvailableVacationas WHERE " +
+        String sql = "SELECT Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName FROM AvailableFlight WHERE " +
                 "Origin='" + origin + "' AND Destionation= '" + destination + "' AND Price='" + price + "' AND DestinationAirport='" + destinationAirport + "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival + "'AND AirlineCompany='" + airlineCompany + "'AND NumberOfTickets='" + numOfTickets + "'AND Baggage='" + baggage + "' AND TicketsType='" + ticketsType + "'AND VacationStyle='" + vacationStyle + "'AND SellerUserName='" + seller + "' AND OriginalPrice= '" +originalPrice + "'";
         String url = "jdbc:sqlite:" + DBName + ".db";
         flights = getVacationsBasedOnQuery(url, sql);
@@ -105,19 +104,19 @@ public class AvailableVacationsDB extends genericDB {
 
 
     //implement readUsers method which will display each available vacation which match given data
-    public ArrayList<Flights> readMatchVacations(Flights Data) {
-        ArrayList<Flights> flights = new ArrayList<>();
+    public ArrayList<Flight> readMatchVacations(Flight Data) {
+        ArrayList<Flight> flights = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
         String dateOfDeparture = Data.getDateOfDeparture();
         String dateOfArrival = Data.getDateOfArrival();
         int numOfTickets = Data.getNumOfTickets();
         String url = "jdbc:sqlite:" + DBName + ".db";
-        String query = "SELECT VacationId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival," +
+        String query = "SELECT FlightId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival," +
                 "AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,sellerUserName," +
-                "OriginalPrice FROM AvailableVacations where Origin=? and Destination=? and DateOfDeparture=? " +
+                "OriginalPrice FROM AvailableFlights where Origin=? and Destination=? and DateOfDeparture=? " +
                 "and DateOfArrival=? and NumberOfTickets>=?";
-        //ArrayList<Flights> flights = new ArrayList<Flights>();
+        //ArrayList<Flight> flights = new ArrayList<Flight>();
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setString(1,origin);
@@ -131,7 +130,7 @@ public class AvailableVacationsDB extends genericDB {
             // loop through the result set
             while (rs.next()) {
                 //creating flights objects only so we could display them, there are not going to be a real availableVacation obects
-                Flights flight = new Flights(rs.getInt("VacationId"),
+                Flight flight = new Flight(rs.getInt("FlightId"),
                         rs.getString("Origin"),
                         rs.getString("Destination"),
                         rs.getInt("Price"),
@@ -146,7 +145,7 @@ public class AvailableVacationsDB extends genericDB {
                         rs.getString("sellerUserName"),
                         rs.getInt("NumberOfTickets"));
                 flights.add(flight);
-                flights = null;
+                flight = null;
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -158,8 +157,8 @@ public class AvailableVacationsDB extends genericDB {
     }
 
 
-//    private ArrayList<Flights> getVacationsBasedOnQuery(String url, String query){
-//       ArrayList<Flights> vacations = new ArrayList<Flights>();
+//    private ArrayList<Flight> getVacationsBasedOnQuery(String url, String query){
+//       ArrayList<Flight> vacations = new ArrayList<Flight>();
 //        try (Connection conn = DriverManager.getConnection(url);
 //             Statement stmt = conn.createStatement();
 //             ResultSet rs = stmt.executeQuery(query)) {
@@ -167,7 +166,7 @@ public class AvailableVacationsDB extends genericDB {
 //            // loop through the result set
 //            while (rs.next()) {
 //                //creating vacation objects only so we could display them, there are not going to be a real availableVacation obects
-//                Flights vacation = new Flights(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
+//                Flight vacation = new Flight(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
 //                vacations.add(vacation);
 //                vacation = null;
 //            }
@@ -178,13 +177,13 @@ public class AvailableVacationsDB extends genericDB {
 //    }
 
 
-    public void deleteFromTable ( int vacationId){
-        String deleteStatement = "DELETE FROM AvailableVacations WHERE VacationId = ?";
+    public void deleteFromTable ( int FlightId){
+        String deleteStatement = "DELETE FROM AvailableFlights WHERE FlightId = ?";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(deleteStatement)) {
             // set the corresponding param
-            pstmt.setInt(1, vacationId);
+            pstmt.setInt(1, FlightId);
             // execute the deleteUser statement
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -196,7 +195,7 @@ public class AvailableVacationsDB extends genericDB {
 
     public int sdf(){
         String url = "jdbc:sqlite:" + DBName + ".db";
-        String query = "SELECT MAX(VacationId) FROM AvailableVacations";
+        String query = "SELECT MAX(FlightId) FROM AvailableFlights";
         try (Connection conn = DriverManager.getConnection(url);
              Statement pstmt = conn.createStatement()) {
                 pstmt.execute(query);

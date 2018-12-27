@@ -1,7 +1,7 @@
 package Model;
 
 import Database.*;
-import Database.AvailableVacationsDB;
+import Database.AvailableFlightsDB;
 //import Database.PurchcasedVacationDB;
 import Database.UsersDB;
 import javafx.scene.control.Alert;
@@ -16,13 +16,13 @@ import java.util.regex.Pattern;
 public class Model extends Observable {
 
     private UsersDB usersDB;
-    public static int vacationID=0;
-    private Flights flights;
-    private AvailableVacationsDB availableVacationsDB;
-    private PurchasedVacationsDB purchasedVacationDB;
-    private PendingVacationsDB pendingVacationsDB;
-    private ConfirmedSaleVacationsDB confirmedSaleVacationsDB;
-    private AllVacationsDB allVacationsDB;
+    public static int flightID =0;
+    private Flight flight;
+    private AvailableFlightsDB availableFlightsDB;
+    private PurchasedFlightsDB purchasedFlightsDB;
+    private PendingFlightsDB pendingFlightsDB;
+    private ConfirmedSaleFlightsDB confirmedSaleFlightsDB;
+    private AllFlightsDB allFlightsDB;
 
 
     //public enum errorType {PASSWORD_USERS_NOT_MATCH, PASSWORDS_NOT_MATCH, USER_NOT_EXIST}
@@ -37,27 +37,27 @@ public class Model extends Observable {
         usersDB.connect("Vacation4U");
         usersDB.createTable();
 
-        this.availableVacationsDB = new AvailableVacationsDB("Vacation4U");
-        availableVacationsDB.connect("Vacation4U");
-        availableVacationsDB.createNewTable();
+        this.availableFlightsDB = new AvailableFlightsDB("Vacation4U");
+        availableFlightsDB.connect("Vacation4U");
+        availableFlightsDB.createNewTable();
 
-        this.purchasedVacationDB = new PurchasedVacationsDB("vacation4U");
-        purchasedVacationDB.connect("Vacation4U");
-        purchasedVacationDB.createNewTable();
+        this.purchasedFlightsDB = new PurchasedFlightsDB("vacation4U");
+        purchasedFlightsDB.connect("Vacation4U");
+        purchasedFlightsDB.createNewTable();
 
-        this.pendingVacationsDB = new PendingVacationsDB("Vacation4U");
-        pendingVacationsDB.connect("Vacation4U");
-        pendingVacationsDB.createNewTable();
+        this.pendingFlightsDB = new PendingFlightsDB("Vacation4U");
+        pendingFlightsDB.connect("Vacation4U");
+        pendingFlightsDB.createNewTable();
 
-        this.confirmedSaleVacationsDB = new ConfirmedSaleVacationsDB("Vacation4U");
-        confirmedSaleVacationsDB.connect("Vacation4U");
-        confirmedSaleVacationsDB.createNewTable();
+        this.confirmedSaleFlightsDB = new ConfirmedSaleFlightsDB("Vacation4U");
+        confirmedSaleFlightsDB.connect("Vacation4U");
+        confirmedSaleFlightsDB.createNewTable();
 
-        this.allVacationsDB = new AllVacationsDB("Vacation4U");
-        allVacationsDB.connect("Vacation4U");
-        allVacationsDB.createNewTable();
+        this.allFlightsDB = new AllFlightsDB("Vacation4U");
+        allFlightsDB.connect("Vacation4U");
+        allFlightsDB.createNewTable();
 
-        vacationID = allVacationsDB.getMaxNumber();
+        flightID = allFlightsDB.getMaxNumber();
     }
 
     /**
@@ -183,23 +183,21 @@ public class Model extends Observable {
         alert("החשבון נמחק בהצלחה", Alert.AlertType.INFORMATION);
     }
 
-    public void deleteAvailableVacation(int vacationId){
-        availableVacationsDB.deleteFromTable(vacationId);
+    public void deleteAvailableFlight(int flightId){
+        availableFlightsDB.deleteFromTable(flightId);
     }
-
-
 
     public String signIn(String userName, String password) {
         String details = readUsers(userName,false);
         boolean isLegal = true;
         if (details != null){
-            String UserDetails = usersDB.read("Users", userName);
+            String UserDetails = usersDB.read(userName);
             String [] detailsArr = UserDetails.split(",");
             if (!password.equals(detailsArr[1])) {
                 return "הסיסמאות אינן תואמות";
             }
             else{
-               return userName;
+                return userName;
 
             }
             //return null;
@@ -207,52 +205,52 @@ public class Model extends Observable {
         return null;
     }
 
-    public void insertPendingVacation(int vacationId,String seller, String buyer ){
+    public void insertPendingFlight(int flightId, String seller, String buyer ){
         try{
-            pendingVacationsDB.insertVacation(vacationId, seller,  buyer);
+            pendingFlightsDB.insertVacation(flightId, seller,  buyer);
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public ArrayList<Flights> readPendingVacations(String sellerUserName){
-        ArrayList<Flights> pendingFlights = new ArrayList<>();
-        pendingFlights = pendingVacationsDB.readPendingVacation(sellerUserName);
+    public ArrayList<Flight> readPendingFlights(String sellerUserName){
+        ArrayList<Flight> pendingFlights = new ArrayList<>();
+        pendingFlights = pendingFlightsDB.readPendingVacation(sellerUserName);
         return pendingFlights;
     }
 
-    public String readPendingVacationBuyer(int vacationId){
-        return pendingVacationsDB.readPendingVacationBuyer(vacationId);
+    public String readPendingFlightBuyer(int flightId){
+        return pendingFlightsDB.readPendingVacationBuyer(flightId);
     }
 
-    public void deletePendingVacation(int vacationID){
-        pendingVacationsDB.deleteVacation(vacationID);
+    public void deleteFlightFlight(int vacationID){
+        pendingFlightsDB.deleteVacation(vacationID);
     }
 
-    public void insertConfirmedVacation(int vacationId,String seller, String buyer,String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
+    public void insertConfirmedFlight(int flightId, String seller, String buyer, String origin, String destination, int price, String dateOfDeparture, String dateOfArrival ){
         try{
-            confirmedSaleVacationsDB.insertVacation(vacationId, seller,  buyer, origin,destination, price, dateOfDeparture,  dateOfArrival);
+            confirmedSaleFlightsDB.insertVacation(flightId, seller,  buyer, origin,destination, price, dateOfDeparture,  dateOfArrival);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
         }
     }
 
-    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
-        ArrayList<Flights> confirmedFlights = new ArrayList<>();
-        confirmedFlights = confirmedSaleVacationsDB.readConfirmedVacations(buyerUserName);
+    public ArrayList<Flight> readConfirmedFlights(String buyerUserName){
+        ArrayList<Flight> confirmedFlights = new ArrayList<>();
+        confirmedFlights = confirmedSaleFlightsDB.readConfirmedVacations(buyerUserName);
         return confirmedFlights;
     }
 
-    public void deleteConfirmedVacation(int vacationID){
-        confirmedSaleVacationsDB.deleteVacation(vacationID);
+    public void deleteConfirmedFlight(int flightID){
+        confirmedSaleFlightsDB.deleteVacation(flightID);
     }
 
-    public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
-        vacationID++;
-        Flights flights = new Flights(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+    public void insertFlight(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
+        flightID++;
+        Flight flight = new Flight(flightID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
-            availableVacationsDB.insertVacation(flights, vacationID);
-            allVacationsDB.insertVacation(flights, vacationID);
+            availableFlightsDB.insertVacation(flight, flightID);
+            allFlightsDB.insertFlight(flight, flightID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -261,12 +259,11 @@ public class Model extends Observable {
         }
     }
 
+    private void insertAvailableFlight(int flightId, String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
 
-    private void insertAvailableVacation(int vactionId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
-
-        Flights flights = new Flights(vactionId, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+        Flight flight = new Flight(flightId, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
-            availableVacationsDB.insertVacation(flights, vacationID);
+            availableFlightsDB.insertVacation(flight, flightID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -274,11 +271,9 @@ public class Model extends Observable {
             //check in GUI that all values aren't null ,don't handle this here
         }
     }
-
-
 
     /**
-     * returns list of all match flights from DB based on given data (as the parameters in signature)
+     * returns list of all match flight from DB based on given data (as the parameters in signature)
      * @param origin
      * @param destination
      * @param price
@@ -293,23 +288,24 @@ public class Model extends Observable {
      * @param seller
      * @return
      */
-    public ArrayList<Flights> getVacations(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int OriginalPrice){
-        ArrayList<Flights> matchesFlights = new ArrayList<Flights>();
-        Flights flights = new Flights(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
-        matchesFlights = availableVacationsDB.readVacation(flights);
+    public ArrayList<Flight> getFlights(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int OriginalPrice){
+        ArrayList<Flight> matchesFlights = new ArrayList<Flight>();
+        Flight flight = new Flight(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
+        matchesFlights = availableFlightsDB.readVacation(flight);
         return matchesFlights;
     }
 
-    public ArrayList<Flights> getMatchesVacations(String origin, String destination, String dateOfDeparture, String dateOfArrival, int numOfTickets){
-        ArrayList<Flights> matchesFlights = new ArrayList<Flights>();
-        Flights flights = new Flights(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        matchesFlights = availableVacationsDB.readMatchVacations(flights);
+    public ArrayList<Flight> getMatchesFlights(String origin, String destination, String dateOfDeparture, String dateOfArrival, int numOfTickets){
+        ArrayList<Flight> matchesFlights = new ArrayList<Flight>();
+        Flight flight = new Flight(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        matchesFlights = availableFlightsDB.readMatchVacations(flight);
         return matchesFlights;
     }
 
-    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName){
+    public void insertPurchasedFlight(int flightId, String date, String time, String  userName){
         try{
-            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName);
+           // purchasedFlightsDB.insertVacation( flightId, date,  time,  userName);
+            purchasedFlightsDB.insertFlight(new PurchasedFlight(flightId,date,time,userName));
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -318,8 +314,8 @@ public class Model extends Observable {
         }
     }
 
-    public int getVacationID() {
-        return vacationID;
+    public int getFlightID() {
+        return flightID;
     }
 
     private void alert(String messageText, Alert.AlertType alertType){
