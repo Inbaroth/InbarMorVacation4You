@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -25,14 +26,10 @@ public class Insert extends HomePage implements Observer {
     public javafx.scene.control.TextField txtfld_lastName;
     public javafx.scene.control.TextField txtfld_Address;
     public javafx.scene.control.TextField txtfld_email;
-    public javafx.scene.control.TextField txtfld_creditCardNumber;
-    public javafx.scene.control.TextField txtfld_CSV;
     public javafx.scene.image.ImageView pictureView;
     public javafx.scene.control.ComboBox combo_box_day;
     public javafx.scene.control.ComboBox combo_box_month;
     public javafx.scene.control.ComboBox combo_box_year;
-    public javafx.scene.control.ComboBox combo_box_yearForCredit;
-    public javafx.scene.control.ComboBox combo_box_monthForCredit;
     //</editor-fold>
 
 
@@ -49,14 +46,13 @@ public class Insert extends HomePage implements Observer {
         String firstName = txtfld_firstName.getText();
         String lastName = txtfld_lastName.getText();
         String address = txtfld_Address.getText();
-        String creditCardNumber = txtfld_creditCardNumber.getText();
-        String CSC = txtfld_CSV.getText();
 
         if (!validation()){
             alert("שדה אחד או יותר ריקים", Alert.AlertType.INFORMATION);
         }
         else{
-            String ans = controller.insertUser(userName,password,confirmPassword,firstName,lastName,getBirthday(),address,email,creditCardNumber,getExpirationTime(),CSC);
+            User user = new User(userName,password,firstName,lastName,getBirthday(),address,email,null);
+            String ans = controller.insertUser(user,confirmPassword);
             if (!ans.equals("התחברת בהצלחה"))
                 alert(ans, Alert.AlertType.ERROR);
             else {
@@ -90,10 +86,6 @@ public class Insert extends HomePage implements Observer {
             return false;
         if (txtfld_email.getText() == null || txtfld_email.getText().trim().isEmpty())
             return false;
-        if (txtfld_creditCardNumber.getText() == null || txtfld_creditCardNumber.getText().trim().isEmpty())
-            return false;
-        if (txtfld_CSV.getText() == null || txtfld_CSV.getText().trim().isEmpty())
-            return false;
         if (pictureView == null)
             return false;
         return true;
@@ -110,15 +102,6 @@ public class Insert extends HomePage implements Observer {
         return day  + "/" + month + "/" + year;
     }
 
-    /**
-     * get the user expiration credit card time
-     * @return the value of the combo_box_monthForCredit, combo_box_yearForCredit in the format: MM/YYYY
-     */
-    private String getExpirationTime(){
-        String month = (String) combo_box_monthForCredit.getValue();
-        String year = (String) combo_box_yearForCredit.getValue();
-        return month + "/" + year;
-    }
 
     /**
      * if the user clicked on cancel, close the program

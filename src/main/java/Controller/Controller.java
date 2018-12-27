@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Model;
 import Model.Vacation;
-import javafx.scene.chart.ValueAxis;
+import Model.User;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -31,16 +31,11 @@ public class Controller extends Observable implements Observer {
 
     /**
      *
-     * @param userName
-     * @param password
-     * @param birthday
-     * @param firstName
-     * @param lastName
-     * @param address
+     * @param user
      * This method insert a new row to the data base with the given parameters
      */
-    public String insertUser (String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSC) {
-        return model.insert(userName,password,confirmPassword,birthday,firstName,lastName,address,email, creditCardNumber,expirationTime,CSC);
+    public String insertUser (User user, String confirmPassword) {
+        return model.insert(user,confirmPassword);
 
     }
 

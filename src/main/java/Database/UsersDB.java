@@ -1,5 +1,7 @@
 package Database;
 
+import Model.User;
+
 import java.sql.*;
 
 public class UsersDB extends genericDB{
@@ -25,10 +27,7 @@ public class UsersDB extends genericDB{
                 + "	birthday text,\n"
                 + "	address text,\n"
                 + "	email text,\n"
-                + "	profilePicture text,\n"
-                + "	credit_card_number text,\n"
-                + "	expiration_time text,\n"
-                + " CSV text NOT NULL\n"
+                + " profilePicture text NOT NULL\n"
                 + ");";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
@@ -44,10 +43,10 @@ public class UsersDB extends genericDB{
 
     /**
      * This method insert a new row to Users table with the given data
-     * @param data data of the new row which need to be added
+     * @param user  data of the new row which need to be added
      */
-    public void insertIntoTable(String data){
-        String [] values = data.split(",");
+    public void insertIntoTable(User user){
+
         String insertStatement = "INSERT INTO Users (user_name, password, first_name, last_name, birthday, address, email, profilePicture, credit_card_number, expiration_time, CSV) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
@@ -55,17 +54,14 @@ public class UsersDB extends genericDB{
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(insertStatement)) {
             // set the corresponding parameters
-            pstmt.setString(1,values[0]); // user name
-            pstmt.setString(2,values[1]); // password
-            pstmt.setString(3,values[2]); // first name
-            pstmt.setString(4,values[3]); // last name
-            pstmt.setString(5,values[4]); // birthday
-            pstmt.setString(6,values[5]); // address
-            pstmt.setString(7,values[6]); // email
+            pstmt.setString(1,user.getUserName()); // user name
+            pstmt.setString(2,user.getPassword()); // password
+            pstmt.setString(3,user.getFirstName()); // first name
+            pstmt.setString(4,user.getLastName()); // last name
+            pstmt.setString(5,user.getBirthday()); // birthday
+            pstmt.setString(6,user.getAddress()); // address
+            pstmt.setString(7,user.getEmail()); // email
             pstmt.setString(8,"picture"); // picture
-            pstmt.setString(9,values[7]); // credit card number
-            pstmt.setString(10,values[8]); // expiration time
-            pstmt.setString(11,values[9]); // CSC
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -75,11 +71,10 @@ public class UsersDB extends genericDB{
 
     /**
      * This method search and return the row in the database which is equal to the given userName
-     * @param tableName
      * @param userName - user name to search by
      * @return the founded row
      */
-    public String read (String tableName, String userName){
+    public String read (String userName){
 
         String selectQuery = "SELECT * FROM users WHERE user_name = ?";
 
@@ -100,10 +95,7 @@ public class UsersDB extends genericDB{
                         rs.getString("birthday") + "," +
                         rs.getString("address") + "," +
                         rs.getString("email") + "," +
-                        rs.getString("profilePicture") + "," +
-                        rs.getString("credit_card_number") + "," +
-                        rs.getString("expiration_time") + "," +
-                        rs.getString("CSV");
+                        rs.getString("profilePicture");
                 return res;
             }
         } catch (SQLException e) {
@@ -127,10 +119,7 @@ public class UsersDB extends genericDB{
                 + "birthday = ? ,"
                 + "address = ? ,"
                 + "email = ? ,"
-                + "profilePicture = ? ,"
-                + "credit_card_number = ? ,"
-                + "expiration_time = ? ,"
-                + "CSV= ?"
+                + "profilePicture= ?"
                 + "WHERE user_name = ?";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
@@ -147,9 +136,6 @@ public class UsersDB extends genericDB{
             pstmt.setString(6,values[5]); // address
             pstmt.setString(7,values[6]); // email
             pstmt.setString(8,"picture"); // picture
-            pstmt.setString(9,values[7]); // credit card number
-            pstmt.setString(10,values[8]); // exiration time
-            pstmt.setString(11,values[9]); // CSV
             pstmt.setString(12, userName); // user name - primary key
             pstmt.executeUpdate();
         } catch (SQLException e) {

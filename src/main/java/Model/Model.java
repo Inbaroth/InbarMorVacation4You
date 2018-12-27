@@ -64,34 +64,25 @@ public class Model extends Observable {
 
     /**
      * This method insert to the database a new row with the given parameters
-     * @param userName
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param birthday
-     * @param address
+     * @param user
+     * @param confirmPassword
      * @return true if insert succeeded, otherwise return false
      */
-    public String insert(String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSV) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
+    public String insert(User user, String confirmPassword) {
 
         // Checking if the user name already exist in the data base
-        if (readUsers(userName, true) != null){
+        if (readUsers(user.getUserName(), true) != null){
             return "שם המשתמש שהזנת כבר קיים";
         }
 
         // Checking that both password text fields are equal
-        else if (!password.equals(confirmPassword)){
+        else if (!user.getPassword().equals(confirmPassword)){
             return "הסיסמאות אינן תואמות";
         }
-        else if(!isValidEmail(email))
+        else if(!isValidEmail(user.getEmail()))
             return "האימייל לא בפורמט הנכון";
-        else if(!isValidCreditCardNumber(creditCardNumber))
-            return "מספר כרטיס אשראי לא תקין, אנא הזן מספר בן 16 ספרות";
-        else if(!isValidCSVNumber(CSV))
-            return "מספר CSV לא תקין, אנא הזן מספר בן 3 ספרות";
         else{
-            usersDB.insertIntoTable(data);
+            usersDB.insertIntoTable(user);
             return "התחברת בהצלחה";
         }
     }
@@ -138,8 +129,8 @@ public class Model extends Observable {
      * @return
      */
     public String readUsers(String userName, Boolean isInsert) {
-        if (usersDB.read("Users", userName) != null){
-            return usersDB.read("Users", userName);
+        if (usersDB.read(userName) != null){
+            return usersDB.read(userName);
         }
         else if (!isInsert){
             alert("שם משתמש לא קיים במערכת", Alert.AlertType.ERROR);
@@ -195,7 +186,7 @@ public class Model extends Observable {
         String details = readUsers(userName,false);
         boolean isLegal = true;
         if (details != null){
-            String UserDetails = usersDB.read("Users", userName);
+            String UserDetails = usersDB.read(userName);
             String [] detailsArr = UserDetails.split(",");
             if (!password.equals(detailsArr[1])) {
                 return "הסיסמאות אינן תואמות";
