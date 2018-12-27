@@ -68,7 +68,7 @@ public class HomePage implements Observer {
         tf_destination.setTooltip(tooltip);
     }
     public void create(ActionEvent actionEvent) {
-        newStage("insert.fxml", "", insertWindow, 721, 619,controller);
+        newStage("insert.fxml", "", insertWindow, 493, 583,controller);
     }
 
     public void signIn(ActionEvent actionEvent){
