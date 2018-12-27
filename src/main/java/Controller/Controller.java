@@ -44,22 +44,13 @@ public class Controller extends Observable implements Observer {
      * @param userName
      * @return the row
      */
-    public String readUsers(String userName, Boolean isInsert){
+    public User readUsers(String userName, Boolean isInsert){
         return model.readUsers(userName,isInsert);
     }
 
-    /**
-     *
-     * @param userName
-     * @param password
-     * @param confirmPassword
-     * @param birthday
-     * @param firstName
-     * @param lastName
-     * @param address
-     */
-    public String updateDB(String oldUserName, String userName, String password, String confirmPassword, String birthday, String firstName, String lastName, String address, String email, String creditCardNumber, String expirationTime,String CSV){
-        return model.updateUser(oldUserName,userName,password,confirmPassword,birthday,firstName,lastName,address,email,creditCardNumber,expirationTime,CSV);
+
+    public String updateDB(String oldUserName, User user, String confirmMessage){
+        return model.updateUser(oldUserName,user,confirmMessage);
     }
 
     /**
@@ -134,16 +125,16 @@ public class Controller extends Observable implements Observer {
      * @return
      */
     public boolean setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
-        vacationMatchSearch = new ArrayList<Vacation>();
-        vacationMatchSearch = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        if(vacationMatchSearch.size()==0)
+        flightsMatchSearches = new ArrayList<Flights>();
+        flightsMatchSearches = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        if(flightsMatchSearches.size()==0)
             return true;
         return false;
     }
 
-    public ArrayList<Vacation> getMatchesVacations(){
-        if(vacationMatchSearch!=null)
-            return vacationMatchSearch;
+    public ArrayList<Flights> getMatchesVacations(){
+        if(flightsMatchSearches !=null)
+            return flightsMatchSearches;
         return null;
     }
 

@@ -42,7 +42,7 @@ public class UserHomePage extends HomePage {
 
 
     public void update(ActionEvent actionEvent) {
-        newStage("Update.fxml", "עדכון פרטים אישיים", updateWindow, 721, 619,controller);
+        newStage("Update.fxml", "עדכון פרטים אישיים", updateWindow, 583, 493,controller);
     }
 
     public void delete(ActionEvent actionEvent) {

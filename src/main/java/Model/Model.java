@@ -128,7 +128,7 @@ public class Model extends Observable {
      * @param userName
      * @return
      */
-    public String readUsers(String userName, Boolean isInsert) {
+    public User readUsers(String userName, Boolean isInsert) {
         if (usersDB.read(userName) != null){
             return usersDB.read(userName);
         }
@@ -140,28 +140,18 @@ public class Model extends Observable {
 
     /**
      * This method updateUser the database with the given @param data
-     * @param userName
-     * @param password
-     * @param confirmPassword
-     * @param firstName
-     * @param lastName
-     * @param birthday
-     * @param address
+     * @param user
+     * @param oldUserName
      */
-    public String updateUser(String oldUserName, String userName, String password, String confirmPassword,  String firstName, String lastName, String birthday, String address, String email, String creditCardNumber, String expirationTime,String CSV) {
-        String data = userName  + "," + password + "," + firstName + "," + lastName + "," + birthday + "," + address + "," + email + "," + creditCardNumber + "," + expirationTime + "," + CSV;
+    public String updateUser(String oldUserName, User user, String confirmPassword) {
         // Checking that both password text fields are equal
-        if(!password.equals(confirmPassword)){
+        if(!user.getPassword().equals(confirmPassword)){
             return "הסיסמאות אינן תואמות";
         }
-        else if(!isValidEmail(email))
+        else if(!isValidEmail(user.getEmail()))
             return "האימייל לא בפורמט הנכון";
-        else if(!isValidCreditCardNumber(creditCardNumber))
-            return "מספר כרטיס אשראי לא תקין, אנא הזן מספר בן 16 ספרות";
-        else if(!isValidCSVNumber(CSV))
-            return "מספר CSV לא תקין, אנא הזן מספר בן 3 ספרות";
         else{
-            usersDB.updateDatabase(data,oldUserName);
+            usersDB.updateDatabase(user,oldUserName);
             return "פרטי החשבון עודכנו בהצלחה";
         }
 
@@ -183,17 +173,14 @@ public class Model extends Observable {
 
 
     public String signIn(String userName, String password) {
-        String details = readUsers(userName,false);
+        User user = readUsers(userName,false);
         boolean isLegal = true;
-        if (details != null){
-            String UserDetails = usersDB.read(userName);
-            String [] detailsArr = UserDetails.split(",");
-            if (!password.equals(detailsArr[1])) {
+        if (user != null){
+            if (!password.equals(user.getPassword())) {
                 return "הסיסמאות אינן תואמות";
             }
             else{
                return userName;
-
             }
             //return null;
         }

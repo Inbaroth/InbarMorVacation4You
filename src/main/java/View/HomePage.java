@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -68,7 +69,7 @@ public class HomePage implements Observer {
         tf_destination.setTooltip(tooltip);
     }
     public void create(ActionEvent actionEvent) {
-        newStage("insert.fxml", "", insertWindow, 493, 583,controller);
+        newStage("insert.fxml", "", insertWindow, 583, 493,controller);
     }
 
     public void signIn(ActionEvent actionEvent){
@@ -114,18 +115,10 @@ public class HomePage implements Observer {
         controller.addObserver(windowName);
 
         if (windowName instanceof Update){
-            String userDetails = controller.readUsers(controller.getUserName(),false);
+            User userDetails = controller.readUsers(controller.getUserName(),false);
             updateWindow = (Update) windowName;
             updateWindow.setUserDetails(userDetails);
         }
-
-        if (windowName instanceof Payment){
-            String userDetails = controller.readUsers(controller.getUserName(),false);
-            payment = (Payment) windowName;
-            payment.setDetails(userDetails);
-
-        }
-
 
 
     }

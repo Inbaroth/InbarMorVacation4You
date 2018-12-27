@@ -47,7 +47,7 @@ public class UsersDB extends genericDB{
      */
     public void insertIntoTable(User user){
 
-        String insertStatement = "INSERT INTO Users (user_name, password, first_name, last_name, birthday, address, email, profilePicture, credit_card_number, expiration_time, CSV) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String insertStatement = "INSERT INTO Users (user_name, password, first_name, last_name, birthday, address, email, profilePicture) VALUES (?,?,?,?,?,?,?,?)";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
 
@@ -74,7 +74,7 @@ public class UsersDB extends genericDB{
      * @param userName - user name to search by
      * @return the founded row
      */
-    public String read (String userName){
+    public User read (String userName){
 
         String selectQuery = "SELECT * FROM users WHERE user_name = ?";
 
@@ -88,15 +88,14 @@ public class UsersDB extends genericDB{
             ResultSet rs  = pstmt.executeQuery();
 
             while (rs.next()) {
-                String res = rs.getString("user_name") + "," +
-                        rs.getString("password") + "," +
-                        rs.getString("first_name") + "," +
-                        rs.getString("last_name") + "," +
-                        rs.getString("birthday") + "," +
-                        rs.getString("address") + "," +
-                        rs.getString("email") + "," +
-                        rs.getString("profilePicture");
-                return res;
+                User user = new User(rs.getString("user_name"), rs.getString("password"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("birthday"),
+                        rs.getString("address"),
+                        rs.getString("email"),
+                        null);
+                return user;
             }
         } catch (SQLException e) {
             return null;
@@ -107,11 +106,9 @@ public class UsersDB extends genericDB{
     /**
      * This method update the row in the data base where the user name is equal to the given user name in the
      * data string
-     * @param data - all the parameters needed to be updated
+     * @param user - all the parameters needed to be updated
      */
-    public void updateDatabase(String data, String userName) {
-        // add fields!!!!
-        String[] values = data.split(",");
+    public void updateDatabase(User user, String userName) {
         String updatetatement = "UPDATE Users SET user_name = ?,"
                 + "password = ? ,"
                 + "first_name = ? ,"
@@ -128,13 +125,13 @@ public class UsersDB extends genericDB{
              PreparedStatement pstmt = conn.prepareStatement(updatetatement)) {
 
             // set the corresponding param
-            pstmt.setString(1, values[0]); // user name
-            pstmt.setString(2, values[1]); // password
-            pstmt.setString(3, values[2]); // first name
-            pstmt.setString(4, values[3]); // last name
-            pstmt.setString(5, values[4]); // birthday
-            pstmt.setString(6,values[5]); // address
-            pstmt.setString(7,values[6]); // email
+            pstmt.setString(1, user.getUserName()); // user name
+            pstmt.setString(2, user.getPassword()); // password
+            pstmt.setString(3, user.getFirstName()); // first name
+            pstmt.setString(4, user.getLastName()); // last name
+            pstmt.setString(5, user.getBirthday()); // birthday
+            pstmt.setString(6, user.getAddress()); // address
+            pstmt.setString(7, user.getEmail()); // email
             pstmt.setString(8,"picture"); // picture
             pstmt.setString(12, userName); // user name - primary key
             pstmt.executeUpdate();
@@ -147,7 +144,7 @@ public class UsersDB extends genericDB{
      * This method deleteUser a row from the data base where the user name is equal to given userName param
      * @param userName
      */
-    public void deleteFromTable ( String userName){
+    public void deleteFromTable (String userName){
         String deleteStatement = "DELETE FROM Users WHERE user_name = ?";
 
         String url = "jdbc:sqlite:" + DBName + ".db";
