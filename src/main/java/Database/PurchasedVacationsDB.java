@@ -1,7 +1,5 @@
 package Database;
 
-import Model.Vacation;
-
 import java.sql.*;
 
 public class PurchasedVacationsDB extends genericDB{

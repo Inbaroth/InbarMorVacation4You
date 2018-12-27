@@ -1,12 +1,11 @@
 package View;
 
 import Controller.Controller;
-import Model.Vacation;
+import Model.Flights;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -19,7 +18,7 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
     private Controller controller;
     private Stage stage;
     private SignIn signInWindow;
-    ArrayList<Vacation> matchVacations;
+    ArrayList<Flights> matchFlights;
     public VBox vb_Buttons;
     public VBox vb_details;
     public Label l_originAndDestination;
@@ -28,28 +27,28 @@ public class DisplayVacations extends HomePage implements EventHandler<ActionEve
     public void setController(Controller controller, Stage stage){
         this.controller = controller;
         this.stage = stage;
-        matchVacations = new ArrayList<>();
-        matchVacations = controller.getMatchesVacations();
+        matchFlights = new ArrayList<>();
+        matchFlights = controller.getMatchesVacations();
         offerVacations();
     }
              //(ActionEvent event)
     void offerVacations() {
         //check this is the right order HERE
-        l_originAndDestination.setText("מ"+matchVacations.get(0).getOrigin() + " אל "+matchVacations.get(0).getDestination() );
-        l_dates.setText(matchVacations.get(0).getDateOfDeparture() + "-" +matchVacations.get(0).getDateOfArrival() );
+        l_originAndDestination.setText("מ"+ matchFlights.get(0).getOrigin() + " אל "+ matchFlights.get(0).getDestination() );
+        l_dates.setText(matchFlights.get(0).getDateOfDeparture() + "-" + matchFlights.get(0).getDateOfArrival() );
         ArrayList<Button> buttonlist = new ArrayList<Button>(); //our Collection to hold newly created Buttons
         String buttonTitle = "רכוש חופשה"; //extract button text, adapt the String to the columnname that you are interested in
         ArrayList<Label> detailsLabels = new ArrayList<Label>();
         //change this to flight details
-        for (Vacation vacation: matchVacations) {
+        for (Flights flights : matchFlights) {
             Button btn = new Button(buttonTitle);
-            btn.setId(String.valueOf(vacation.getVacationId() + "," + vacation.getSeller()));
+            btn.setId(String.valueOf(flights.getVacationId() + "," + flights.getSeller()));
             btn.setFont(new Font("Calibri Light", 15));
             btn.setPrefHeight(38.0);
             btn.setOnAction(this);
            // btn.setTextFill();
             buttonlist.add(btn);
-            String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + " מס' כרטיסים: " + vacation.getNumOfTickets() + "\n" +  " כבודה:"+ vacation.getBaggage() + " סוג כרטיס: " + vacation.getTicketsType() + "\n" + " מחיר: "+ vacation.getPrice();
+            String details = "שדה תעופה ביעד:"+ flights.getDestinationAirport() + " מס' כרטיסים: " + flights.getNumOfTickets() + "\n" +  " כבודה:"+ flights.getBaggage() + " סוג כרטיס: " + flights.getTicketsType() + "\n" + " מחיר: "+ flights.getPrice();
             Label lbl = new Label();
             lbl.setText(details);
             lbl.setFont(new Font("Calibri Light", 15));

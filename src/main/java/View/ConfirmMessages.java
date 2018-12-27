@@ -1,7 +1,7 @@
 package View;
 
 import Controller.Controller;
-import Model.Vacation;
+import Model.Flights;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -30,12 +30,12 @@ public class ConfirmMessages extends HomePage implements EventHandler<ActionEven
     }
 
     public void setMessages() {
-        ArrayList<Vacation> pendingVacations = controller.readConfirmedVacations(controller.getUserName());
+        ArrayList<Flights> pendingFlights = controller.readConfirmedVacations(controller.getUserName());
         this.buttonsList = new ArrayList<>();
         this.labelList = new ArrayList<>();
-        for (Vacation vacation : pendingVacations) {
-            String vacationID = String.valueOf(vacation.getVacationId());
-            String details = "שדה תעופה ביעד:"+vacation.getDestination() + "\n" + " מחיר: "+ vacation.getNumOfTickets();
+        for (Flights flights : pendingFlights) {
+            String vacationID = String.valueOf(flights.getVacationId());
+            String details = "שדה תעופה ביעד:"+ flights.getDestination() + "\n" + " מחיר: "+ flights.getNumOfTickets();
             Button button = new Button("קנה עכשיו");
             button.setId(vacationID);
             button.setOnAction(this);

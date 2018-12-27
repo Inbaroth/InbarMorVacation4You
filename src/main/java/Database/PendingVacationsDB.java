@@ -1,6 +1,6 @@
 package Database;
 
-import Model.Vacation;
+import Model.Flights;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,8 +72,8 @@ public class PendingVacationsDB extends genericDB {
      * @param sellerUserName
      * @return
      */
-    public ArrayList<Vacation> readPendingVacation(String sellerUserName){
-        ArrayList<Vacation> vacations = new ArrayList<Vacation>();
+    public ArrayList<Flights> readPendingVacation(String sellerUserName){
+        ArrayList<Flights> flights = new ArrayList<Flights>();
         String sql = "SELECT VacationId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany, NumberOfTickets,Baggage, TicketsType,VacationStyle," +
                 "SellerUserName,OriginalPrice, FROM AvailableVacations WHERE SellerUserName " +
                 "IN (SELECT SellerUserName FROM PendingVacations  WHERE " +
@@ -87,8 +87,8 @@ public class PendingVacationsDB extends genericDB {
                 stmt.setString(1,sellerUserName);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()){
-                    //creating vacation objects only so we could display them, there are not going to be a real availableVacation obects
-                    Vacation vacation = new Vacation(rs.getInt("VacationId"),
+                    //creating flights objects only so we could display them, there are not going to be a real availableVacation obects
+                    Flights flight= new Flights(rs.getInt("VacationId"),
                             rs.getString("Origin"),
                             rs.getString("Destination"),
                             rs.getInt("Price"),
@@ -102,15 +102,15 @@ public class PendingVacationsDB extends genericDB {
                             rs.getString("VacationStyle"),
                             rs.getString("sellerUserName"),
                             rs.getInt("NumberOfTickets"));
-                    vacations.add(vacation);
-                    vacation = null;
+                    flights.add(flight);
+                    flights = null;
                 }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //vacations = getVacationsBasedOnQuery(url, sql);
-        return vacations;
+        //flights = getVacationsBasedOnQuery(url, sql);
+        return flights;
     }
 
 

@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.regex.Pattern;
 
@@ -19,7 +17,7 @@ public class Model extends Observable {
 
     private UsersDB usersDB;
     public static int vacationID=0;
-    private Vacation vacation;
+    private Flights flights;
     private AvailableVacationsDB availableVacationsDB;
     private PurchasedVacationsDB purchasedVacationDB;
     private PendingVacationsDB pendingVacationsDB;
@@ -217,10 +215,10 @@ public class Model extends Observable {
         }
     }
 
-    public ArrayList<Vacation> readPendingVacations(String sellerUserName){
-        ArrayList<Vacation> pendingVacations = new ArrayList<>();
-        pendingVacations = pendingVacationsDB.readPendingVacation(sellerUserName);
-        return pendingVacations;
+    public ArrayList<Flights> readPendingVacations(String sellerUserName){
+        ArrayList<Flights> pendingFlights = new ArrayList<>();
+        pendingFlights = pendingVacationsDB.readPendingVacation(sellerUserName);
+        return pendingFlights;
     }
 
     public String readPendingVacationBuyer(int vacationId){
@@ -239,10 +237,10 @@ public class Model extends Observable {
         }
     }
 
-    public ArrayList<Vacation> readConfirmedVacations(String buyerUserName){
-        ArrayList<Vacation> confirmedVacations = new ArrayList<>();
-        confirmedVacations = confirmedSaleVacationsDB.readConfirmedVacations(buyerUserName);
-        return confirmedVacations;
+    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
+        ArrayList<Flights> confirmedFlights = new ArrayList<>();
+        confirmedFlights = confirmedSaleVacationsDB.readConfirmedVacations(buyerUserName);
+        return confirmedFlights;
     }
 
     public void deleteConfirmedVacation(int vacationID){
@@ -251,10 +249,10 @@ public class Model extends Observable {
 
     public void insertVacation(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
         vacationID++;
-        Vacation vacation = new Vacation(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+        Flights flights = new Flights(vacationID, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
-            availableVacationsDB.insertVacation( vacation, vacationID);
-            allVacationsDB.insertVacation(vacation, vacationID);
+            availableVacationsDB.insertVacation(flights, vacationID);
+            allVacationsDB.insertVacation(flights, vacationID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -266,9 +264,9 @@ public class Model extends Observable {
 
     private void insertAvailableVacation(int vactionId,String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int originalPrice){
 
-        Vacation vacation = new Vacation(vactionId, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
+        Flights flights = new Flights(vactionId, origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, originalPrice);
         try {
-            availableVacationsDB.insertVacation( vacation, vacationID);
+            availableVacationsDB.insertVacation(flights, vacationID);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong
@@ -280,7 +278,7 @@ public class Model extends Observable {
 
 
     /**
-     * returns list of all match vacation from DB based on given data (as the parameters in signature)
+     * returns list of all match flights from DB based on given data (as the parameters in signature)
      * @param origin
      * @param destination
      * @param price
@@ -295,18 +293,18 @@ public class Model extends Observable {
      * @param seller
      * @return
      */
-    public ArrayList<Vacation> getVacations(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller,int OriginalPrice){
-        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
-        Vacation vacation = new Vacation(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
-        matchesVacations = availableVacationsDB.readVacation( vacation);
-        return matchesVacations;
+    public ArrayList<Flights> getVacations(String origin, String destination, int price, String destinationAirport, String dateOfDeparture, String dateOfArrival, String airlineCompany, int numOfTickets, String baggage, String ticketsType, String vacationStyle, String seller, int OriginalPrice){
+        ArrayList<Flights> matchesFlights = new ArrayList<Flights>();
+        Flights flights = new Flights(origin,  destination,  price,  destinationAirport,  dateOfDeparture,  dateOfArrival,  airlineCompany,  numOfTickets,  baggage,  ticketsType,  vacationStyle,  seller, OriginalPrice);
+        matchesFlights = availableVacationsDB.readVacation(flights);
+        return matchesFlights;
     }
 
-    public ArrayList<Vacation> getMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
-        ArrayList<Vacation> matchesVacations = new ArrayList<Vacation>();
-        Vacation vacation = new Vacation(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        matchesVacations = availableVacationsDB.readMatchVacations(vacation);
-        return matchesVacations;
+    public ArrayList<Flights> getMatchesVacations(String origin, String destination, String dateOfDeparture, String dateOfArrival, int numOfTickets){
+        ArrayList<Flights> matchesFlights = new ArrayList<Flights>();
+        Flights flights = new Flights(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        matchesFlights = availableVacationsDB.readMatchVacations(flights);
+        return matchesFlights;
     }
 
     public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv){

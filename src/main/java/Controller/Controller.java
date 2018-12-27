@@ -1,8 +1,8 @@
 package Controller;
 
 import Model.Model;
-import Model.Vacation;
-import javafx.scene.chart.ValueAxis;
+import Model.Flights;
+import Model.User;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Controller extends Observable implements Observer {
     private Model model;
     public static String currentUserName;
 
-    private ArrayList<Vacation> vacationMatchSearch;
+    private ArrayList<Flights> flightsMatchSearches;
 
 
 
@@ -75,11 +75,11 @@ public class Controller extends Observable implements Observer {
         model.deleteUser(userName);
     }
 
-    public ArrayList<Vacation> readPendingVacations(String sellerUserName){
+    public ArrayList<Flights> readPendingVacations(String sellerUserName){
         return model.readPendingVacations(sellerUserName);
     }
 
-    public ArrayList<Vacation> readConfirmedVacations(String buyerUserName){
+    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
         return model.readConfirmedVacations(buyerUserName);
     }
 
@@ -139,16 +139,16 @@ public class Controller extends Observable implements Observer {
      * @return
      */
     public boolean setMatchesVacations(String origin, String destination, String dateOfDeparture,String dateOfArrival,int numOfTickets){
-        vacationMatchSearch = new ArrayList<Vacation>();
-        vacationMatchSearch = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
-        if(vacationMatchSearch.size()==0)
+        flightsMatchSearches = new ArrayList<Flights>();
+        flightsMatchSearches = model.getMatchesVacations(origin,  destination,  dateOfDeparture,  dateOfArrival,  numOfTickets);
+        if(flightsMatchSearches.size()==0)
             return true;
         return false;
     }
 
-    public ArrayList<Vacation> getMatchesVacations(){
-        if(vacationMatchSearch!=null)
-            return vacationMatchSearch;
+    public ArrayList<Flights> getMatchesVacations(){
+        if(flightsMatchSearches !=null)
+            return flightsMatchSearches;
         return null;
     }
 

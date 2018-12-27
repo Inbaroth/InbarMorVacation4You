@@ -1,8 +1,7 @@
 package Database;
 
-import Controller.Controller;
-import Model.Model;
-import Model.Vacation;
+import Model.Flights;
+import Model.Flights;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class AvailableVacationsDB extends genericDB {
         }
     }
 
-    public void insertVacation(Vacation Data, int vacationId) throws SQLException {
+    public void insertVacation(Flights Data, int vacationId) throws SQLException {
         String insertStatement = "INSERT INTO AvailableVacations (VacationId,Origin,Destination,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName,OriginalPrice) VAlUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection conn = DriverManager.getConnection(url);
@@ -78,8 +77,8 @@ public class AvailableVacationsDB extends genericDB {
     //maybe there will be another usage for this
     //maybe return by using it all vacations by removing the "WHERE" parts
 //    //implement readUsers method which will display eace available vacation
-    public ArrayList<Vacation> readVacation(Vacation Data) {
-        ArrayList<Vacation> vacations = new ArrayList<>();
+    public ArrayList<Flights> readVacation(Flights Data) {
+        ArrayList<Flights> flights = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
         int price = Data.getPrice();
@@ -99,15 +98,15 @@ public class AvailableVacationsDB extends genericDB {
         String sql = "SELECT Origin,Destionation,Price,DestinationAirport,DateOfDeparture,DateOfArrival,AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,SellerUserName FROM AvailableVacationas WHERE " +
                 "Origin='" + origin + "' AND Destionation= '" + destination + "' AND Price='" + price + "' AND DestinationAirport='" + destinationAirport + "'AND DateOfDeparture='" + dateOfDeparture + "'AND DateOfarrival='" + dateOfArrival + "'AND AirlineCompany='" + airlineCompany + "'AND NumberOfTickets='" + numOfTickets + "'AND Baggage='" + baggage + "' AND TicketsType='" + ticketsType + "'AND VacationStyle='" + vacationStyle + "'AND SellerUserName='" + seller + "' AND OriginalPrice= '" +originalPrice + "'";
         String url = "jdbc:sqlite:" + DBName + ".db";
-        vacations = getVacationsBasedOnQuery(url, sql);
-        return vacations;
+        flights = getVacationsBasedOnQuery(url, sql);
+        return flights;
     }
 
 
 
     //implement readUsers method which will display each available vacation which match given data
-    public ArrayList<Vacation> readMatchVacations( Vacation Data) {
-        ArrayList<Vacation> vacations = new ArrayList<>();
+    public ArrayList<Flights> readMatchVacations(Flights Data) {
+        ArrayList<Flights> flights = new ArrayList<>();
         String origin = Data.getOrigin();
         String destination = Data.getDestination();
         String dateOfDeparture = Data.getDateOfDeparture();
@@ -118,7 +117,7 @@ public class AvailableVacationsDB extends genericDB {
                 "AirlineCompany,NumberOfTickets,Baggage,TicketsType,VacationStyle,sellerUserName," +
                 "OriginalPrice FROM AvailableVacations where Origin=? and Destination=? and DateOfDeparture=? " +
                 "and DateOfArrival=? and NumberOfTickets>=?";
-        //ArrayList<Vacation> vacations = new ArrayList<Vacation>();
+        //ArrayList<Flights> flights = new ArrayList<Flights>();
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setString(1,origin);
@@ -131,8 +130,8 @@ public class AvailableVacationsDB extends genericDB {
 
             // loop through the result set
             while (rs.next()) {
-                //creating vacation objects only so we could display them, there are not going to be a real availableVacation obects
-                Vacation vacation = new Vacation(rs.getInt("VacationId"),
+                //creating flights objects only so we could display them, there are not going to be a real availableVacation obects
+                Flights flight = new Flights(rs.getInt("VacationId"),
                         rs.getString("Origin"),
                         rs.getString("Destination"),
                         rs.getInt("Price"),
@@ -146,21 +145,21 @@ public class AvailableVacationsDB extends genericDB {
                         rs.getString("VacationStyle"),
                         rs.getString("sellerUserName"),
                         rs.getInt("NumberOfTickets"));
-                vacations.add(vacation);
-                vacation = null;
+                flights.add(flight);
+                flights = null;
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
-        //vacations = getVacationsBasedOnQuery(url, sql);
-        return vacations;
-        //vacations = getVacationsBasedOnQuery(url, sql);
-        //return vacations;
+        //flights = getVacationsBasedOnQuery(url, sql);
+        return flights;
+        //flights = getVacationsBasedOnQuery(url, sql);
+        //return flights;
     }
 
 
-//    private ArrayList<Vacation> getVacationsBasedOnQuery(String url, String query){
-//       ArrayList<Vacation> vacations = new ArrayList<Vacation>();
+//    private ArrayList<Flights> getVacationsBasedOnQuery(String url, String query){
+//       ArrayList<Flights> vacations = new ArrayList<Flights>();
 //        try (Connection conn = DriverManager.getConnection(url);
 //             Statement stmt = conn.createStatement();
 //             ResultSet rs = stmt.executeQuery(query)) {
@@ -168,7 +167,7 @@ public class AvailableVacationsDB extends genericDB {
 //            // loop through the result set
 //            while (rs.next()) {
 //                //creating vacation objects only so we could display them, there are not going to be a real availableVacation obects
-//                Vacation vacation = new Vacation(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
+//                Flights vacation = new Flights(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14));
 //                vacations.add(vacation);
 //                vacation = null;
 //            }

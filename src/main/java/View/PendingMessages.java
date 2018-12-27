@@ -1,7 +1,7 @@
 package View;
 
 import Controller.Controller;
-import Model.Vacation;
+import Model.Flights;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +21,7 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
     private Stage stage;
     private ArrayList<Button> buttonsListConfirm;
     private ArrayList<Button> buttonsListCancel;
-    private ArrayList<Vacation> vacations;
+    private ArrayList<Flights> flights;
     private ArrayList<Label> labelList;
 
     public void setController(Controller controller, Stage stage){
@@ -31,14 +31,14 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
     }
 
     public void setMessages() {
-        ArrayList<Vacation> pendingVacations = controller.readPendingVacations(controller.getUserName());
-        this.vacations = new ArrayList<>();
+        ArrayList<Flights> pendingFlights = controller.readPendingVacations(controller.getUserName());
+        this.flights = new ArrayList<>();
         this.buttonsListConfirm = new ArrayList<>();
         this.buttonsListCancel = new ArrayList<>();
         this.labelList = new ArrayList<>();
-        for (Vacation vacation : pendingVacations) {
-            String vacationID = String.valueOf(vacation.getVacationId());
-            String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + " מס' כרטיסים: " + vacation.getNumOfTickets() + "\n" +  " כבודה:"+ vacation.getBaggage() + " סוג כרטיס: " + vacation.getTicketsType() + "\n" + " מחיר: "+ vacation.getPrice();
+        for (Flights flights : pendingFlights) {
+            String vacationID = String.valueOf(flights.getVacationId());
+            String details = "שדה תעופה ביעד:"+ flights.getDestinationAirport() + " מס' כרטיסים: " + flights.getNumOfTickets() + "\n" +  " כבודה:"+ flights.getBaggage() + " סוג כרטיס: " + flights.getTicketsType() + "\n" + " מחיר: "+ flights.getPrice();
             Button buttonConfirm = new Button("אשר רכישה");
             buttonConfirm.setId(vacationID);
             buttonConfirm.setOnAction(this);
@@ -52,7 +52,7 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
             Label label = new Label(details);
             label.setFont(new Font("Calibri Light",15));
             label.setPrefSize(500.0,38.0);
-            vacations.add(vacation);
+            this.flights.add(flights);
             labelList.add(label);
         }
         VB_buttonsConfirm.getChildren().clear();
@@ -73,10 +73,10 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
             controller.deletePendingVacation(button.getId());
             Label label = labelList.get(index);
             String labelText = label.getText();
-            Vacation vacation = this.vacations.get(index);
+            Flights flights = this.flights.get(index);
             //String[] data = labelText.split(",");
             controller.insertConfirmedVacation(Integer.valueOf(button.getId()), controller.getUserName(),
-                    buyer, vacation.getOrigin(), vacation.getDestination(), vacation.getPrice(),vacation.getDateOfDeparture(), vacation.getDateOfArrival());
+                    buyer, flights.getOrigin(), flights.getDestination(), flights.getPrice(), flights.getDateOfDeparture(), flights.getDateOfArrival());
             button.setDisable(true);
             buttonsListCancel.get(index).setDisable(true);
             alert("הודעת אישור תועבר לקונה", Alert.AlertType.CONFIRMATION);
@@ -87,9 +87,9 @@ public class PendingMessages extends HomePage implements EventHandler<ActionEven
             controller.deletePendingVacation(button.getId());
             int index = buttonsListCancel.indexOf(button);
             Label label = labelList.get(index);
-            Vacation vacation = vacations.get(index);
-            controller.insertVacation(vacation.getOrigin(),vacation.getDestination(),vacation.getPrice(),vacation.getDestinationAirport(),vacation.getDateOfDeparture(),vacation.getDateOfArrival(),vacation.getAirlineCompany(),
-                    vacation.getNumOfTickets(),vacation.getBaggage(),vacation.getTicketsType(),vacation.getVacationStyle(),vacation.getSeller(),vacation.getOriginalPrice());
+            Flights flights = this.flights.get(index);
+            controller.insertVacation(flights.getOrigin(), flights.getDestination(), flights.getPrice(), flights.getDestinationAirport(), flights.getDateOfDeparture(), flights.getDateOfArrival(), flights.getAirlineCompany(),
+                    flights.getNumOfTickets(), flights.getBaggage(), flights.getTicketsType(), flights.getVacationStyle(), flights.getSeller(), flights.getOriginalPrice());
             button.setDisable(true);
             buttonsListConfirm.get(index).setDisable(true);
 

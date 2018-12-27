@@ -1,6 +1,6 @@
 package Database;
 
-import Model.Vacation;
+import Model.Flights;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -82,8 +82,8 @@ public class ConfirmedSaleVacationsDB extends genericDB {
      * @param buyerUserName
      * @return
      */
-    public ArrayList<Vacation> readConfirmedVacations(String buyerUserName){
-        ArrayList<Vacation> vacationsToPay = new ArrayList<Vacation>();
+    public ArrayList<Flights> readConfirmedVacations(String buyerUserName){
+        ArrayList<Flights> vacationsToPay = new ArrayList<Flights>();
         String sql = "SELECT VacationId,Origin,Destination,Price,DateOfDeparture,DateOfArrival FROM ConfirmedSaleVacations WHERE buyerUserName=?";
         String url = "jdbc:sqlite:" + DBName + ".db";
         try (Connection connect = DriverManager.getConnection(url);
@@ -92,11 +92,11 @@ public class ConfirmedSaleVacationsDB extends genericDB {
              ResultSet rs = stmt.executeQuery();
             // loop through the result set
             while (rs.next()) {
-                //Vacation vacation = new Vacation(rs.getInt("VacationId"), rs.getString("Origin"),)
-                Vacation vacation = new Vacation(rs.getString("Origin"),rs.getString("Destination"),rs.getString("DateOfDeparture"),rs.getString("DateOfArrival"),rs.getInt("Price"));
-                //String details = "שדה תעופה ביעד:"+vacation.getDestinationAirport() + " מס' כרטיסים: " + vacation.getNumOfTickets() + "\n" +  " כבודה:"+ vacation.getBaggage() + " סוג כרטיס: " + vacation.getTicketsType() + "\n" + " מחיר: "+ vacation.getPrice()
-                vacation.setVacationId(rs.getInt("VacationId"));
-                vacationsToPay.add(vacation);
+                //Flights flights = new Flights(rs.getInt("VacationId"), rs.getString("Origin"),)
+                Flights flights = new Flights(rs.getString("Origin"),rs.getString("Destination"),rs.getString("DateOfDeparture"),rs.getString("DateOfArrival"),rs.getInt("Price"));
+                //String details = "שדה תעופה ביעד:"+flights.getDestinationAirport() + " מס' כרטיסים: " + flights.getNumOfTickets() + "\n" +  " כבודה:"+ flights.getBaggage() + " סוג כרטיס: " + flights.getTicketsType() + "\n" + " מחיר: "+ flights.getPrice()
+                flights.setVacationId(rs.getInt("VacationId"));
+                vacationsToPay.add(flights);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
