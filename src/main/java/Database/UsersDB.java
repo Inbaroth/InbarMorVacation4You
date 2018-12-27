@@ -112,7 +112,7 @@ public class UsersDB extends genericDB{
         }
         return null;
     }
-    
+
 
     /**
      * This method update the row in the data base where the user name is equal to the given user name in the
