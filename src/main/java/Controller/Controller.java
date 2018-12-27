@@ -90,8 +90,8 @@ public class Controller extends Observable implements Observer {
         model.insertConfirmedVacation(vacationId,seller,buyer,origin,destination,price,dateOfDeparture,dateOfArrival);
     }
 
-    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv){
-        model.insertPurchasedVacation(vacationId,date,time,userName,creditCard,expirationDate,csv);
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName){
+        model.insertPurchasedVacation(vacationId,date,time,userName);
     }
 
     /**

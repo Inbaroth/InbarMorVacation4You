@@ -307,9 +307,9 @@ public class Model extends Observable {
         return matchesFlights;
     }
 
-    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName, String creditCard, String expirationDate, int csv){
+    public void insertPurchasedVacation(int vacationId,String date, String time,String  userName){
         try{
-            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName,  creditCard,  expirationDate,  csv);
+            purchasedVacationDB.insertVacation( vacationId, date,  time,  userName);
         }catch (SQLException e){
             System.out.println(e.getErrorCode());
             //inform controller something is wrong

@@ -52,8 +52,7 @@ public class Payment  extends HomePage implements Observer {
         String date = LocalDateTime.now().toString().substring(0,localDateTime.toString().indexOf("T"));
         String time = LocalTime.now().toString();
         controller.deleteConfirmedVacation(ConfirmMessages.vacationID);
-        controller.insertPurchasedVacation(ConfirmMessages.vacationID,date,time,controller.getUserName(),
-                newCreditCardNumber,newExp,Integer.valueOf(newCSV));
+        controller.insertPurchasedVacation(ConfirmMessages.vacationID,date,time,controller.getUserName());
         alert("הרכישה בוצעה בהצלחה", Alert.AlertType.INFORMATION);
         stage.close();
     }
